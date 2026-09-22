@@ -1,0 +1,6 @@
+{
+  "id": "documents",
+  "filters": ["filter.lua"],
+  "scripts": ["preview.js"],
+  "styles": ["styles.css"]
+}

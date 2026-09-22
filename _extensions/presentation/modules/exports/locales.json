@@ -1,0 +1,27 @@
+{
+  "de": {
+    "Export Slides PDF": "Folien als PDF exportieren",
+    "Export Presentation": "Präsentation exportieren",
+    "Current session": "Aktuelle Sitzung",
+    "Prepared presentation": "Vorbereitete Präsentation",
+    "Include placed images": "Platzierte Bilder einschließen",
+    "Include slide drawings": "Folienzeichnungen einschließen",
+    "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen",
+    "Cancel": "Abbrechen",
+    "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer",
+    "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.",
+    "Preparing export…": "Export wird vorbereitet …",
+    "Export ready.": "Export ist fertig.",
+    "Export failed.": "Export fehlgeschlagen.",
+    "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.",
+    "Scope": "Umfang",
+    "Current state": "Aktueller Stand",
+    "Custom": "Benutzerdefiniert",
+    "Slide state": "Folienstand",
+    "Current": "Aktuell",
+    "Prepared": "Vorbereitet",
+    "Also include hidden drawings": "Auch ausgeblendete Zeichnungen",
+    "Include chalkboard pages": "Tafelseiten einschließen",
+    "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen."
+  }
+}

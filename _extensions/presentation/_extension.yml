@@ -1,0 +1,63 @@
+# Generated from core/format.json and modules/*/module.json.
+title: "Presentation"
+author: "Max Krischeu"
+version: "0.2.0"
+quarto-required: ">=1.10.0"
+contributes:
+  project:
+    project:
+      type: "default"
+      pre-render: "python3 -c \"from pathlib import Path; import runpy; paths=list(Path('_extensions').glob('presentation/server/prepare.py'))+list(Path('_extensions').glob('*/presentation/server/prepare.py')); assert len(paths)==1, 'Presentation: expected exactly one installed extension'; runpy.run_path(str(paths[0]),run_name='__main__')\""
+      post-render: "python3 -c \"from pathlib import Path; import runpy; paths=list(Path('_extensions').glob('presentation/server/post_render.py'))+list(Path('_extensions').glob('*/presentation/server/post_render.py')); assert len(paths)==1, 'Presentation: expected exactly one installed extension'; runpy.run_path(str(paths[0]),run_name='__main__')\""
+      preview:
+        serve:
+          cmd: "python3 .presentation-preview.py --port {port} --live-reload"
+          ready: "Presentation preview ready:"
+    format: "presentation-revealjs"
+  formats:
+    revealjs:
+      lang: "de"
+      width: 1280
+      height: 720
+      margin: 0
+      min-scale: 0.01
+      max-scale: 100
+      center: false
+      center-title-slide: false
+      controls: false
+      progress: false
+      slide-number: false
+      menu: false
+      transition: "none"
+      background-transition: "none"
+      hash: true
+      history: true
+      theme:
+        - "default"
+        - "ui/theme.scss"
+      css:
+        - "presentation.css"
+      filters:
+        - "ui/filter.lua"
+        - "modules/annotations/rough.lua"
+        - "modules/documents/filter.lua"
+        - "modules/images/filter.lua"
+      revealjs-plugins:
+        - "runtime/RevealDrop"
+        - "runtime/RevealQuiz"
+        - "runtime/RevealPresentation"
+      chalkboard:
+        theme: "whiteboard"
+        buttons: false
+        transition: 1
+        boardmarker-width: 3
+      quiz:
+        includeScore: true
+        presentationKeyboard: true
+        allowNumberKeys: false
+        shuffleOptions: false
+      drop:
+        engine: "pyodide"
+        button: false
+        shortcut: "t"
+      embed-resources: false

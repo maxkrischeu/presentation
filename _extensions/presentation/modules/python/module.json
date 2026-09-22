@@ -1,0 +1,23 @@
+{
+  "id": "python",
+  "scripts": ["output.js", "drop-runtime.js", "adapter.js", "module.js"],
+  "styles": ["drop-runtime.css", "styles.css"],
+  "plugins": [
+    {
+      "name": "RevealDrop",
+      "config": {
+        "drop": {
+          "button": false,
+          "shortcut": "t",
+          "engine": "pyodide",
+          "webr": {
+            "packages": []
+          },
+          "pyodide": {
+            "packages": []
+          }
+        }
+      }
+    }
+  ]
+}

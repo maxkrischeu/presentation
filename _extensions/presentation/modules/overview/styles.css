@@ -1,0 +1,110 @@
+/* These overrides are confined to overview. Normal slides and PDF retain their
+   original geometry. Zoom scales both the thumbnail and its grid footprint. */
+.reveal.overview .slides {
+  position: absolute !important;
+  inset: auto !important;
+  left: var(--presentation-overview-left) !important;
+  top: var(--presentation-overview-top) !important;
+  width: var(--presentation-overview-width) !important;
+  height: var(--presentation-overview-height) !important;
+  margin: 0 !important;
+  padding: 32px 32px 88px !important;
+  box-sizing: border-box;
+  transform: none !important;
+  perspective: none;
+  display: grid !important;
+  grid-template-columns: repeat(
+    var(--presentation-overview-columns),
+    minmax(0, 1fr)
+  );
+  gap: 20px;
+  align-content: start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  pointer-events: auto;
+  overscroll-behavior: contain;
+}
+.reveal.overview .slides > section.stack {
+  display: contents !important;
+  transform: none !important;
+}
+.reveal.overview .slides section.presentation-slide {
+  position: relative !important;
+  inset: auto !important;
+  width: var(--presentation-slide-width) !important;
+  height: var(--presentation-slide-height) !important;
+  margin: 0 !important;
+  transform: none !important;
+  zoom: var(--presentation-thumbnail-scale);
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: var(--presentation-paper);
+  outline: 5px solid #d8deea;
+  outline-offset: -5px;
+  overflow: hidden;
+}
+.reveal.overview .slides section.presentation-slide.present {
+  outline-color: var(--presentation-navy);
+}
+.reveal.overview .slides section.presentation-slide:hover {
+  outline-color: var(--presentation-blue);
+}
+.reveal.overview .slides section.presentation-slide::before,
+.reveal.overview .slides section.presentation-slide::after {
+  display: none !important;
+}
+.reveal.overview .slides .fragment {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.reveal.overview .backgrounds {
+  display: none !important;
+}
+.reveal.overview .slides section.presentation-slide#title-slide,
+.reveal.overview .slides section.presentation-slide.title-slide {
+  display: flex !important;
+}
+
+/* Chalkboard stores strokes per slide, but displays them on a viewport canvas.
+   That full-size overlay must not cover the overview thumbnails. Keep its data
+   intact so the native plugin restores the correct slide's strokes on return. */
+.reveal.overview #notescanvas,
+.reveal.overview #chalkboard {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* The grid has no spatial relationship to Reveal's animated overview stacks. */
+.reveal .slides,
+.reveal.overview .slides section.presentation-slide {
+  transition: none !important;
+}
+
+/* Notes follow their slide thumbnail, never the viewport-sized drawing overlay. */
+.reveal .slides .presentation-notes-preview {
+  display: none;
+}
+.reveal.overview .slides .presentation-notes-preview {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  pointer-events: none;
+}
+/* Reveal's generic overlay transition otherwise delays hiding the canvas. */
+.reveal #notescanvas,
+.reveal #chalkboard {
+  transition: none !important;
+}
+
+/* Hidden notes stay hidden in the overview without discarding their pixels. */
+.reveal.overview.presentation-notes-hidden .slides .presentation-notes-preview {
+  display: none;
+}

@@ -1,0 +1,67 @@
+.presentation-letterbox {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 0 0 100vmax #000;
+}
+.presentation-letterbox[hidden] {
+  display: none;
+}
+@media print {
+  .presentation-letterbox {
+    display: none !important;
+  }
+}
+
+/* Keep Chalkboard's palette and board switcher inside the same stage. */
+#chalkboard .palette,
+#notescanvas .palette {
+  left: calc(var(--presentation-board-left, 0px) - 10px);
+}
+#chalkboard .boardhandle {
+  right: calc(var(--presentation-board-right, 0px) - 10px);
+}
+
+/* A shared viewport for native menu and help, independent of slide scaling.
+   The transform contains the menu plugin's fixed-position descendants. */
+.slide-menu-wrapper {
+  position: fixed;
+  left: var(--presentation-stage-left, 0px);
+  top: var(--presentation-stage-top, 0px);
+  width: var(--presentation-stage-width, 100vw);
+  height: var(--presentation-stage-height, 100vh);
+  transform: translateZ(0);
+  overflow: clip;
+  z-index: 200;
+  pointer-events: none;
+}
+.slide-menu-wrapper .slide-menu {
+  max-width: 100%;
+  pointer-events: auto;
+}
+.slide-menu-wrapper .slide-menu-overlay.active {
+  pointer-events: auto;
+}
+.reveal > .overlay.overlay-help {
+  position: fixed;
+  left: var(--presentation-stage-left, 0px);
+  top: var(--presentation-stage-top, 0px);
+  width: var(--presentation-stage-width, 100vw);
+  height: var(--presentation-stage-height, 100vh);
+  overflow: hidden;
+  transition: none;
+}
+.reveal > .overlay.overlay-help .viewport .viewport-inner {
+  width: min(600px, 100%);
+  min-width: 0;
+  box-sizing: border-box;
+}
+.reveal > .overlay.overlay-help header a.close {
+  width: 44px;
+  height: 44px;
+}
+
+.slide-menu-wrapper .slide-menu-panel {
+  height: calc(100% - 62px);
+  overscroll-behavior: contain;
+}

@@ -1,0 +1,46 @@
+/* Native canvases retain their state; their tools are exposed in the footer. */
+#notescanvas .palette,
+#chalkboard .palette,
+#chalkboard .boardhandle {
+  display: none !important;
+}
+
+.presentation-drawing-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.presentation-drawing-controls[hidden],
+.presentation-drawing-controls button[hidden],
+.presentation-dock-palette[hidden] {
+  display: none !important;
+}
+
+.presentation-dock.presentation-drawing > button {
+  display: none;
+}
+
+.presentation-dock.presentation-drawing {
+  background: #fffffff2;
+  border-radius: 8px;
+}
+
+/* Notes Canvas should leave the slide colors unchanged while drawing. */
+#notescanvas {
+  background: transparent !important;
+}
+
+/* A plain white board without the plugin’s paper texture. */
+#chalkboard,
+#chalkboard canvas {
+  background: #fff !important;
+}
+
+.presentation-eraser-options button {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 8px 12px;
+  white-space: nowrap;
+}

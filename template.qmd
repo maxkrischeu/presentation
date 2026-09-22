@@ -1,0 +1,22 @@
+---
+title: "Meine Präsentation"
+lang: de
+date: today
+date-format: "D. MMMM YYYY"
+presentation:
+  logo-text: date
+  header-text: "Mein Thema"
+  slide-number: true
+---
+
+# Willkommen
+
+## Erste Folie
+
+- Ein Gedanke
+- Noch ein Gedanke
+
+## Gemeinsam ausprobieren
+
+Mit **C** auf der Folie zeichnen, mit **B** die Tafel öffnen.
+Mit **Enter** oder dem Haken den Arbeitsmodus verlassen.

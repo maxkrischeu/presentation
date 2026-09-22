@@ -1,0 +1,32 @@
+.presentation-laser-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.presentation-laser-controls[hidden],
+.presentation-laser-canvas[hidden] {
+  display: none !important;
+}
+
+.presentation-dock.presentation-lasering > button {
+  display: none;
+}
+
+.presentation-laser-canvas {
+  position: fixed;
+  z-index: 35;
+  touch-action: none;
+  cursor: none;
+}
+
+@media print {
+  .presentation-laser-canvas {
+    display: none !important;
+  }
+}
+
+html.print-pdf .presentation-laser-canvas {
+  display: none !important;
+}

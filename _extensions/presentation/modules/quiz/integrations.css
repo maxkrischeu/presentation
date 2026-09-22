@@ -1,0 +1,123 @@
+.reveal .quiz-question .prev-button,
+.reveal .quiz-question .next-button {
+  display: none;
+}
+
+.reveal .quiz-question .option-button {
+  font: inherit;
+  font-size: 0.8em;
+  padding: 0.3em 0.6em;
+  margin: 0.25em 0;
+  border-radius: 6px;
+}
+
+.reveal .quiz-question .action-buttons {
+  font: inherit;
+  font-size: 0.65em;
+  border-radius: 6px;
+}
+
+.reveal .quiz-question .feedback {
+  font-size: 0.75em;
+}
+
+.reveal .quiz-question ul {
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reveal .quiz-question .option-button {
+  box-sizing: border-box;
+}
+
+/* Equal side columns keep assessment centered across the whole control row. */
+.reveal .quiz-question .button-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.reveal .quiz-question .quiz-action-group {
+  grid-column: 3;
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.reveal .quiz-question .button-container .feedback {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  font-size: 0.65em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.reveal .quiz-question .button-container .action-buttons {
+  margin: 0;
+}
+
+.reveal .quiz-question .button-container .score {
+  grid-column: 1;
+  grid-row: 1;
+  position: static;
+  transform: none;
+  margin: 0;
+  z-index: auto;
+  color: var(--presentation-muted);
+  font-size: 0.65em;
+  font-weight: 500;
+}
+
+/* Assessment takes precedence over the multiple-choice selection and hover. */
+.reveal .quiz-question .option-button.correct,
+.reveal .quiz-question .option-button.correct:hover {
+  background-color: #27ae60;
+  border-color: #218c50;
+  box-shadow: none;
+}
+
+.reveal .quiz-question .option-button.incorrect,
+.reveal .quiz-question .option-button.incorrect:hover {
+  background-color: #c0392b;
+  border-color: #a93226;
+  box-shadow: none;
+}
+
+.reveal .quiz-multiple .option-button.selected.incorrect::after {
+  content: " ✕";
+}
+
+/* Opt-in image question. Custom properties keep spacing locally adjustable. */
+.reveal .quiz-image-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.reveal .quiz-image-question,
+.reveal .quiz-image-answers {
+  flex: 0 0 auto;
+}
+.reveal .quiz-image-question > :last-child {
+  margin-bottom: 0;
+}
+.reveal .quiz-image-area {
+  flex: 1 1 0;
+  min-height: 0;
+  margin: var(--quiz-image-gap, 16px) var(--quiz-image-inset, 12px);
+}
+.reveal .quiz-image-answers > ul,
+.reveal .quiz-image-answers > ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.reveal .quiz-image-question > h2 {
+  text-align: center;
+  margin: 0 0 30px;
+}

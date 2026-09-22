@@ -1,0 +1,33 @@
+/* Quiz opener: the title alone is centered; the optional subtitle hangs below.
+   Override these variables on .quiz-intro or an individual slide. */
+.reveal .slides section.quiz-intro {
+  --presentation-quiz-intro-center: 50%;
+  --presentation-quiz-intro-title-size: 2.3em;
+  --presentation-quiz-intro-subtitle-size: 0.8em;
+  --presentation-quiz-intro-gap: 28px;
+}
+.reveal .slides .presentation-quiz-intro {
+  position: absolute;
+  top: var(--presentation-quiz-intro-center);
+  left: var(--presentation-side);
+  right: var(--presentation-side);
+  transform: translateY(-50%);
+  text-align: center;
+}
+.reveal .slides .presentation-quiz-intro-title {
+  margin: 0;
+  font-size: var(--presentation-quiz-intro-title-size);
+  line-height: 1.1;
+  text-align: center;
+}
+.reveal .slides .presentation-quiz-intro-stats {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: var(--presentation-quiz-intro-gap) 0 0;
+  color: var(--presentation-muted);
+  font-size: var(--presentation-quiz-intro-subtitle-size);
+  line-height: 1.35;
+  text-align: center;
+}

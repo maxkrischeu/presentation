@@ -1,0 +1,5 @@
+{
+  "id": "overview",
+  "scripts": ["overview.js", "module.js"],
+  "styles": ["styles.css"]
+}

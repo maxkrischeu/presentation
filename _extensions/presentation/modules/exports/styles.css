@@ -1,0 +1,86 @@
+.presentation-export-dialog {
+  box-sizing: border-box;
+  width: min(440px, 90vw);
+  max-height: 85vh;
+  border: 1px solid #cbd2df;
+  border-radius: 12px;
+  padding: 24px;
+  color: #24334b;
+  background: white;
+  font:
+    16px/1.5 Arial,
+    sans-serif;
+  box-shadow: 0 12px 40px #0003;
+}
+.presentation-export-dialog::backdrop {
+  background: #0009;
+}
+.presentation-export-dialog h2 {
+  font-size: 22px;
+  color: var(--presentation-navy);
+  margin: 0 0 20px;
+}
+.presentation-export-options {
+  display: grid;
+  gap: 12px;
+}
+.presentation-export-options[hidden] {
+  display: none;
+}
+.presentation-export-options label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.presentation-export-dialog select {
+  font: inherit;
+  max-width: 100%;
+}
+.presentation-export-description,
+.presentation-export-dialog [role="status"] {
+  font-size: 14px;
+  color: #5e6878;
+}
+.presentation-export-dialog footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.presentation-export-dialog button {
+  font: inherit;
+  padding: 7px 16px;
+  border: 1px solid #cbd2df;
+  border-radius: 6px;
+  background: white;
+  color: #253481;
+  cursor: pointer;
+}
+.presentation-export-dialog [data-export] {
+  background: #3873b8;
+  color: white;
+  border-color: #3873b8;
+}
+.presentation-export-dialog button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+@media print {
+  .presentation-export-dialog {
+    display: none !important;
+  }
+}
+
+.presentation-export-dialog fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.presentation-export-dialog legend { padding: 0; margin-bottom: 8px; font-weight: 600; }
+.presentation-export-custom { display: grid; gap: 12px; border-top: 1px solid #cbd2df; padding-top: 16px; }
+.presentation-export-custom[hidden] { display: none; }
+.presentation-export-hidden { margin-left: 26px; }
+.presentation-export-hidden:has(input:disabled) { color: #767e8b; }
+.presentation-export-dialog footer { margin-top: 20px; }

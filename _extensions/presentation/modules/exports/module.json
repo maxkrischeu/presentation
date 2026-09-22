@@ -1,0 +1,8 @@
+{
+  "id": "exports",
+  "scripts": ["dialog.js", "module.js"],
+  "styles": ["styles.css"],
+  "server": {
+    "export": "service.py"
+  }
+}

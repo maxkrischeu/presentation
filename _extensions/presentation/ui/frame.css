@@ -1,0 +1,148 @@
+/* Only leaf slides receive the frame. Reveal retains navigation and transforms. */
+.reveal .slides section.presentation-slide {
+  box-sizing: border-box;
+  height: 100%;
+  padding: calc(var(--presentation-header) + 30px) var(--presentation-side)
+    calc(var(--presentation-footer) + 22px);
+  text-align: left;
+}
+.presentation-header,
+.presentation-footer {
+  position: absolute;
+  left: var(--presentation-side);
+  right: var(--presentation-side);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
+  color: var(--presentation-muted);
+  font-size: var(--presentation-frame-font);
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-align: left;
+}
+.presentation-header {
+  top: 0;
+  height: var(--presentation-header);
+}
+.presentation-footer {
+  bottom: 0;
+  height: var(--presentation-footer);
+  border-top: 1px solid #b9b9b9;
+}
+.presentation-header-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+.reveal .presentation-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.presentation-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.presentation-header-center {
+  text-align: center;
+}
+.reveal .presentation-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+.reveal .presentation-footer a:hover,
+.reveal .presentation-footer a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+}
+.presentation-header-right,
+.presentation-footer-right {
+  text-align: right;
+}
+.presentation-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.presentation-progress::before,
+.presentation-progress-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--presentation-spectrum);
+}
+.presentation-progress::before {
+  content: "";
+  opacity: 0.23;
+}
+.presentation-progress-fill {
+  clip-path: inset(0 calc((1 - var(--presentation-progress, 0)) * 100%) 0 0);
+}
+.reveal .slides section.presentation-slide#title-slide,
+.reveal .slides section.presentation-slide.title-slide {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.reveal #title-slide .title {
+  font-size: 2.25em;
+  line-height: 1.08;
+}
+.reveal #title-slide .subtitle {
+  color: var(--presentation-blue);
+}
+.reveal #title-slide .quarto-title-authors {
+  font-size: 0.65em;
+  color: var(--presentation-muted);
+}
+html.print-pdf .presentation-progress-fill {
+  clip-path: none;
+}
+@media print {
+  .presentation-progress-fill {
+    clip-path: none;
+  }
+}
+/* Reveal's PDF stylesheet resets padding with !important. Preserve the same
+   reserved content area explicitly; page creation and positioning stay native. */
+html.print-pdf .reveal .slides section.presentation-slide {
+  padding: calc(var(--presentation-header) + 30px) var(--presentation-side)
+    calc(var(--presentation-footer) + 22px) !important;
+}
+
+.presentation-header-left,
+.presentation-header-right {
+  color: var(--presentation-navy);
+}
+
+/* Decorative chapter logo; the same configured image as in the header. */
+.reveal .slides section:is(#title-slide, .title-slide.level1, .quiz-intro) {
+  isolation: isolate;
+}
+.reveal
+  .slides
+  section:is(#title-slide, .title-slide.level1, .quiz-intro)
+  > img.presentation-chapter-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--presentation-chapter-logo-size);
+  height: var(--presentation-chapter-logo-size);
+  max-width: 70%;
+  max-height: 70%;
+  margin: 0;
+  object-fit: contain;
+  opacity: var(--presentation-chapter-logo-opacity);
+  pointer-events: none;
+  z-index: -1;
+}

@@ -1,0 +1,5 @@
+{
+  "id": "magnifier",
+  "scripts": ["magnifier.js", "module.js"],
+  "styles": ["styles.css"]
+}

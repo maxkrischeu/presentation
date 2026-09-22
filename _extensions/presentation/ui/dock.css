@@ -1,0 +1,159 @@
+.presentation-dock {
+  position: fixed;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: var(--presentation-muted);
+  font-family: var(--r-main-font, Arial, sans-serif);
+  transform: translateX(-50%);
+  box-sizing: border-box;
+}
+
+.presentation-dock button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 7px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  font: inherit;
+}
+
+.presentation-dock button:hover,
+.presentation-dock button[aria-pressed="true"],
+.presentation-dock button[aria-expanded="true"] {
+  background: #e8eef7;
+  color: var(--presentation-navy);
+}
+
+.presentation-dock button:focus-visible {
+  outline: 2px solid var(--presentation-blue);
+  outline-offset: 2px;
+}
+
+.presentation-dock button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.presentation-dock svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+html.print-pdf .presentation-dock {
+  display: none !important;
+}
+
+@media print {
+  .presentation-dock {
+    display: none !important;
+  }
+}
+
+.reveal.overview ~ .presentation-dock,
+body:has(.reveal.overview) .presentation-dock {
+  background: #fffffff2;
+  border-radius: 9px;
+  box-shadow: 0 2px 14px #17203320;
+}
+
+body:has(.reveal.overview)
+  .presentation-dock
+  > button:not([data-action="overview"]) {
+  display: none;
+}
+
+body:has(.reveal.overview) .presentation-dock {
+  height: 44px !important;
+  padding: 4px;
+}
+
+.presentation-dock-palette {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: calc(var(--presentation-stage-width, 100vw) - 24px);
+  overflow-x: auto;
+  padding: 6px;
+  background: white;
+  border: 1px solid #ccd7e6;
+  border-radius: 8px;
+  box-shadow: 0 3px 16px #0002;
+}
+
+.presentation-dock-palette button {
+  flex: 0 0 36px;
+}
+
+.presentation-dock-palette button span {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #777;
+  border-radius: 50%;
+}
+
+.slide-menu-toolbar .presentation-utilities-icon {
+  width: 1em;
+  height: 1em;
+  font-size: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.slide-menu .slide-tool-item kbd,
+.slide-menu .slide-tool-item:hover kbd,
+.slide-menu .slide-tool-item.active kbd {
+  color: #394250 !important;
+  background: #f8f9fa !important;
+}
+
+.presentation-standard-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.presentation-standard-controls[hidden],
+.presentation-dock[hidden] {
+  display: none !important;
+}
+body:has(.reveal.overview)
+  .presentation-standard-controls
+  button:not([data-action="overview"]) {
+  display: none;
+}
+
+.presentation-error {
+  position: fixed;
+  z-index: 100000;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(720px, 90vw);
+  padding: 16px 24px;
+  border: 2px solid #b42318;
+  border-radius: 8px;
+  background: #fff;
+  color: #7a271a;
+  font: 16px/1.5 system-ui, sans-serif;
+  box-shadow: 0 4px 24px #0002;
+}

@@ -1,0 +1,37 @@
+/*-- scss:defaults --*/
+$body-bg: #ffffff;
+$body-color: #172033;
+$link-color: #3873b8;
+$font-family-sans-serif: "Aptos", "Helvetica Neue", Arial, sans-serif;
+$presentation-heading-font: $font-family-sans-serif;
+$presentation-heading-color: #253481;
+$presentation-heading-font-weight: 700;
+$presentation-heading-text-transform: none;
+$presentation-font-size-root: 32px;
+$presentation-line-height: 1.35;
+$presentation-h1-font-size: 2em;
+$presentation-h2-font-size: 1.4em;
+$presentation-h3-font-size: 1em;
+/*-- scss:rules --*/
+:root {
+  --presentation-ink: #172033;
+  --presentation-muted: #5e6878;
+  --presentation-navy: #253481;
+  --presentation-blue: #3873b8;
+  --presentation-paper: #fff;
+  --presentation-side: 36px;
+  --presentation-header: 58px;
+  --presentation-footer: 50px;
+  --presentation-frame-font: 17px;
+  --presentation-chapter-logo-size: 460px;
+  --presentation-chapter-logo-opacity: 0.08;
+  --presentation-spectrum: linear-gradient(
+    90deg,
+    #3873b8 0% 16.6667%,
+    #14abd5 16.6667% 33.3333%,
+    #7cb142 33.3333% 50%,
+    #ffcc00 50% 66.6667%,
+    #f59f00 66.6667% 83.3333%,
+    #e20010 83.3333% 100%
+  );
+}

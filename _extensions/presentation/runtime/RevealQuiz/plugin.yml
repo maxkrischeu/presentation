@@ -1,0 +1,13 @@
+name: "RevealQuiz"
+config:
+  quiz:
+    presentationKeyboard: true
+    allowNumberKeys: false
+    shuffleOptions: false
+    includeScore: true
+    disableOnCheck: false
+    defaultCorrect: ""
+    defaultIncorrect: ""
+    disableReset: false
+script:
+  - "registration.js"

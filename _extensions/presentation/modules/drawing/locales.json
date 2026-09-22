@@ -1,0 +1,29 @@
+{
+  "de": {
+    "Notes Canvas": "Zeichenmodus",
+    "Show / Hide Drawings": "Zeichnungen ein-/ausblenden",
+    "Pen / Colors": "Stift / Farben",
+    "Eraser": "Radierer",
+    "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen",
+    "Previous Board": "Vorherige Tafel",
+    "Next Board": "Nächste Tafel",
+    "Back to Presentation": "Zurück zur Präsentation",
+    "Done Drawing": "Zeichenmodus beenden",
+    "Pen Color": "Stiftfarbe",
+    "Eraser Type": "Radierertyp",
+    "Pixel Eraser": "Normaler Radierer",
+    "Stroke Eraser": "Objektradierer",
+    "White": "Weiß",
+    "Orange": "Orange",
+    "Purple": "Violett",
+    "Yellow": "Gelb",
+    "Hide Drawings": "Zeichnungen ausblenden",
+    "Show Drawings": "Zeichnungen einblenden",
+    "Color {number}": "Farbe {number}",
+    "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?",
+    "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?",
+    "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)",
+    "← / → (chalkboard)": "← / → (Tafel)",
+    "Previous / next board": "Vorherige / nächste Tafel"
+  }
+}

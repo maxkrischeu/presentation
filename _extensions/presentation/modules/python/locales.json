@@ -1,0 +1,12 @@
+{
+  "de": {
+    "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.",
+    "Python Console": "Python-Konsole",
+    "Run": "Ausführen",
+    "Rich Output": "Erweiterte Ausgabe",
+    "Done Python Console": "Python-Konsole beenden",
+    "Output": "Ausgabe",
+    "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.",
+    "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei."
+  }
+}

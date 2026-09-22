@@ -1,0 +1,57 @@
+/* Magnifier is clipped to the content area; its mirror never receives input. */
+.presentation-magnifier-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.presentation-magnifier-controls[hidden],
+.presentation-magnifier[hidden] {
+  display: none !important;
+}
+
+.presentation-dock.presentation-magnifiering > button {
+  display: none;
+}
+
+.presentation-magnifier {
+  position: fixed;
+  z-index: 35;
+  touch-action: none;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.presentation-magnifier-lens {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #3873b8;
+  box-sizing: border-box;
+  background: white;
+  box-shadow: 0 3px 16px #17203355;
+  pointer-events: none;
+}
+
+.presentation-magnifier-mirror {
+  position: absolute;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.presentation-magnifier-controls output {
+  font-size: 14px;
+  min-width: 30px;
+  text-align: center;
+  color: var(--presentation-muted);
+}
+
+@media print {
+  .presentation-magnifier {
+    display: none !important;
+  }
+}
+
+html.print-pdf .presentation-magnifier {
+  display: none !important;
+}

@@ -1,0 +1,22 @@
+{
+  "id": "quiz",
+  "scripts": ["quiz.js", "module.js"],
+  "styles": ["quiz.css", "integrations.css", "intro.css", "results.css"],
+  "plugins": [
+    {
+      "name": "RevealQuiz",
+      "config": {
+        "quiz": {
+          "presentationKeyboard": true,
+          "allowNumberKeys": false,
+          "shuffleOptions": false,
+          "includeScore": true,
+          "disableOnCheck": false,
+          "defaultCorrect": "",
+          "defaultIncorrect": "",
+          "disableReset": false
+        }
+      }
+    }
+  ]
+}

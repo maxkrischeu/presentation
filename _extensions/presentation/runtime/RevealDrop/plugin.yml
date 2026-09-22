@@ -1,0 +1,12 @@
+name: "RevealDrop"
+config:
+  drop:
+    button: false
+    shortcut: "t"
+    engine: "pyodide"
+    webr:
+      packages: []
+    pyodide:
+      packages: []
+script:
+  - "registration.js"

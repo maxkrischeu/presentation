@@ -1,0 +1,11 @@
+{
+  "id": "drawing",
+  "scripts": [
+    "cursors.js",
+    "engine.js",
+    "drawing.js",
+    "toolbar.js",
+    "module.js"
+  ],
+  "styles": ["styles.css"]
+}

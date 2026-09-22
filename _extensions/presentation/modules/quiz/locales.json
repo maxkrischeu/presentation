@@ -1,0 +1,22 @@
+{
+  "de": {
+    "Again": "Noch einmal",
+    "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern",
+    "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen",
+    "Check": "Prüfen",
+    "Correct!": "Richtig!",
+    "Incorrect!": "Falsch!",
+    "Partly correct!": "Teilweise richtig!",
+    "Total score": "Gesamtpunktzahl",
+    "Quiz results by question": "Quizergebnisse nach Frage",
+    "Question": "Frage",
+    "Questions": "Fragen",
+    "Points": "Punkte",
+    "{number}. Question:": "{number}. Frage:",
+    "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft",
+    "Points earned": "Erreichte Punkte",
+    "Not checked yet": "Noch nicht geprüft",
+    "Score: {score}": "Punktestand: {score}",
+    "Total quiz score": "Gesamtpunktzahl im Quiz"
+  }
+}

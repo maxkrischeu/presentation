@@ -1,0 +1,51 @@
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  letter-spacing: -0.025em;
+}
+.reveal .presentation-slide > h2 {
+  text-align: center;
+  margin: 0 0 30px;
+}
+.reveal p,
+.reveal li {
+  line-height: 1.35;
+}
+.reveal .presentation-slide li::marker {
+  color: var(--presentation-blue);
+}
+.reveal strong {
+  color: var(--presentation-navy);
+}
+.reveal .columns {
+  gap: 36px;
+}
+.reveal .column {
+  min-width: 0;
+}
+.reveal .statement,
+.reveal .result {
+  padding: 18px 24px;
+  margin: 24px 0;
+  border-left: 6px solid var(--presentation-blue);
+  background: #eef4fb;
+}
+.reveal .result {
+  border-color: #7cb142;
+  background: #f1f7ec;
+}
+.reveal .statement > :last-child,
+.reveal .result > :last-child {
+  margin-bottom: 0;
+}
+.reveal table {
+  font-size: 0.8em;
+  width: 100%;
+}
+.reveal table th {
+  color: var(--presentation-navy);
+}
+.reveal pre {
+  font-size: 0.65em;
+  box-shadow: none;
+}

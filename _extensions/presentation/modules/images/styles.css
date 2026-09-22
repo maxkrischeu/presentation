@@ -1,0 +1,412 @@
+.reveal .presentation-asset-layer {
+  position: absolute;
+  left: var(--presentation-side);
+  right: var(--presentation-side);
+  top: calc(var(--presentation-header) + 30px);
+  bottom: calc(var(--presentation-footer) + 22px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+.reveal .presentation-asset-layer.editing {
+  pointer-events: auto;
+  touch-action: none;
+  outline: 1px dashed #3973bc66;
+}
+.reveal .presentation-placed-image {
+  position: absolute;
+  box-sizing: border-box;
+}
+.reveal .presentation-placed-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  object-fit: contain;
+}
+.reveal .presentation-asset-layer.editing .presentation-placed-image {
+  cursor: move;
+}
+.reveal .presentation-placed-image.selected {
+  outline: 2px solid #3973bc;
+  outline-offset: -2px;
+}
+.presentation-asset-resize {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  background: #3973bc;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+.presentation-asset-library,
+.presentation-image-controls,
+.presentation-asset-status {
+  font:
+    14px/1.4 Arial,
+    sans-serif;
+  color: #24334b;
+}
+/* Reuse the native menu wrapper, toolbar and icons, mirrored to the right. */
+.presentation-assets-shell {
+  z-index: 210;
+}
+.slide-menu-wrapper .presentation-asset-library {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 300px;
+  max-width: 100%;
+  z-index: 200;
+  background: #333;
+  color: #aaa;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.4;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform 0.3s,
+    visibility 0s;
+}
+.slide-menu-wrapper .presentation-asset-library[hidden] {
+  display: flex;
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s,
+    visibility 0s 0.3s;
+}
+.presentation-asset-library .slide-menu-toolbar {
+  flex-shrink: 0;
+}
+.presentation-asset-library .slide-menu-toolbar button {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  width: 100%;
+  min-height: 60px;
+  padding: 0;
+  cursor: pointer;
+}
+.presentation-asset-catalog {
+  overflow: auto;
+  min-height: 0;
+  padding: 0 0 16px;
+  overscroll-behavior: contain;
+}
+.presentation-asset-catalog h3 {
+  font: inherit;
+  color: #eee;
+  margin: 0;
+  padding: 10px 18px;
+  border-top: 1px solid #555;
+  background: #292929;
+}
+.presentation-asset-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.presentation-asset-grid button {
+  min-width: 0;
+  touch-action: none;
+  border: 0;
+  border-top: 1px solid #555;
+  border-bottom: 1px solid #555;
+  border-radius: 0;
+  background: #333;
+  color: #aaa;
+  padding: 16px 18px;
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+}
+.presentation-asset-grid button:hover,
+.presentation-asset-grid button:focus-visible {
+  background: #222;
+  color: #fff;
+}
+.presentation-asset-grid img {
+  display: block;
+  width: 100%;
+  height: 140px;
+  margin: 0 auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+.presentation-asset-grid span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.presentation-asset-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.presentation-asset-backdrop.active {
+  opacity: 0.7;
+  pointer-events: auto;
+}
+.presentation-asset-status {
+  position: fixed;
+  z-index: 204;
+  pointer-events: none;
+  left: calc(var(--presentation-stage-left) + 12px);
+  bottom: calc(
+    100vh - var(--presentation-stage-top) - var(--presentation-stage-height) *
+      0.9
+  );
+  max-width: calc(var(--presentation-stage-width) - 24px);
+  background: #f4f7fb;
+}
+.presentation-asset-status:empty {
+  display: none;
+}
+.presentation-asset-ghost {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1100;
+  opacity: 0.8;
+}
+.presentation-image-controls[hidden] {
+  display: none;
+}
+/* Hide immediately during dragging; return with the native menu's slide motion. */
+.slide-menu-wrapper .presentation-asset-library.dragging {
+  transform: translateX(100%);
+  pointer-events: none;
+  transition: none;
+}
+.presentation-assets-shell:has(.dragging) .presentation-asset-backdrop {
+  opacity: 0;
+  transition: none;
+}
+@media print {
+  .presentation-assets-shell {
+    display: none !important;
+  }
+  .presentation-asset-library,
+  .presentation-image-controls,
+  .presentation-asset-status {
+    display: none !important;
+  }
+}
+
+.presentation-dock[hidden],
+.presentation-image-controls[hidden] {
+  display: none !important;
+}
+.presentation-image-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.presentation-image-controls button[hidden] {
+  display: none;
+}
+.presentation-dock.presentation-positioning > button {
+  display: none;
+}
+
+/* A fixed scope selector; only the image list scrolls. */
+.presentation-asset-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  border-bottom: 1px solid #666;
+  background: #292929;
+}
+.presentation-asset-tabs button {
+  flex: 1;
+  min-width: 0;
+  min-height: 32px;
+  padding: 6px 4px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #aaa;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.presentation-asset-tabs button[aria-selected="true"] {
+  background: #383838;
+  color: #eee;
+  border-bottom-color: #aaa;
+}
+.presentation-asset-tabs button:hover {
+  color: #fff;
+  background: #3d3d3d;
+}
+.presentation-asset-tabs button:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+.presentation-asset-empty {
+  padding: 18px;
+  margin: 0;
+  color: #aaa;
+  font-size: 14px;
+}
+
+/* Three separate planes: watermark, background images, content, foreground images.
+   Low specificity preserves positioning rules belonging to other components. */
+:where(.reveal .slides section.presentation-slide) {
+  isolation: isolate;
+}
+:where(
+  .reveal
+    .slides
+    section.presentation-slide
+    > :not(
+      .presentation-asset-layer,
+      .presentation-header,
+      .presentation-footer,
+      .presentation-chapter-logo,
+      .presentation-notes-preview,
+      template,
+      style,
+      script
+    )
+) {
+  position: relative;
+  z-index: 1;
+}
+.reveal .presentation-asset-background {
+  z-index: 0;
+}
+.reveal .presentation-image-proxy {
+  position: absolute;
+  box-sizing: border-box;
+  cursor: move;
+}
+.reveal .presentation-image-proxy.selected {
+  outline: 2px solid #3973bc;
+  outline-offset: -2px;
+}
+/* A quiet circular handle, rigidly attached to the rotating selection frame. */
+.presentation-asset-rotate {
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  padding: 0;
+  cursor: grab;
+  touch-action: none;
+}
+.presentation-asset-rotate::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 14px;
+  height: 24px;
+  width: 2px;
+  background: #3973bc;
+  pointer-events: none;
+}
+.presentation-asset-rotate::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #3973bc;
+  box-shadow: 0 0 0 1px #3973bc;
+  pointer-events: none;
+}
+.presentation-asset-rotate:active {
+  cursor: grabbing;
+}
+.presentation-image-properties {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px;
+  border-left: 1px solid #cbd2df;
+}
+.presentation-image-properties[hidden] {
+  display: none;
+}
+.presentation-image-properties label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font:
+    12px/1 Arial,
+    sans-serif;
+  color: var(--presentation-muted);
+}
+.presentation-image-properties input {
+  box-sizing: border-box;
+  width: 58px;
+  height: 28px;
+  padding: 3px 4px;
+  border: 1px solid #cbd2df;
+  border-radius: 4px;
+  background: white;
+  color: var(--presentation-navy);
+  font:
+    14px Arial,
+    sans-serif;
+}
+.presentation-unit-value {
+  position: relative;
+  display: inline-flex;
+  min-width: 70px;
+  width: calc(var(--presentation-value-chars, 1) * 1ch + 36px);
+  font:
+    14px Arial,
+    sans-serif;
+  color: var(--presentation-navy);
+}
+.presentation-image-properties .presentation-unit-value input {
+  width: 100%;
+}
+.presentation-unit-display {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  font:
+    14px Arial,
+    sans-serif;
+  pointer-events: none;
+  white-space: pre;
+}
+.presentation-unit-number {
+  visibility: hidden;
+}
+.presentation-image-properties input:focus-visible {
+  outline: 2px solid var(--presentation-blue);
+  outline-offset: 1px;
+}

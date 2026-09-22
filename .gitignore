@@ -1,0 +1,10 @@
+.quarto/
+_output/
+node_modules/
+**/node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.html
+*_files/
+.presentation-*

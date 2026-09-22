@@ -1,0 +1,19 @@
+{
+  "id": "images",
+  "scripts": [
+    "geometry.js",
+    "history.js",
+    "editor.js",
+    "module.js"
+  ],
+  "styles": [
+    "styles.css"
+  ],
+  "filters": [
+    "filter.lua"
+  ],
+  "server": {
+    "source": "source.py",
+    "assets": "assets.py"
+  }
+}
