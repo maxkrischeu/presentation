@@ -5,7 +5,7 @@ Presentation.register({
   interactiveOnly: true,
   setup({deck, invoke, changed}) {
     let gesture=null, suppressClickUntil=0;
-    const allowed=()=>Presentation.modes?.current()==="standard";
+    const allowed=()=>Presentation.modes?.current()==="standard" && !document.querySelector("dialog[open]");
     function finish(cancel=false) {
       const g=gesture;gesture=null;
       if(!g?.dragging) return;

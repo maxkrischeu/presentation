@@ -6,13 +6,14 @@ Presentation.register({
 });
 Presentation.register({
   id: "shell",
-  requires: ["frame"],
+  requires: ["frame", "dialogs"],
   interactiveOnly: true,
   setup(context) {
     const { deck, changed } = context;
     Presentation.factories.viewport(context);
     Presentation.factories.transitions(context);
     const menu = deck.getPlugin("menu");
+    let resetting = false;
     const isFullscreen = () =>
       !!(document.fullscreenElement || document.webkitFullscreenElement);
     const exitFullscreen = () => {
@@ -94,15 +95,19 @@ Presentation.register({
           id: "resetSession",
           label: "Reset Session",
           menu: "utilities",
-          run: () => {
-            if (
-              confirm(
-                context.t(
-                  "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.",
-                ),
-              )
-            )
-              return Presentation.session.reset();
+          run: async () => {
+            if (resetting) return;
+            resetting = true;
+            try {
+              const confirmed = await context.get("dialogs").confirm({
+                title: context.t("Reset Session"),
+                message: context.t("Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone."),
+                label: context.t("Reset"),
+              });
+              if (confirmed) await Presentation.session.reset();
+            } finally {
+              resetting = false;
+            }
           },
         },
       ],
