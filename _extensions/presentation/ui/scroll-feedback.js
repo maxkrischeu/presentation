@@ -12,12 +12,11 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     if (!list) return;
     list.style.transform = "";
     animation?.cancel();
-    if (!reducedMotion()) animation = list.animate([
+    animation = list.animate([
       {transform: `translateY(${from}px)`}, {transform: "translateY(0)"},
-    ], {duration: 220, easing: "ease-out"});
+    ], {duration: reducedMotion() ? 100 : 220, easing: "ease-out"});
   };
   const rebound = delta => {
-    if (reducedMotion()) return;
     const list = getContent();
     if (!list) return;
     // A trackpad sends many small deltas. Accumulate them instead of
@@ -25,8 +24,9 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     animation?.cancel();
     clearTimeout(timer);
     if (offset && Math.sign(offset) !== Math.sign(delta)) offset = 0;
-    offset += delta * 0.3 * (1 - Math.abs(offset) / 22);
-    offset = Math.max(-22, Math.min(22, offset));
+    const limit = reducedMotion() ? 8 : 22;
+    offset += delta * 0.3 * (1 - Math.abs(offset) / limit);
+    offset = Math.max(-limit, Math.min(limit, offset));
     list.style.transform = `translateY(${offset}px)`;
     timer = setTimeout(settle, 130);
   };
@@ -38,8 +38,9 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     return delta > 0 ? viewport.scrollTop <= 1 : viewport.scrollTop >= scrollLimit - 1;
   };
   viewport.addEventListener("wheel", event => {
-    if (options.isDragging?.() || event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    if (event.ctrlKey || !event.deltaY) return;
     options.onScroll?.();
+    if (options.isDragging?.()) return;
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientHeight : 1;
     const delta = -event.deltaY * unit;
     if (atEdge(delta)) {

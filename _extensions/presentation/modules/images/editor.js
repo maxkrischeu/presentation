@@ -763,7 +763,7 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
-  let nativeDrag = null, libraryScrollUntil = 0;
+  let nativeDrag = null;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
     g.button?.classList.remove("is-held");
@@ -779,11 +779,12 @@ Presentation.factories.images = function (context) {
     gesture = null;
     releaseLibraryHold(canceled);
     canceled.ghost?.remove();
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
   }
   panel.addEventListener("pointerdown", (event) => {
     const button = event.target.closest("[data-asset]");
-    if (!button || event.button !== 0 || !event.isPrimary || Date.now() < libraryScrollUntil) return;
+    if (!button || event.button !== 0 || !event.isPrimary) return;
+    finishNativeDrag();
     cancelGesture();
     // Pointer interaction ends an old keyboard focus indication. The library
     // has no persistent selection; only the one currently held item is marked.
@@ -824,15 +825,25 @@ Presentation.factories.images = function (context) {
     document.body.append(preview);
     return preview;
   }
+  function restoreLibraryAfterDrag() {
+    if (!panel.classList.contains("dragging")) return;
+    // No slide-in animation here: the next tile must be immediately hittable.
+    const transition = panel.style.transition;
+    panel.style.transition = "none";
+    panel.classList.remove("dragging");
+    panel.getBoundingClientRect();
+    panel.style.transition = transition;
+  }
   const finishNativeDrag = () => {
     nativeDrag?.preview.remove();
     nativeDrag = null;
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
   };
   panel.addEventListener("dragstart", event => {
     const button = event.target.closest("[data-asset]");
-    if (!button || !event.dataTransfer || gesture?.type !== "add" ||
-        gesture.pointerType === "touch" || Date.now() < libraryScrollUntil) {
+    // WebKit can start the next native drag without a preceding Pointer Event.
+    // dragstart itself is the browser's authoritative indication of intent.
+    if (!button || !event.dataTransfer || gesture?.pointerType === "touch") {
       event.preventDefault();
       return;
     }
@@ -883,7 +894,6 @@ Presentation.factories.images = function (context) {
   // Sidecar can deliver scrolling as wheel events between pointer down/up.
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
-    libraryScrollUntil = Date.now() + 250;
     if (gesture?.type === "add") cancelGesture();
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
@@ -891,7 +901,7 @@ Presentation.factories.images = function (context) {
   const catalogViewport = panel.querySelector(".presentation-asset-catalog");
   Presentation.scrollFeedback(catalogViewport,
     () => catalogViewport.firstElementChild,
-    {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.held || !!gesture?.ghost});
+    {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.ghost});
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {
       if ((!editing && !armed) || event.button !== 0) return;
@@ -1002,7 +1012,7 @@ Presentation.factories.images = function (context) {
     const completed = gesture;
     gesture = null;
     releaseLibraryHold(completed);
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
     document.querySelectorAll('.presentation-alignment-guide').forEach(line => line.remove());
     if (completed.type === "add") {
       if (completed.ghost) {

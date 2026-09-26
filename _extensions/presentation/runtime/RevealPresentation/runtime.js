@@ -571,12 +571,11 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     if (!list) return;
     list.style.transform = "";
     animation?.cancel();
-    if (!reducedMotion()) animation = list.animate([
+    animation = list.animate([
       {transform: `translateY(${from}px)`}, {transform: "translateY(0)"},
-    ], {duration: 220, easing: "ease-out"});
+    ], {duration: reducedMotion() ? 100 : 220, easing: "ease-out"});
   };
   const rebound = delta => {
-    if (reducedMotion()) return;
     const list = getContent();
     if (!list) return;
     // A trackpad sends many small deltas. Accumulate them instead of
@@ -584,8 +583,9 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     animation?.cancel();
     clearTimeout(timer);
     if (offset && Math.sign(offset) !== Math.sign(delta)) offset = 0;
-    offset += delta * 0.3 * (1 - Math.abs(offset) / 22);
-    offset = Math.max(-22, Math.min(22, offset));
+    const limit = reducedMotion() ? 8 : 22;
+    offset += delta * 0.3 * (1 - Math.abs(offset) / limit);
+    offset = Math.max(-limit, Math.min(limit, offset));
     list.style.transform = `translateY(${offset}px)`;
     timer = setTimeout(settle, 130);
   };
@@ -597,8 +597,9 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     return delta > 0 ? viewport.scrollTop <= 1 : viewport.scrollTop >= scrollLimit - 1;
   };
   viewport.addEventListener("wheel", event => {
-    if (options.isDragging?.() || event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    if (event.ctrlKey || !event.deltaY) return;
     options.onScroll?.();
+    if (options.isDragging?.()) return;
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientHeight : 1;
     const delta = -event.deltaY * unit;
     if (atEdge(delta)) {
@@ -5708,7 +5709,7 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
-  let nativeDrag = null, libraryScrollUntil = 0;
+  let nativeDrag = null;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
     g.button?.classList.remove("is-held");
@@ -5724,11 +5725,12 @@ Presentation.factories.images = function (context) {
     gesture = null;
     releaseLibraryHold(canceled);
     canceled.ghost?.remove();
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
   }
   panel.addEventListener("pointerdown", (event) => {
     const button = event.target.closest("[data-asset]");
-    if (!button || event.button !== 0 || !event.isPrimary || Date.now() < libraryScrollUntil) return;
+    if (!button || event.button !== 0 || !event.isPrimary) return;
+    finishNativeDrag();
     cancelGesture();
     // Pointer interaction ends an old keyboard focus indication. The library
     // has no persistent selection; only the one currently held item is marked.
@@ -5769,15 +5771,25 @@ Presentation.factories.images = function (context) {
     document.body.append(preview);
     return preview;
   }
+  function restoreLibraryAfterDrag() {
+    if (!panel.classList.contains("dragging")) return;
+    // No slide-in animation here: the next tile must be immediately hittable.
+    const transition = panel.style.transition;
+    panel.style.transition = "none";
+    panel.classList.remove("dragging");
+    panel.getBoundingClientRect();
+    panel.style.transition = transition;
+  }
   const finishNativeDrag = () => {
     nativeDrag?.preview.remove();
     nativeDrag = null;
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
   };
   panel.addEventListener("dragstart", event => {
     const button = event.target.closest("[data-asset]");
-    if (!button || !event.dataTransfer || gesture?.type !== "add" ||
-        gesture.pointerType === "touch" || Date.now() < libraryScrollUntil) {
+    // WebKit can start the next native drag without a preceding Pointer Event.
+    // dragstart itself is the browser's authoritative indication of intent.
+    if (!button || !event.dataTransfer || gesture?.pointerType === "touch") {
       event.preventDefault();
       return;
     }
@@ -5828,7 +5840,6 @@ Presentation.factories.images = function (context) {
   // Sidecar can deliver scrolling as wheel events between pointer down/up.
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
-    libraryScrollUntil = Date.now() + 250;
     if (gesture?.type === "add") cancelGesture();
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
@@ -5836,7 +5847,7 @@ Presentation.factories.images = function (context) {
   const catalogViewport = panel.querySelector(".presentation-asset-catalog");
   Presentation.scrollFeedback(catalogViewport,
     () => catalogViewport.firstElementChild,
-    {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.held || !!gesture?.ghost});
+    {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.ghost});
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {
       if ((!editing && !armed) || event.button !== 0) return;
@@ -5947,7 +5958,7 @@ Presentation.factories.images = function (context) {
     const completed = gesture;
     gesture = null;
     releaseLibraryHold(completed);
-    panel.classList.remove("dragging");
+    restoreLibraryAfterDrag();
     document.querySelectorAll('.presentation-alignment-guide').forEach(line => line.remove());
     if (completed.type === "add") {
       if (completed.ghost) {
