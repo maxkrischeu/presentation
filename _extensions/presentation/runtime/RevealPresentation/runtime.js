@@ -558,6 +558,8 @@ Presentation.factories.transitions = function (context) {
 
 /* ui/scroll-feedback.js */
 /* Shared boundary feedback for scrollable panels; owners supply their content. */
+Presentation.panelScrollers = new WeakMap();
+Presentation.scrollPanelBy = (viewport, delta) => Presentation.panelScrollers.get(viewport)?.(delta);
 Presentation.scrollFeedback = function (viewport, content, options = {}) {
   const getContent = () => typeof content === "function" ? content() : content;
   let animation, touch, timer, offset = 0, scrollLimit = 0, suppressClickUntil = 0;
@@ -596,6 +598,21 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     }
     return delta > 0 ? viewport.scrollTop <= 1 : viewport.scrollTop >= scrollLimit - 1;
   };
+  Presentation.panelScrollers.set(viewport, delta => {
+    options.onScroll?.();
+    if (options.isDragging?.()) return;
+    // Vertical gestures on the external grip belong to this viewport too.
+    if (atEdge(-delta)) rebound(-delta);
+    else {
+      settle();
+      animation?.cancel();
+      const before = viewport.scrollTop;
+      viewport.scrollTop += delta;
+      const remaining = delta - (viewport.scrollTop - before);
+      if (Math.abs(remaining) > 1) rebound(-remaining);
+    }
+    suppressClickUntil = Date.now() + 250;
+  });
   viewport.addEventListener("wheel", event => {
     if (event.ctrlKey || !event.deltaY) return;
     options.onScroll?.();
@@ -934,6 +951,7 @@ Presentation.register({
           priority: 30,
           edge: {
             side: "left", command: "more",
+            scrollBy: delta => Presentation.scrollPanelBy(document.querySelector(".slide-menu .active-menu-panel"), delta),
             element: () => document.querySelector(".slide-menu"),
             viewport: () => document.querySelector(".slide-menu").parentElement.getBoundingClientRect(),
           },
@@ -4449,6 +4467,14 @@ Presentation.register({
       if (!allowed()) { finish(true); return; }
       const dx = event.clientX - g.x, dy = event.clientY - g.y;
       const inward = dx * g.direction;
+      if (!g.dragging && !g.opening && g.panel.edge.scrollBy &&
+          (g.scrolling || (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)))) {
+        event.preventDefault(); event.stopImmediatePropagation();
+        g.panel.edge.scrollBy((g.lastY ?? g.y) - event.clientY);
+        g.lastY = event.clientY;
+        g.scrolling = true;
+        return;
+      }
       if (!g.dragging) {
         if (Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)) { finish(true); return; }
         if (inward < -12) { finish(true); return; }
@@ -4474,7 +4500,14 @@ Presentation.register({
     // Sidecar may translate a finger pan into trackpad scrolling, rather than
     // touch/pointer dragging. Consume only horizontal scrolling on a grip.
     function wheel(event, panel, handle) {
-      if (!allowed() || event.ctrlKey || Math.abs(event.deltaX) < Math.abs(event.deltaY) * 1.2 || !event.deltaX) return;
+      if (!allowed() || event.ctrlKey) return;
+      if (Math.abs(event.deltaY) > Math.abs(event.deltaX) && panel.isOpen() && panel.edge.scrollBy) {
+        if (gesture) finish();
+        event.preventDefault(); event.stopPropagation();
+        panel.edge.scrollBy(event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1));
+        return;
+      }
+      if (Math.abs(event.deltaX) < Math.abs(event.deltaY) * 1.2 || !event.deltaX) return;
       if (gesture && gesture.pointerId !== undefined) return;
       if (gesture && gesture.panel !== panel) finish(true);
       if (!gesture) {
@@ -6343,6 +6376,7 @@ Presentation.factories.images = function (context) {
     libraryOpen: () => !panel.hidden,
     libraryElement: () => panel,
     libraryViewport: () => shell.getBoundingClientRect(),
+    libraryScrollBy: delta => Presentation.scrollPanelBy(catalogViewport, delta),
     undo: () => actions.undo(),
     redo: () => actions.redo(),
     remove,
@@ -6420,6 +6454,7 @@ Presentation.register({
             side: "right", command: "assets",
             element: api.libraryElement,
             viewport: api.libraryViewport,
+            scrollBy: api.libraryScrollBy,
           },
           isOpen: api.libraryOpen,
           close: api.closeLibrary,

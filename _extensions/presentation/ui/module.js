@@ -129,6 +129,7 @@ Presentation.register({
           priority: 30,
           edge: {
             side: "left", command: "more",
+            scrollBy: delta => Presentation.scrollPanelBy(document.querySelector(".slide-menu .active-menu-panel"), delta),
             element: () => document.querySelector(".slide-menu"),
             viewport: () => document.querySelector(".slide-menu").parentElement.getBoundingClientRect(),
           },

@@ -1,4 +1,6 @@
 /* Shared boundary feedback for scrollable panels; owners supply their content. */
+Presentation.panelScrollers = new WeakMap();
+Presentation.scrollPanelBy = (viewport, delta) => Presentation.panelScrollers.get(viewport)?.(delta);
 Presentation.scrollFeedback = function (viewport, content, options = {}) {
   const getContent = () => typeof content === "function" ? content() : content;
   let animation, touch, timer, offset = 0, scrollLimit = 0, suppressClickUntil = 0;
@@ -37,6 +39,21 @@ Presentation.scrollFeedback = function (viewport, content, options = {}) {
     }
     return delta > 0 ? viewport.scrollTop <= 1 : viewport.scrollTop >= scrollLimit - 1;
   };
+  Presentation.panelScrollers.set(viewport, delta => {
+    options.onScroll?.();
+    if (options.isDragging?.()) return;
+    // Vertical gestures on the external grip belong to this viewport too.
+    if (atEdge(-delta)) rebound(-delta);
+    else {
+      settle();
+      animation?.cancel();
+      const before = viewport.scrollTop;
+      viewport.scrollTop += delta;
+      const remaining = delta - (viewport.scrollTop - before);
+      if (Math.abs(remaining) > 1) rebound(-remaining);
+    }
+    suppressClickUntil = Date.now() + 250;
+  });
   viewport.addEventListener("wheel", event => {
     if (event.ctrlKey || !event.deltaY) return;
     options.onScroll?.();

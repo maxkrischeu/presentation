@@ -122,6 +122,14 @@ Presentation.register({
       if (!allowed()) { finish(true); return; }
       const dx = event.clientX - g.x, dy = event.clientY - g.y;
       const inward = dx * g.direction;
+      if (!g.dragging && !g.opening && g.panel.edge.scrollBy &&
+          (g.scrolling || (Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)))) {
+        event.preventDefault(); event.stopImmediatePropagation();
+        g.panel.edge.scrollBy((g.lastY ?? g.y) - event.clientY);
+        g.lastY = event.clientY;
+        g.scrolling = true;
+        return;
+      }
       if (!g.dragging) {
         if (Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)) { finish(true); return; }
         if (inward < -12) { finish(true); return; }
@@ -147,7 +155,14 @@ Presentation.register({
     // Sidecar may translate a finger pan into trackpad scrolling, rather than
     // touch/pointer dragging. Consume only horizontal scrolling on a grip.
     function wheel(event, panel, handle) {
-      if (!allowed() || event.ctrlKey || Math.abs(event.deltaX) < Math.abs(event.deltaY) * 1.2 || !event.deltaX) return;
+      if (!allowed() || event.ctrlKey) return;
+      if (Math.abs(event.deltaY) > Math.abs(event.deltaX) && panel.isOpen() && panel.edge.scrollBy) {
+        if (gesture) finish();
+        event.preventDefault(); event.stopPropagation();
+        panel.edge.scrollBy(event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1));
+        return;
+      }
+      if (Math.abs(event.deltaX) < Math.abs(event.deltaY) * 1.2 || !event.deltaX) return;
       if (gesture && gesture.pointerId !== undefined) return;
       if (gesture && gesture.panel !== panel) finish(true);
       if (!gesture) {

@@ -66,6 +66,7 @@ Presentation.register({
             side: "right", command: "assets",
             element: api.libraryElement,
             viewport: api.libraryViewport,
+            scrollBy: api.libraryScrollBy,
           },
           isOpen: api.libraryOpen,
           close: api.closeLibrary,

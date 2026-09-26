@@ -1397,6 +1397,7 @@ Presentation.factories.images = function (context) {
     libraryOpen: () => !panel.hidden,
     libraryElement: () => panel,
     libraryViewport: () => shell.getBoundingClientRect(),
+    libraryScrollBy: delta => Presentation.scrollPanelBy(catalogViewport, delta),
     undo: () => actions.undo(),
     redo: () => actions.redo(),
     remove,

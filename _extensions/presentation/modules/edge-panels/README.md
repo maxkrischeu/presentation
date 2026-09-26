@@ -27,3 +27,8 @@ emulieren kann:
 https://developer.apple.com/documentation/technotes/tn3212-adopting-gesture-recognizers-for-sidecar-touch-support
 Je nach Systemversion sind die unterstützten Finger-Gesten unterschiedlich.
 Systemgesten außerhalb des Browserinhalts kann die Extension nicht abfangen.
+
+Vertikale Pointer-/Scrollgesten auf einem offenen Griff werden über
+`edge.scrollBy(delta)` an den aktiven Listenbereich weitergegeben. Horizontale
+Gesten bleiben beim Öffnen/Schließen. Damit ist die Grifffläche keine tote
+Zone für Sidecar-Scrollereignisse.
