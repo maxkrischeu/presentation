@@ -162,10 +162,9 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   font: inherit;
   text-align: center;
 }
-.presentation-asset-grid button:hover,
 .presentation-asset-grid button:focus-visible {
-  background: #222;
-  color: #fff;
+  outline: 2px solid #8eb9f5;
+  outline-offset: -3px;
 }
 .presentation-asset-grid img {
   display: block;
@@ -464,10 +463,6 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   cursor: grabbing;
 }
 
-.presentation-asset-library.is-scrolling .presentation-asset-grid button:hover {
-  background: #333;
-  color: #aaa;
-}
 .presentation-asset-grid button * {
   user-select: none;
   -webkit-user-select: none;

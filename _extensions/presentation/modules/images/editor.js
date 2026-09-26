@@ -763,7 +763,7 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
-  let nativeDrag = null, libraryScrollUntil = 0, scrollFeedbackTimer;
+  let nativeDrag = null, libraryScrollUntil = 0;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
     g.button?.classList.remove("is-held");
@@ -785,6 +785,9 @@ Presentation.factories.images = function (context) {
     const button = event.target.closest("[data-asset]");
     if (!button || event.button !== 0 || !event.isPrimary || Date.now() < libraryScrollUntil) return;
     cancelGesture();
+    // Pointer interaction ends an old keyboard focus indication. The library
+    // has no persistent selection; only the one currently held item is marked.
+    if (panel.contains(document.activeElement)) document.activeElement.blur();
     event.stopPropagation();
     gesture = {
       type: "add",
@@ -804,7 +807,25 @@ Presentation.factories.images = function (context) {
       panel.setPointerCapture(pending.pointer);
     }, 350);
   });
+  function mediaDragPreview(button) {
+    const source = button.querySelector("img, canvas, video");
+    const width = source?.naturalWidth || source?.videoWidth || source?.width || 100;
+    const height = source?.naturalHeight || source?.videoHeight || source?.height || 100;
+    const scale = Math.min(180 / width, 140 / height, 1);
+    const preview = document.createElement("canvas");
+    preview.width = Math.max(1, Math.round(width * scale));
+    preview.height = Math.max(1, Math.round(height * scale));
+    preview.className = "presentation-asset-drag-preview";
+    preview.setAttribute("aria-hidden", "true");
+    Object.assign(preview.style, {position: "fixed", left: "0px", top: "0px",
+      width: `${preview.width}px`, height: `${preview.height}px`, pointerEvents: "none"});
+    try { if (source) preview.getContext("2d").drawImage(source, 0, 0, preview.width, preview.height); }
+    catch { /* An unloaded preview remains transparent; never drag the label. */ }
+    document.body.append(preview);
+    return preview;
+  }
   const finishNativeDrag = () => {
+    nativeDrag?.preview.remove();
     nativeDrag = null;
     panel.classList.remove("dragging");
   };
@@ -815,11 +836,18 @@ Presentation.factories.images = function (context) {
       event.preventDefault();
       return;
     }
-    nativeDrag = {asset: button.dataset.asset, slide: currentId()};
+    const preview = mediaDragPreview(button);
+    preview.style.left = `${event.clientX - preview.width / 2}px`;
+    preview.style.top = `${event.clientY - preview.height / 2}px`;
+    nativeDrag = {asset: button.dataset.asset, slide: currentId(), preview};
+    event.dataTransfer.setDragImage(preview, preview.width / 2, preview.height / 2);
     event.dataTransfer.setData("text/plain", catalog.get(nativeDrag.asset).label);
     event.dataTransfer.effectAllowed = "copy";
     cancelGesture();
-    requestAnimationFrame(() => { if (nativeDrag) panel.classList.add("dragging"); });
+    requestAnimationFrame(() => {
+      preview.remove();
+      if (nativeDrag) panel.classList.add("dragging");
+    });
   });
   document.addEventListener("dragover", event => {
     if (!nativeDrag) return;
@@ -856,9 +884,6 @@ Presentation.factories.images = function (context) {
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
     libraryScrollUntil = Date.now() + 250;
-    panel.classList.add("is-scrolling");
-    clearTimeout(scrollFeedbackTimer);
-    scrollFeedbackTimer = setTimeout(() => panel.classList.remove("is-scrolling"), 250);
     if (gesture?.type === "add") cancelGesture();
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
@@ -921,10 +946,8 @@ Presentation.factories.images = function (context) {
         event.preventDefault();
         if (!gesture.ghost) {
           clearTimeout(gesture.holdTimer);
-          const ghost = document.createElement("img");
-          ghost.src = catalog.get(gesture.asset).src;
-          ghost.className = "presentation-asset-ghost";
-          document.body.append(ghost);
+          const ghost = mediaDragPreview(gesture.button);
+          ghost.classList.add("presentation-asset-ghost");
           gesture.ghost = ghost;
           panel.classList.add("dragging");
         }
