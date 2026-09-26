@@ -863,6 +863,10 @@ Presentation.factories.images = function (context) {
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
   panel.addEventListener("scroll", cancelLibraryGesture, true);
+  const catalogViewport = panel.querySelector(".presentation-asset-catalog");
+  Presentation.scrollFeedback(catalogViewport,
+    () => catalogViewport.firstElementChild,
+    {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.held || !!gesture?.ghost});
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {
       if ((!editing && !armed) || event.button !== 0) return;
