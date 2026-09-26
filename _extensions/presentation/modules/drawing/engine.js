@@ -535,8 +535,7 @@
       }
 
       var canvas = document.createElement("canvas");
-      canvas.width = drawingCanvas[id].width;
-      canvas.height = drawingCanvas[id].height;
+      sizeDisplayCanvas(canvas, drawingCanvas[id].width, drawingCanvas[id].height);
       canvas.setAttribute("data-chalkboard", id);
       changeCursor(canvas, pens[id][color[id]]);
       container.appendChild(canvas);
@@ -1964,6 +1963,19 @@
       });
     }
 
+    // Drawing coordinates remain CSS pixels; only the backing bitmap grows.
+    // Replay uses the original stroke data after resize, avoiding bitmap scaling.
+    function sizeDisplayCanvas(canvas, width, height) {
+      var ratio = Math.max(1, Math.min(window.devicePixelRatio || 1, 3,
+        Math.sqrt(16000000 / (width * height))));
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      canvas.getContext("2d").setTransform(canvas.width / width, 0, 0,
+        canvas.height / height, 0, 0);
+    }
+
     function resize() {
       //console.log("resize");
       // Resize the canvas and draw everything again
@@ -1976,10 +1988,7 @@
       for (var id = 0; id < 2; id++) {
         drawingCanvas[id].width = window.innerWidth;
         drawingCanvas[id].height = window.innerHeight;
-        drawingCanvas[id].canvas.width = drawingCanvas[id].width;
-        drawingCanvas[id].canvas.height = drawingCanvas[id].height;
-        drawingCanvas[id].context.canvas.width = drawingCanvas[id].width;
-        drawingCanvas[id].context.canvas.height = drawingCanvas[id].height;
+        sizeDisplayCanvas(drawingCanvas[id].canvas, drawingCanvas[id].width, drawingCanvas[id].height);
 
         drawingCanvas[id].scale = Math.min(
           drawingCanvas[id].width / storage[id].width,

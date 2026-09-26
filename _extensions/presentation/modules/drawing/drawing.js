@@ -56,8 +56,9 @@ Presentation.factories.drawing = function (context) {
       slide.append(preview);
     }
     const config = deck.getConfig();
-    preview.width = config.width;
-    preview.height = config.height;
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    preview.width = Math.round(config.width * ratio);
+    preview.height = Math.round(config.height * ratio);
     const viewport = deck.getRevealElement().getBoundingClientRect();
     const width = Math.min(
       viewport.width,

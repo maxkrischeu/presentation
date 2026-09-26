@@ -44,3 +44,22 @@
   padding: 8px 12px;
   white-space: nowrap;
 }
+
+/* Keep touch targets within the existing footer height. */
+@media (any-pointer: coarse) {
+  .presentation-drawing-controls {
+    height: 100%;
+    gap: 4px;
+  }
+  .presentation-drawing-controls > button {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 100%;
+    max-height: 44px;
+    padding: 9px;
+  }
+  .presentation-dock-palette button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
