@@ -10,3 +10,8 @@ In der Bibliothek scrollen vertikale Fingerbewegungen nativ. Ein kurzer Klick
 fügt das Medium mittig ein; bewusstes horizontales Herausziehen nach links
 platziert es auf der Folie. Scroll-/Wheel-Ereignisse brechen einen noch nicht
 begonnenen Einfügevorgang ab, auch bei von Sidecar übersetzten Gesten.
+
+Etwa 350 ms Halten markiert ein Medium als aufgenommen. Danach darf die
+Ziehbewegung in jede Richtung starten, auch mit Touch. Loslassen ohne Ziehen
+bricht ab. Sofortiges vertikales Wischen scrollt weiterhin; Scrollen, Abbruch,
+Fokusverlust und ein zweiter Finger beenden einen ausstehenden Haltevorgang.

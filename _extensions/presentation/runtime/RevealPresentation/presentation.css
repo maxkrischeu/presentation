@@ -1235,6 +1235,17 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
 .presentation-alignment-y { left: 0; right: 0; border-top-width: 1px; }
 @media print { .presentation-alignment-guide { display: none !important; } }
 
+.presentation-asset-grid button {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.presentation-asset-grid button.is-held {
+  box-shadow: inset 0 0 0 3px #8eb9f5;
+  background: #222;
+  cursor: grabbing;
+}
+
 /* modules/laser/styles.css */
 .presentation-laser-controls {
   display: flex;

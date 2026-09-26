@@ -87,7 +87,7 @@ Presentation.register({
           id: "speaker",
           icon: "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"1\"/><path d=\"M8 21h8m-4-4v4M5 7h6m-6 3h4m5-3h5v6h-5Z\"/>",
           label: "Speaker View",
-          key: "S",
+          key: "R",
           menu: "modes",
           run: () => deck.getPlugin("notes")?.open(),
         },

@@ -762,27 +762,62 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
+  function releaseLibraryHold(g) {
+    clearTimeout(g.holdTimer);
+    g.button?.classList.remove("is-held");
+    if (g.button?.hasPointerCapture(g.pointer)) g.button.releasePointerCapture(g.pointer);
+  }
   function cancelGesture() {
     if (!gesture) return;
     if (gesture.before) {
       state = gesture.before;
       selected = null;
     }
-    gesture.ghost?.remove();
+    const canceled = gesture;
     gesture = null;
+    releaseLibraryHold(canceled);
+    canceled.ghost?.remove();
     panel.classList.remove("dragging");
   }
   panel.addEventListener("pointerdown", (event) => {
     const button = event.target.closest("[data-asset]");
-    if (!button || event.button !== 0) return;
+    if (!button || event.button !== 0 || !event.isPrimary) return;
+    cancelGesture();
     event.stopPropagation();
     gesture = {
       type: "add",
+      button,
+      held: false,
       asset: button.dataset.asset,
       startX: event.clientX,
       startY: event.clientY,
       pointer: event.pointerId,
     };
+    const pending = gesture;
+    pending.holdTimer = setTimeout(() => {
+      if (gesture !== pending || pending.ghost) return;
+      pending.held = true;
+      button.classList.add("is-held");
+      button.setPointerCapture(pending.pointer);
+    }, 350);
+  });
+  panel.addEventListener("contextmenu", event => {
+    if (event.target.closest("[data-asset]")) event.preventDefault();
+  });
+  // touch-action cannot be changed during a gesture. Once held, prevent the
+  // first native pan instead; ordinary, immediate swipes retain native scroll.
+  document.addEventListener("touchmove", event => {
+    if (gesture?.type === "add" && gesture.held && event.cancelable) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }, {passive: false, capture: true});
+  window.addEventListener("blur", cancelGesture);
+  document.addEventListener("pointerdown", event => {
+    if (gesture?.type === "add" && event.pointerId !== gesture.pointer) cancelGesture();
+  }, true);
+  panel.addEventListener("lostpointercapture", event => {
+    if (gesture?.type === "add" && event.pointerId === gesture.pointer) cancelGesture();
   });
   // Sidecar can deliver scrolling as wheel events between pointer down/up.
   // Neither those sequences nor native touch scrolling are insert gestures.
@@ -833,13 +868,14 @@ Presentation.factories.images = function (context) {
           if (Math.hypot(dx, dy) < 8) return;
           // The library sits on the right: only a deliberate drag toward the
           // slide inserts media. Vertical movement remains native scrolling.
-          if (dx >= -8 || -dx < Math.abs(dy) * 1.3) {
+          if (!gesture.held && (dx >= -8 || -dx < Math.abs(dy) * 1.3)) {
             cancelGesture();
             return;
           }
         }
         event.preventDefault();
         if (!gesture.ghost) {
+          clearTimeout(gesture.holdTimer);
           const ghost = document.createElement("img");
           ghost.src = catalog.get(gesture.asset).src;
           ghost.className = "presentation-asset-ghost";
@@ -897,13 +933,14 @@ Presentation.factories.images = function (context) {
     if (!gesture || gesture.pointer !== event.pointerId) return;
     const completed = gesture;
     gesture = null;
+    releaseLibraryHold(completed);
     panel.classList.remove("dragging");
     document.querySelectorAll('.presentation-alignment-guide').forEach(line => line.remove());
     if (completed.type === "add") {
       if (completed.ghost) {
         completed.ghost.remove();
         insert(completed.asset, event);
-      } else insertCentered(completed.asset);
+      } else if (!completed.held) insertCentered(completed.asset);
     } else if (JSON.stringify(completed.before) !== JSON.stringify(state)) {
       history.record(completed.before, state);
       refresh();

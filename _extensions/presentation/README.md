@@ -188,6 +188,7 @@ Verfügbar sind `prev`, `next`, `overview`, `draw` (Zeichnen), `board` (Tafel),
 `assets` (Bildbibliothek), `position` (Bilder verschieben), `python`, `laser`,
 `magnifier` (Lupe), `fullscreen`, `speaker`, `help`, `search`, `blackout` und
 `more` (Menü). Die Icons stammen aus den jeweiligen Modulen.
+Die Suche öffnet sich mit **S**, die Referentenansicht mit **R**.
 
 Ein langes Dock scrollt horizontal mit Trackpad, Touch oder Mausrad; per Tab
 bleiben alle Schaltflächen erreichbar. In Arbeitsmodi erscheint weiterhin die
