@@ -1,16 +1,26 @@
-# Seitenleisten per Touch
+# Seitenleisten per Ziehen und Wischen
 
-Im normalen Präsentationsmodus öffnet eine horizontale Geste vom linken
-Folienrand das Menü, vom rechten Rand die Medienbibliothek. Die Leiste folgt
-dem Finger. Ein kurzer Zug zurück bricht ab; vom inneren Rand einer geöffneten
-Leiste lässt sie sich wieder nach außen schieben.
+Die schmalen Griffe am linken und rechten Rand öffnen Menü bzw. Medienbibliothek.
+Sie unterstützen Maus, Stift und Finger über Pointer Events sowie horizontale
+Scrollgesten (Trackpad bzw. über Sidecar weitergeleitete Wischgesten).
 
-Die Randzone ist 28 CSS-Pixel breit. Vertikale Bewegungen, mehrere Finger,
-Eingabefelder und aktive Arbeitsmodi werden nicht übernommen. Die gewohnte
-Bedienung durch Tastatur und Dock bleibt erhalten.
+Zum Öffnen den Griff nach innen ziehen. Die Leiste folgt der Bewegung; ein
+kurzer Zug zurück bricht ab. Zum Schließen den Griff am inneren Rand der offenen
+Leiste nach außen ziehen. Für Trackpad-/Sidecar-Scrollgesten endet der Zug nach
+einer kurzen Pause ohne weitere Scrollereignisse.
 
-Panels melden `edge: {side, command, element, viewport}` in ihrem bestehenden
+36 CSS-Pixel breite Eingabeflächen reservieren die Geste vor dem Folienwechsel.
+Bei schwarzen Seitenrändern gibt es Griffe am Browserrand und am Folienrand.
+Die Flächen werden bei Größen- und Vollbildwechseln neu positioniert. In
+Arbeitsmodi (z. B. Zeichnen) und bei modalen Dialogen sind sie ausgeblendet.
+
+Panels melden `edge: {side, command, element, viewport}` im bestehenden
 Panelvertrag an. Dieses Modul enthält keine fremden DOM-Selektoren oder
 Listen von Feature-Namen und öffnet Panels über die gemeinsame Modussteuerung.
-Die Browser-/System-Navigation am äußersten Bildschirmrand kann vom Betriebssystem
-beansprucht werden; auf echten Touchgeräten zusätzlich innerhalb des Folienrands testen.
+
+Sidecar läuft mit dem Browser auf dem Mac, nicht mit Safari auf dem iPad.
+Apple dokumentiert, dass direktes Fingerwischen Trackpad-Scrollereignisse
+emulieren kann:
+https://developer.apple.com/documentation/technotes/tn3212-adopting-gesture-recognizers-for-sidecar-touch-support
+Je nach Systemversion sind die unterstützten Finger-Gesten unterschiedlich.
+Systemgesten außerhalb des Browserinhalts kann die Extension nicht abfangen.

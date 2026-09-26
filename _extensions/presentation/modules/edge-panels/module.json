@@ -1,4 +1,9 @@
 {
   "id": "edge-panels",
-  "scripts": ["module.js"]
+  "scripts": [
+    "module.js"
+  ],
+  "styles": [
+    "styles.css"
+  ]
 }

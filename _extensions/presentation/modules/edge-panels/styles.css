@@ -1,0 +1,28 @@
+/* Dedicated hit areas keep horizontal dragging out of browser/Reveal gestures.
+   Hidden in working modes so the complete drawing surface remains available. */
+.presentation-edge-grip {
+  position: fixed;
+  width: 36px;
+  z-index: 220;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: ew-resize;
+}
+.presentation-edge-grip[hidden] { display: none; }
+.presentation-edge-grip::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 24px);
+  left: 16px;
+  width: 4px;
+  height: 48px;
+  border-radius: 4px;
+  background: #7b879b;
+  opacity: 0.35;
+}
+.presentation-edge-grip:hover::after,
+.presentation-edge-grip:active::after { opacity: 0.85; }
+@media print { .presentation-edge-grip { display: none; } }
