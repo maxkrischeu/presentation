@@ -5452,6 +5452,7 @@ Presentation.factories.images = function (context) {
         const asset = catalog.get(id),
           button = document.createElement("button");
         button.dataset.asset = id;
+        button.draggable = true;
         button.title = asset.label;
         const img = document.createElement(asset.kind === 'video' ? 'span' : 'img');
         if (asset.kind === 'video') { img.className = 'presentation-media-video-preview'; img.textContent = '▶'; }
@@ -5690,10 +5691,11 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
+  let nativeDrag = null, libraryScrollUntil = 0, scrollFeedbackTimer;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
     g.button?.classList.remove("is-held");
-    if (g.button?.hasPointerCapture(g.pointer)) g.button.releasePointerCapture(g.pointer);
+    if (panel.hasPointerCapture(g.pointer)) panel.releasePointerCapture(g.pointer);
   }
   function cancelGesture() {
     if (!gesture) return;
@@ -5709,13 +5711,14 @@ Presentation.factories.images = function (context) {
   }
   panel.addEventListener("pointerdown", (event) => {
     const button = event.target.closest("[data-asset]");
-    if (!button || event.button !== 0 || !event.isPrimary) return;
+    if (!button || event.button !== 0 || !event.isPrimary || Date.now() < libraryScrollUntil) return;
     cancelGesture();
     event.stopPropagation();
     gesture = {
       type: "add",
       button,
       held: false,
+      pointerType: event.pointerType,
       asset: button.dataset.asset,
       startX: event.clientX,
       startY: event.clientY,
@@ -5726,9 +5729,39 @@ Presentation.factories.images = function (context) {
       if (gesture !== pending || pending.ghost) return;
       pending.held = true;
       button.classList.add("is-held");
-      button.setPointerCapture(pending.pointer);
+      panel.setPointerCapture(pending.pointer);
     }, 350);
   });
+  const finishNativeDrag = () => {
+    nativeDrag = null;
+    panel.classList.remove("dragging");
+  };
+  panel.addEventListener("dragstart", event => {
+    const button = event.target.closest("[data-asset]");
+    if (!button || !event.dataTransfer || gesture?.type !== "add" ||
+        gesture.pointerType === "touch" || Date.now() < libraryScrollUntil) {
+      event.preventDefault();
+      return;
+    }
+    nativeDrag = {asset: button.dataset.asset, slide: currentId()};
+    event.dataTransfer.setData("text/plain", catalog.get(nativeDrag.asset).label);
+    event.dataTransfer.effectAllowed = "copy";
+    cancelGesture();
+    requestAnimationFrame(() => { if (nativeDrag) panel.classList.add("dragging"); });
+  });
+  document.addEventListener("dragover", event => {
+    if (!nativeDrag) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+  });
+  document.addEventListener("drop", event => {
+    if (!nativeDrag) return;
+    event.preventDefault();
+    const completed = nativeDrag;
+    finishNativeDrag();
+    if (completed.slide === currentId()) insert(completed.asset, event);
+  });
+  document.addEventListener("dragend", finishNativeDrag);
   panel.addEventListener("contextmenu", event => {
     if (event.target.closest("[data-asset]")) event.preventDefault();
   });
@@ -5750,7 +5783,11 @@ Presentation.factories.images = function (context) {
   // Sidecar can deliver scrolling as wheel events between pointer down/up.
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
-    if (gesture?.type === "add" && !gesture.ghost) cancelGesture();
+    libraryScrollUntil = Date.now() + 250;
+    panel.classList.add("is-scrolling");
+    clearTimeout(scrollFeedbackTimer);
+    scrollFeedbackTimer = setTimeout(() => panel.classList.remove("is-scrolling"), 250);
+    if (gesture?.type === "add") cancelGesture();
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
   panel.addEventListener("scroll", cancelLibraryGesture, true);
@@ -5793,7 +5830,11 @@ Presentation.factories.images = function (context) {
         if (!gesture.ghost) {
           const dx = event.clientX - gesture.startX;
           const dy = event.clientY - gesture.startY;
+          // A hold requires a stationary finger, not merely a slow swipe.
+          if (!gesture.held && Math.hypot(dx, dy) > 4) clearTimeout(gesture.holdTimer);
           if (Math.hypot(dx, dy) < 8) return;
+          // Desktop dragging is handled by the browser's drag/drop events.
+          if (gesture.pointerType === "mouse") return;
           // The library sits on the right: only a deliberate drag toward the
           // slide inserts media. Vertical movement remains native scrolling.
           if (!gesture.held && (dx >= -8 || -dx < Math.abs(dy) * 1.3)) {
@@ -5877,7 +5918,7 @@ Presentation.factories.images = function (context) {
   });
   document.addEventListener("pointercancel", () => {
     cancelGesture();
-    refresh();
+    if (!nativeDrag) refresh();
   });
   function remove() {
     if (selected === null) return;

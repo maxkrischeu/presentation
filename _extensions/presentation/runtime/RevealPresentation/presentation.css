@@ -1246,6 +1246,16 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   cursor: grabbing;
 }
 
+.presentation-asset-library.is-scrolling .presentation-asset-grid button:hover {
+  background: #333;
+  color: #aaa;
+}
+.presentation-asset-grid button * {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* modules/laser/styles.css */
 .presentation-laser-controls {
   display: flex;

@@ -15,3 +15,7 @@ Etwa 350 ms Halten markiert ein Medium als aufgenommen. Danach darf die
 Ziehbewegung in jede Richtung starten, auch mit Touch. Loslassen ohne Ziehen
 bricht ab. Sofortiges vertikales Wischen scrollt weiterhin; Scrollen, Abbruch,
 Fokusverlust und ein zweiter Finger beenden einen ausstehenden Haltevorgang.
+
+Maus-/Trackpad-Gesten verwenden natives HTML-Drag-and-drop. Touch behält die
+Haltegeste. Während Wheel-/Scroll-Ereignissen wird die Hover-Hervorhebung
+unterdrückt (insbesondere für den stehenbleibenden Sidecar-Mauszeiger).
