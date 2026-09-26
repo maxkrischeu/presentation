@@ -493,6 +493,23 @@ body:has(.reveal.overview)
 
 /* modules/drawing/styles.css */
 /* Native canvases retain their state; their tools are exposed in the footer. */
+#notescanvas,
+#notescanvas canvas,
+#chalkboard,
+#chalkboard canvas,
+.presentation-drawing-active .slides,
+.presentation-drawing-active .slides * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#notescanvas canvas,
+#chalkboard canvas {
+  touch-action: none;
+}
+
 #notescanvas .palette,
 #chalkboard .palette,
 #chalkboard .boardhandle {

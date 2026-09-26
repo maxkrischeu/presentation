@@ -12,9 +12,29 @@ Presentation.factories.drawing = function (context) {
     ...context.saved("drawing")?.visibility,
   };
   const boarding = () => !!board && board.style.visibility === "visible";
+  const clearSelection = () => window.getSelection()?.removeAllRanges();
+  let drawingActive = false;
+  // Safari can select the whole transparent canvas on a double tap. Keep
+  // selection handling on the drawing surfaces, leaving other UI untouched.
+  for (const layer of [notes, board].filter(Boolean)) {
+    layer.addEventListener("pointerdown", () => {
+      if (drawing() || boarding()) clearSelection();
+    });
+    for (const name of ["selectstart", "dblclick"]) {
+      layer.addEventListener(name, (event) => {
+        if (!drawing() && !boarding()) return;
+        event.preventDefault();
+        clearSelection();
+      });
+    }
+  }
   // Chalkboard's canvases already carry data-prevent-swipe. Changing Reveal's
   // configuration here would re-sync slides and interrupt Chalkboard playback.
   const sync = () => {
+    const active = drawing() || boarding();
+    deck.getRevealElement().classList.toggle("presentation-drawing-active", active);
+    if (active && !drawingActive) clearSelection();
+    drawingActive = active;
     deck
       .getRevealElement()
       .classList.toggle("presentation-notes-hidden", !drawingsShown.notes);
