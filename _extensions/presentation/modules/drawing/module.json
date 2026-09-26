@@ -2,10 +2,14 @@
   "id": "drawing",
   "scripts": [
     "cursors.js",
+    "shapes.js",
+    "hold.js",
     "engine.js",
     "drawing.js",
     "toolbar.js",
     "module.js"
   ],
-  "styles": ["styles.css"]
+  "styles": [
+    "styles.css"
+  ]
 }

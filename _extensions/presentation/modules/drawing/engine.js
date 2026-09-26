@@ -1258,6 +1258,7 @@
      * Set the  board
      */
     function selectBoard(boardIdx, record) {
+      stopDrawing();
       //console.log("Set board",boardIdx);
       if (board == boardIdx) return;
 
@@ -1576,7 +1577,7 @@
     }
 
     function startErasing(x, y) {
-      drawing = false;
+      stopDrawing();
       erasing = true;
       erasePoint(x, y);
     }
@@ -1666,16 +1667,17 @@
       data.events = events.filter(function (event) {
         return !hit.has(event);
       });
+      redrawCurrentBoard();
+      storageChanged();
+    }
+
+    function redrawCurrentBoard() {
       clearCanvas(mode);
-      // Redraw only the current board, preserving tool, color and board index.
-      for (var event of data.events) {
-        if (
-          event.board === targetBoard &&
-          ["draw", "erase", "clear"].includes(event.type)
-        )
+      var targetBoard = mode === 1 ? board : undefined;
+      for (var event of getSlideData().events) {
+        if (event.board === targetBoard && ["draw", "erase", "clear"].includes(event.type))
           playEvent(mode, event, Date.now() - slideStart + 1);
       }
-      storageChanged();
     }
 
     function stopErasing() {
@@ -1684,6 +1686,31 @@
 
     var smoothPoint = null;
     var smoothEnd = null;
+    var smoothRaw = null;
+    var heldOriginal = null;
+    function restoreHeldStroke() {
+      if (!heldOriginal) return;
+      var data = getSlideData();
+      data.events = data.events.filter(event => event.strokeId !== strokeId);
+      data.events.push(...heldOriginal);
+      heldOriginal = null;
+      redrawCurrentBoard();
+      storageChanged();
+    }
+    var hold = Presentation.createDrawingHold({
+      onShape(shape) {
+        if (!drawing) return false;
+        var data = getSlideData();
+        heldOriginal = data.events.filter(event => event.strokeId === strokeId);
+        data.events = data.events.filter(event => event.strokeId !== strokeId);
+        for (var i = 1; i < shape.points.length; i++) {
+          var a = shape.points[i-1], b = shape.points[i];
+          drawSegment(a.x, a.y, b.x, b.y, color[mode]);
+        }
+        redrawCurrentBoard();
+      },
+      onResume: restoreHeldStroke,
+    });
 
     // Midpoint quadratics round sampled corners. Flatten to short segments so
     // existing replay, export and stroke erasing share exactly the same path.
@@ -1692,6 +1719,14 @@
         drawSegment(fromX, fromY, toX, toY, colorIdx);
         return;
       }
+      smoothRaw = { x: toX, y: toY };
+      if (!hold.move(toX, toY)) return;
+      // Damp small hand tremors more than long movements, without waiting
+      // for another frame. Retain the raw endpoint for release and recognition.
+      var delta = Math.hypot(toX-smoothPoint.x, toY-smoothPoint.y) * drawingCanvas[mode].scale;
+      var alpha = 0.55 + 0.35 * Math.min(1, delta / 20);
+      toX = smoothPoint.x + alpha * (toX-smoothPoint.x);
+      toY = smoothPoint.y + alpha * (toY-smoothPoint.y);
       var end = { x: (smoothPoint.x + toX) / 2, y: (smoothPoint.y + toY) / 2 };
       var start = smoothEnd;
       var control = smoothPoint;
@@ -1716,6 +1751,9 @@
     function startDrawing(x, y) {
       smoothPoint = { x, y };
       smoothEnd = { x, y };
+      smoothRaw = { x, y };
+      heldOriginal = null;
+      hold.start(x, y, drawingCanvas[mode].scale);
       strokeId = strokeSession + "-" + ++strokeSequence;
       drawing = true;
 
@@ -1764,11 +1802,13 @@
       }
     }
 
-    function stopDrawing() {
-      if (drawing && smoothPoint) {
-        drawSegment(smoothEnd.x, smoothEnd.y, smoothPoint.x, smoothPoint.y, color[mode]);
+    function stopDrawing(cancel) {
+      if (cancel) restoreHeldStroke();
+      var snapped = hold ? hold.stop() : false;
+      if (drawing && smoothRaw && (!snapped || cancel)) {
+        drawSegment(smoothEnd.x, smoothEnd.y, smoothRaw.x, smoothRaw.y, color[mode]);
       }
-      smoothPoint = smoothEnd = null;
+      smoothPoint = smoothEnd = smoothRaw = heldOriginal = null;
       drawing = false;
     }
 
@@ -2000,6 +2040,11 @@
       });
     }
 
+    window.addEventListener("mouseup", () => { stopDrawing(); stopErasing(); });
+    window.addEventListener("touchend", () => { stopDrawing(); stopErasing(); });
+    window.addEventListener("touchcancel", () => { stopDrawing(true); stopErasing(); });
+    window.addEventListener("blur", () => { stopDrawing(true); stopErasing(); });
+
     // Drawing coordinates remain CSS pixels; only the backing bitmap grows.
     // Replay uses the original stroke data after resize, avoiding bitmap scaling.
     function sizeDisplayCanvas(canvas, width, height) {
@@ -2014,6 +2059,7 @@
     }
 
     function resize() {
+      stopDrawing();
       //console.log("resize");
       // Resize the canvas and draw everything again
       var timestamp = Date.now() - slideStart;
@@ -2070,6 +2116,7 @@
       }
     });
     Reveal.addEventListener("slidechanged", function (evt) {
+      stopDrawing();
       //		clearTimeout( slidechangeTimeout );
       //console.log('slidechanged');
       if (!printMode) {
@@ -2095,6 +2142,7 @@
       }
     });
     Reveal.addEventListener("fragmentshown", function (evt) {
+      stopDrawing();
       //		clearTimeout( slidechangeTimeout );
       //console.log('fragmentshown');
       if (!printMode) {
@@ -2115,6 +2163,7 @@
       }
     });
     Reveal.addEventListener("fragmenthidden", function (evt) {
+      stopDrawing();
       //		clearTimeout( slidechangeTimeout );
       //console.log('fragmenthidden');
       if (!printMode) {
@@ -2149,6 +2198,7 @@
     });
 
     function toggleNotesCanvas() {
+      stopDrawing();
       if (!readOnly) {
         if (mode == 1) {
           toggleChalkboard();
@@ -2183,6 +2233,7 @@
     }
 
     function toggleChalkboard() {
+      stopDrawing();
       //console.log("toggleChalkboard " + mode);
       if (mode == 1) {
         if (!readOnly) {
@@ -2232,6 +2283,7 @@
     }
 
     function clear() {
+      stopDrawing();
       if (!readOnly) {
         clearSlide();
         // broadcast
@@ -2248,12 +2300,14 @@
     }
 
     function colorIndex(idx) {
+      stopDrawing();
       if (!readOnly) {
         setColor(idx, true);
       }
     }
 
     function colorNext() {
+      stopDrawing();
       if (!readOnly) {
         let idx = cycleColorNext();
         setColor(idx, true);
@@ -2261,6 +2315,7 @@
     }
 
     function colorPrev() {
+      stopDrawing();
       if (!readOnly) {
         let idx = cycleColorPrev();
         setColor(idx, true);
@@ -2268,6 +2323,7 @@
     }
 
     function resetSlideDrawings() {
+      stopDrawing();
       slideStart = Date.now();
       closeChalkboard();
 
@@ -2312,6 +2368,7 @@
     }
 
     function resetStorage(force) {
+      stopDrawing();
       var ok =
         force ||
         confirm(

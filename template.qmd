@@ -252,7 +252,8 @@ die Gesamtpunktzahl; show="questions" nur die Fragenübersicht.
 
 - **C:** Markiere etwas direkt auf dieser Folie.
 - **B:** Öffne eine Tafel für eine freie Skizze.
-- Probiere Stift, Radierer und Rückgängig in der Werkzeugleiste aus.
+- Probiere Stift und Radierer in der Werkzeugleiste aus.
+- Zeichne eine Linie oder einen Kreis und halte am Ende kurz still.
 - **Enter:** Kehre zur Präsentation zurück.
 
 ::: {.statement}

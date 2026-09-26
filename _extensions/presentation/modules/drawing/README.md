@@ -12,9 +12,22 @@ CSS-Pixel; beim Größenwechsel werden gespeicherte Striche neu gezeichnet.
 Auf Touchgeräten sind die direkten Zeichenwerkzeuge 44 px breit und höchstens
 44 px hoch; ihre Höhe bleibt auf die bestehende Fußzeile begrenzt.
 
-Neue Striche verwenden eine leichte Glättung über quadratische Mittelpunktkurven.
+Neue Striche dämpfen kleine Bewegungsunruhe und verwenden quadratische Mittelpunktkurven.
 Sie werden mit höchstens 0,25 CSS-Pixel Näherungsfehler in das bestehende
 Segmentformat überführt; Replay, Export und Objektradierer bleiben kompatibel.
 Beim Absetzen wird der letzte Endpunkt ergänzt. Bestehende Striche bleiben erhalten.
 Folienvorschauen werden nach dem Strich gebündelt aktualisiert, nicht mehrfach
 für die zusammengehörigen Pointer-, Touch- und Mausereignisse.
+
+## Zeichnen und halten
+
+Am Ende einer Linie, eines Dreiecks, Vierecks oder Kreises den Stift/Finger bzw.
+die gedrückte Maustaste etwa 0,7 Sekunden ruhig halten. Eindeutige Formen werden
+begradigt; annähernd rechtwinklige Vierecke werden zu Rechtecken, auch gedreht.
+Loslassen übernimmt die Form. Weiterzeichnen stellt den ursprünglichen Strich
+wieder her. Kleine Zeichen und unklare Konturen bleiben Freihand.
+
+`shapes.js` enthält die reine Geometrieerkennung, `hold.js` verwaltet Wartezeit,
+Bewegungstoleranz und Abbruch. Die Engine ersetzt nur den aktuellen Strich und
+behält seine Identität für Objektradierer, Replay und Export. Modus-/Folienwechsel,
+Fokusverlust und abgebrochene Touchgesten beenden ausstehende Erkennungen.
