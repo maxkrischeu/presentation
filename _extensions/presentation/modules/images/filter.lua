@@ -169,25 +169,8 @@ function Div(div)
   return pandoc.RawBlock('html', '<template class="presentation-assets-source" data-scope="slide">'..table.concat(images)..'</template>')
 end
 function Pandoc(doc)
-  local input = quarto.doc.input_file
-  local input_dir = pandoc.path.directory(pandoc.path.normalize(pandoc.path.is_absolute(input) and input or pandoc.path.join({pandoc.system.get_working_directory(), input})))
-  local root = quarto.project.directory or os.getenv('QUARTO_PROJECT_DIR')
-  -- Single-file preview may omit both project context values. Resolve the
-  -- nearest Quarto project from the source, never from the configured assets.
-  if not root then
-    local candidate = input_dir
-    while candidate and candidate ~= '' do
-      for _, name in ipairs({'_quarto.yml', '_quarto.yaml'}) do
-        local file = io.open(pandoc.path.join({candidate, name}), 'rb')
-        if file then file:close(); root = candidate; break end
-      end
-      if root then break end
-      local parent = pandoc.path.directory(candidate)
-      if parent == candidate then break end
-      candidate = parent
-    end
-  end
-  root = root or input_dir
+  local paths = dofile(pandoc.path.join({pandoc.path.directory(PANDOC_SCRIPT_FILE), '../../core/paths.lua'}))
+  local root, input, input_dir = paths()
   -- Quarto rebases existing project paths relative to nested input files.
   -- Store canonical project-relative folders for both render and live refresh.
   for i,folder in ipairs(folders) do
@@ -195,8 +178,8 @@ function Pandoc(doc)
       folders[i]=pandoc.path.make_relative(pandoc.path.normalize(pandoc.path.join({input_dir,folder})),root)
     end
   end
-  local scanner = pandoc.path.join({pandoc.path.directory(PANDOC_SCRIPT_FILE), 'assets.py'})
-  local discovered = quarto.json.decode(pandoc.pipe('python3', {scanner, root, input, #folders==0 and '[]' or quarto.json.encode(folders)}, ''))
+  local scanner = pandoc.path.join({pandoc.path.directory(PANDOC_SCRIPT_FILE), 'scan.ts'})
+  local discovered = quarto.json.decode(pandoc.pipe('quarto', {'run', scanner, root, input, #folders==0 and '[]' or quarto.json.encode(folders)}, ''))
   for _, asset in ipairs(discovered) do
     if not declared[pandoc.path.normalize(asset.src)] then
       local markup = image(asset.src, asset.id, asset.label)

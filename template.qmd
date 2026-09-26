@@ -1,22 +1,40 @@
 ---
-title: "Meine Präsentation"
-lang: de
-date: today
-date-format: "D. MMMM YYYY"
-presentation:
-  logo-text: date
-  header-text: "Mein Thema"
-  slide-number: true
+title: "Meine erste Präsentation"
+subtitle: "Gemeinsam ausprobieren"
 ---
 
-# Willkommen
+## Eine Idee nach der anderen
 
-## Erste Folie
+::: {.columns}
+::: {.column width="65%"}
+- Beginne mit einem klaren Gedanken.
+- Ergänze ein passendes Bild.
+- Beziehe dein Publikum mit einer Frage ein.
+:::
+::: {.column width="35%"}
+![Drei Gedanken werden miteinander verbunden.](assets/ideen.svg){width="300"}
+:::
+:::
 
-- Ein Gedanke
-- Noch ein Gedanke
+## Jetzt seid ihr dran
 
-## Gemeinsam ausprobieren
+::: {.task title="Ideen sammeln" time="3" icon="discussion"}
+- Überlegt euch zu zweit ein Thema für eure Präsentation.
+- Notiert drei Gedanken, die ihr vermitteln möchtet.
+:::
 
-Mit **C** auf der Folie zeichnen, mit **B** die Tafel öffnen.
-Mit **Enter** oder dem Haken den Arbeitsmodus verlassen.
+::: {.notes}
+Die Zeitangabe der Aufgabenbox wird automatisch um „min“ ergänzt.
+Die Tafel öffnet sich mit B, der Zeichenmodus mit C.
+:::
+
+## Kurz ausprobieren {.quiz-intro}
+
+## Welche Taste öffnet die Tafel? {.quiz-question columns="2"}
+
+- C
+- [B]{.correct}
+- V
+- F
+
+## Unser Ergebnis {.quiz-results show="total"}

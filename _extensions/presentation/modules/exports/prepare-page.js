@@ -1,24 +1,6 @@
-// Local export worker. Input arrives on stdin, never interpolated into shell code.
-const fs=require('node:fs/promises');
-const {chromium}=require('playwright');
-const {PDFDocument}=require('pdf-lib');
-const {landscape,width,height,fit}=require('./pdf-layout.cjs');
-(async()=>{
- let text='';for await(const part of process.stdin)text+=part;
- const {url,destination,kind,snapshot,options}=JSON.parse(text);
- if(kind==='chalkboard') {
-  if(!snapshot.modules.drawing.drawings.boards.length)throw Error('No non-empty chalkboards to export.');
-  const pdf=await PDFDocument.create();
-  for(const board of snapshot.modules.drawing.drawings.boards){const png=await pdf.embedPng(board.png);pdf.addPage([width,height]).drawImage(png,fit(png.width,png.height));}
-  await fs.writeFile(destination,await pdf.save());return;
- }
- const browser=await chromium.launch();
- try{
-  const page=await browser.newPage();
-  if(options.content==='current')await page.addInitScript(data=>{window.__presentationSession=data;},snapshot);
-  await page.goto(url+'?print-pdf',{waitUntil:'networkidle'});
-  await page.waitForFunction(()=>window.Reveal?.isReady()&&document.querySelector('.pdf-page'));
-  await page.evaluate(async({snapshot,options})=>{
+// Runs inside the print page; shared by live-session and standalone exports.
+export async function preparePage({snapshot,options}) {
+
    await Presentation.ready;
    if(!options.images)document.querySelectorAll('.presentation-asset-layer').forEach(el=>el.remove());
    if(options.drawings&&(snapshot.modules.drawing.visibility.notes||options.hidden)) {
@@ -46,7 +28,5 @@ const {landscape,width,height,fit}=require('./pdf-layout.cjs');
     }
    }
    await document.fonts.ready;await Promise.all(Array.from(document.images,image=>image.decode().catch(()=>{})));
-  },{snapshot,options});
-  await fs.writeFile(destination,await (await landscape(await page.pdf({printBackground:true,preferCSSPageSize:true}),await page.title())).save());
- }finally{await browser.close();}
-})().catch(error=>{console.error(error.message);process.exitCode=1;});
+
+}

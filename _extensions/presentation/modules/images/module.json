@@ -13,7 +13,7 @@
     "filter.lua"
   ],
   "server": {
-    "source": "source.py",
-    "assets": "assets.py"
+    "source": "source.ts",
+    "assets": "assets.ts"
   }
 }

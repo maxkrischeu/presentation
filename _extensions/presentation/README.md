@@ -50,11 +50,16 @@ presentation:
 ---
 ```
 
-Voraussetzungen: Quarto ab 1.10 und Python ab 3.10. Für PDF-/ZIP-Exporte
-zusätzlich Node.js ab 20 mit npm. Beim ersten Export werden die festgelegten
-Node-Abhängigkeiten und Chromium automatisch heruntergeladen; dafür ist eine
-Internetverbindung nötig. Spätere Exporte verwenden die installierten Komponenten.
-Normales Rendern und die Vorschau starten diese Downloads nicht.
+Voraussetzung: Quarto ab 1.10. Python, Node und npm müssen nicht zusätzlich
+installiert werden. Vorschau, Speichern und Exporte verwenden Quartos Laufzeit.
+Beim ersten Folien-PDF- oder ZIP-Export wird ein vorhandener Chrome/Edge bzw.
+Quartos Headless-Browser verwendet. Fehlt er, installiert Quarto ihn automatisch;
+dafür wird einmalig Internet benötigt. Weitere Exporte verwenden ihn erneut.
+Tafel-PDFs benötigen keinen Browser. Normales Rendern und Preview laden keinen
+PDF-Browser herunter. Auf Linux können Systembibliotheken für Chromium nötig sein.
+
+Die internen Hilfsdateien entstehen gebündelt unter `.quarto/presentation/`.
+Sie werden automatisch erzeugt und müssen nicht mitkopiert werden.
 
 Danach funktionieren die normalen Quarto-Befehle:
 
@@ -105,7 +110,7 @@ python3 _extensions/presentation/core/build.py
 python3 _extensions/presentation/core/build.py --check
 ```
 
-Die Vorschau baut die Laufzeit beim Rendern automatisch neu. Nach Änderungen an Servercode, Modulmanifesten, Filterlisten oder Pluginregistrierungen den Build ausdrücklich **vor** dem nächsten Quarto-Aufruf starten und eine laufende Vorschau neu starten, da Quarto die Extension-Konfiguration früh einliest.
+Die Entwicklungswerkzeuge gehören nur zum Quellprojekt und sind nicht im installierbaren Paket enthalten. Vor dem Rendern nach Quelländerungen den Build ausführen. Die Vorschau baut die Extension nicht selbst. Nach Änderungen an Servercode, Modulmanifesten, Filterlisten oder Pluginregistrierungen den Build ausdrücklich **vor** dem nächsten Quarto-Aufruf starten und eine laufende Vorschau neu starten, da Quarto die Extension-Konfiguration früh einliest.
 
 Jedes Modul besitzt ein `module.json` und registriert bei Bedarf seine öffentlichen Browser-Verträge in `module.js`. Fremdcode liegt beim zuständigen Modul; Herkunft, Änderungen und Lizenzen werden dort dokumentiert. V2 ist eine Entwicklungsfassung, keine veröffentlichte Extension.
 
@@ -116,7 +121,7 @@ werden über Extras ausdrücklich exportiert. Für einen PDF-Export des gerender
 Grundstands im Terminal:
 
 ```sh
-node _extensions/presentation/modules/exports/render.cjs meine-praesentation.html
+quarto run _extensions/presentation/modules/exports/render.ts meine-praesentation.html
 ```
 
 Die Vorschau lädt erst nach erfolgreichem Renderabschluss neu. Erfolgreiche

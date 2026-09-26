@@ -7,11 +7,10 @@
     "project": {
       "project": {
         "type": "default",
-        "pre-render": "python3 -c \"from pathlib import Path; import runpy; paths=list(Path('_extensions').glob('presentation/server/prepare.py'))+list(Path('_extensions').glob('*/presentation/server/prepare.py')); assert len(paths)==1, 'Presentation: expected exactly one installed extension'; runpy.run_path(str(paths[0]),run_name='__main__')\"",
-        "post-render": "python3 -c \"from pathlib import Path; import runpy; paths=list(Path('_extensions').glob('presentation/server/post_render.py'))+list(Path('_extensions').glob('*/presentation/server/post_render.py')); assert len(paths)==1, 'Presentation: expected exactly one installed extension'; runpy.run_path(str(paths[0]),run_name='__main__')\"",
+        "post-render": "quarto run .quarto/presentation/hooks.ts",
         "preview": {
           "serve": {
-            "cmd": "python3 .presentation-preview.py --port {port} --live-reload",
+            "cmd": "quarto run .quarto/presentation/preview.ts --port {port} --live-reload",
             "ready": "Presentation preview ready:"
           }
         }
@@ -41,6 +40,7 @@
           "ui/theme.scss"
         ],
         "filters": [
+          "server/filter.lua",
           "ui/filter.lua"
         ],
         "revealjs-plugins": [

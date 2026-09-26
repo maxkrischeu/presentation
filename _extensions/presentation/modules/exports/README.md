@@ -1,7 +1,13 @@
 # PDF und Präsentations-ZIP
 
-`dialog.js` besitzt die Exportauswahl. `service.py` validiert Aufträge und baut ZIPs; `worker.cjs` erzeugt Sitzungs-PDFs. `render.cjs` erzeugt PDFs des gerenderten Grundstands auf ausdrücklichen CLI-Aufruf. `pdf-layout.cjs` definiert das gemeinsame Seitenformat.
+`dialog.js` besitzt die Exportauswahl. `service.ts` validiert Aufträge und baut ZIPs;
+`worker.ts` erzeugt Sitzungs-PDFs. `render.ts` exportiert vorhandene HTML-Dateien auf
+expliziten CLI-Aufruf. `pdf-layout.ts` definiert A4 quer mit 10 mm Rand.
 
-Registriert Exportbefehle und den HTTP-Dienst `export`. Verwendet `core/session.js` und öffentliche Snapshots, nicht die Editor-DOMs. Unit-Tests für Quarto-Eingaben liegen in `tests/`.
+`browser.ts` verwendet Quartos öffentliche Erkennung und Browserinstallation.
+`cdp.ts` steuert eine kurzlebige Browserinstanz mit eigenem temporären Profil.
+`prepare-page.js` ergänzt die eingefrorenen Sitzungszeichnungen im Druckdokument.
+Die MIT-lizenzierte PDF-Bibliothek liegt unter `vendor/`; keine npm-Installation.
 
-`module.json` ist die Ressourcenregistrierung. Eigene Beschriftungen liegen in `locales.json`. Nach Quellenänderungen den gemeinsamen Build ausführen; generierte Dateien unter `runtime/` nicht von Hand bearbeiten.
+Registriert den Dienst `export`. Verwendet öffentliche Snapshots aus `core/session.js`.
+Nach Quellenänderungen bauen; generierte `runtime/`-Dateien nicht von Hand ändern.

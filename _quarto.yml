@@ -1,2 +1,15 @@
 project:
   type: presentation
+
+lang: de
+date: today
+date-format: "D. MMMM YYYY"
+
+presentation:
+  logo-text: date
+  slide-number: true
+
+  fragments: auto
+
+  media:
+    folders: [assets]
