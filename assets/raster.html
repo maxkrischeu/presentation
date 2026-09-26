@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klickbares Raster</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:16px;font:20px system-ui;color:#243b53;background:#f4f7fc;text-align:center}h1{font-size:26px;margin:0 0 10px}#grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;max-width:420px;margin:14px auto}.cell{aspect-ratio:1;border:2px solid #94a3b8;border-radius:6px;background:white;cursor:pointer}.cell[aria-pressed=true]{background:#2d3f81}.cell:focus-visible,button:focus-visible{outline:3px solid #e5a000;outline-offset:2px}#reset{border:0;border-radius:8px;padding:10px 22px;font:inherit;background:#2d3f81;color:white;cursor:pointer}p{margin:10px}
+</style>
+<h1>Gestalte ein Muster</h1><p>Klicke auf die Felder oder nutze Tab und die Leertaste.</p>
+<div id="grid" role="group" aria-label="Raster mit 32 Feldern"></div>
+<p id="count" aria-live="polite">0 dunkle Felder</p><button id="reset">Zurücksetzen</button>
+<script>
+const grid=document.getElementById('grid');
+function update(){document.getElementById('count').textContent=grid.querySelectorAll('[aria-pressed=true]').length+' dunkle Felder';}
+for(let i=0;i<32;i++){const b=document.createElement('button');b.className='cell';b.setAttribute('aria-label','Feld '+(i+1));b.setAttribute('aria-pressed','false');b.onclick=()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');update();};grid.append(b);}
+document.getElementById('reset').onclick=()=>{grid.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed','false'));update();};
+</script></html>

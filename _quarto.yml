@@ -23,23 +23,7 @@ presentation:
 
   dock:
     enabled: true
-    items:
-      - prev
-      - next
-      - overview
-      - draw
-      - board
-      - assets
-      - position
-      - python
-      - laser
-      - magnifier
-      - fullscreen
-      - speaker
-      - help
-      - search
-      - blackout
-      - more
+    items: [prev, next, overview, draw, more]
 
   fragments: auto
   fragment-effect: fade
