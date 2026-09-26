@@ -11,3 +11,10 @@ Die sichtbaren Zeichenflächen verwenden die Display-Pixeldichte (begrenzt auf
 CSS-Pixel; beim Größenwechsel werden gespeicherte Striche neu gezeichnet.
 Auf Touchgeräten sind die direkten Zeichenwerkzeuge 44 px breit und höchstens
 44 px hoch; ihre Höhe bleibt auf die bestehende Fußzeile begrenzt.
+
+Neue Striche verwenden eine leichte Glättung über quadratische Mittelpunktkurven.
+Sie werden mit höchstens 0,25 CSS-Pixel Näherungsfehler in das bestehende
+Segmentformat überführt; Replay, Export und Objektradierer bleiben kompatibel.
+Beim Absetzen wird der letzte Endpunkt ergänzt. Bestehende Striche bleiben erhalten.
+Folienvorschauen werden nach dem Strich gebündelt aktualisiert, nicht mehrfach
+für die zusammengehörigen Pointer-, Touch- und Mausereignisse.

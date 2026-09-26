@@ -64,7 +64,9 @@ Presentation.factories.drawing = function (context) {
     );
   // Cache notes inside their owning slide for the overview. Copy pixels directly
   // rather than encoding images during the mode switch.
+  let captureTimer;
   const captureNotes = () => {
+    clearTimeout(captureTimer);
     const source = notes?.querySelector("canvas");
     const slide = deck.getCurrentSlide();
     if (!source || !slide || boarding()) return;
@@ -103,10 +105,16 @@ Presentation.factories.drawing = function (context) {
         preview.height,
       );
   };
+  // Touch/pen input can also emit pointer and mouse events. Copy once after
+  // the stroke, and postpone if the next stroke has already started.
+  document.addEventListener("pointerdown", () => clearTimeout(captureTimer));
   // Mouse and touch strokes, including erasing, finish before their bubbling events.
   ["mouseup", "touchend", "pointerup"].forEach((name) =>
     document.addEventListener(name, () => {
-      if (drawing() && !deck.isOverview()) captureNotes();
+      clearTimeout(captureTimer);
+      captureTimer = setTimeout(() => {
+        if (drawing() && !deck.isOverview()) captureNotes();
+      }, 100);
     }),
   );
   const stop = () => {

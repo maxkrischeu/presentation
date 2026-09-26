@@ -1682,7 +1682,40 @@
       erasing = false;
     }
 
+    var smoothPoint = null;
+    var smoothEnd = null;
+
+    // Midpoint quadratics round sampled corners. Flatten to short segments so
+    // existing replay, export and stroke erasing share exactly the same path.
+    function drawSmoothedSegment(fromX, fromY, toX, toY, colorIdx) {
+      if (!smoothPoint) {
+        drawSegment(fromX, fromY, toX, toY, colorIdx);
+        return;
+      }
+      var end = { x: (smoothPoint.x + toX) / 2, y: (smoothPoint.y + toY) / 2 };
+      var start = smoothEnd;
+      var control = smoothPoint;
+      var scale = drawingCanvas[mode].scale;
+      // Quadratic subdivision error <= 0.25 CSS pixels; straight strokes
+      // remain one segment per sample rather than growing the event history.
+      var curvature = Math.hypot(start.x - 2 * control.x + end.x,
+        start.y - 2 * control.y + end.y) * scale;
+      var steps = Math.max(1, Math.ceil(Math.sqrt(curvature)));
+      var previous = start;
+      for (var i = 1; i <= steps; i++) {
+        var t = i / steps, u = 1 - t;
+        var point = { x: u*u*start.x + 2*u*t*control.x + t*t*end.x,
+          y: u*u*start.y + 2*u*t*control.y + t*t*end.y };
+        drawSegment(previous.x, previous.y, point.x, point.y, colorIdx);
+        previous = point;
+      }
+      smoothPoint = { x: toX, y: toY };
+      smoothEnd = end;
+    }
+
     function startDrawing(x, y) {
+      smoothPoint = { x, y };
+      smoothEnd = { x, y };
       strokeId = strokeSession + "-" + ++strokeSequence;
       drawing = true;
 
@@ -1732,6 +1765,10 @@
     }
 
     function stopDrawing() {
+      if (drawing && smoothPoint) {
+        drawSegment(smoothEnd.x, smoothEnd.y, smoothPoint.x, smoothPoint.y, color[mode]);
+      }
+      smoothPoint = smoothEnd = null;
       drawing = false;
     }
 
@@ -1789,7 +1826,7 @@
             mouseY = touch.pageY;
 
             if (drawing) {
-              drawSegment(
+              drawSmoothedSegment(
                 (lastX - xOffset) / scale,
                 (lastY - yOffset) / scale,
                 (mouseX - xOffset) / scale,
@@ -1908,7 +1945,7 @@
           mouseY = evt.pageY;
 
           if (drawing) {
-            drawSegment(
+            drawSmoothedSegment(
               (lastX - xOffset) / scale,
               (lastY - yOffset) / scale,
               (mouseX - xOffset) / scale,
