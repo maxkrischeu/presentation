@@ -455,6 +455,29 @@ body:has(.reveal.overview)
   flex: 0 0 36px;
 }
 
+/* The entire menu row is one hit target, including its padding. */
+.slide-menu-wrapper .slide-tool-item {
+  padding: 0;
+}
+.slide-menu-wrapper .slide-tool-item > a {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 18px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.slide-menu-wrapper .slide-tool-item > a:focus-visible {
+  outline: 2px solid #a9c9f7;
+  outline-offset: -3px;
+}
+.slide-menu-wrapper .slide-menu-panel {
+  overscroll-behavior-y: none;
+}
+
 /* modules/dialogs/styles.css */
 .presentation-confirm-dialog {
   width: min(520px, calc(100vw - 48px));
