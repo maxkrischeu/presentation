@@ -909,7 +909,7 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
 }
 .presentation-asset-grid button {
   min-width: 0;
-  touch-action: none;
+  touch-action: pan-y;
   border: 0;
   border-top: 1px solid #555;
   border-bottom: 1px solid #555;

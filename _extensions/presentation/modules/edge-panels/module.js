@@ -4,7 +4,7 @@ Presentation.register({
   requires: ["frame"],
   interactiveOnly: true,
   setup({deck, invoke, changed}) {
-    let gesture = null, suppressClickUntil = 0, wheelTimer, placementTimer;
+    let gesture = null, suppressClickUntil = 0, wheelTimer, frame, trackUntil = 0;
     const handles = new Map();
     const allowed = () => Presentation.modes?.current() === "standard" &&
       !document.querySelector("dialog[open]");
@@ -42,8 +42,18 @@ Presentation.register({
       handle.setPointerCapture(event.pointerId);
     }
 
+    // Follow native panel transitions as well as direct dragging. Observe the
+    // owner and its wrapper, including closes initiated by the owner's buttons.
+    function track() {
+      trackUntil = performance.now() + 450;
+      if (frame) return;
+      const tick = () => {
+        place();
+        frame = performance.now() < trackUntil ? requestAnimationFrame(tick) : null;
+      };
+      frame = requestAnimationFrame(tick);
+    }
     function place() {
-      if (gesture) return; // The grip must not move away from an active pointer.
       for (const panel of Presentation.panels.values()) {
         if (!panel.edge) continue;
         let surfaces = handles.get(panel.id);
@@ -64,6 +74,15 @@ Presentation.register({
             return handle;
           });
           handles.set(panel.id, surfaces);
+          const element = panel.edge.element();
+          if (element) {
+            const observer = new MutationObserver(track);
+            observer.observe(element, {attributes: true, attributeFilter: ["class", "style", "hidden"]});
+            if (element.parentElement) observer.observe(element.parentElement,
+              {attributes: true, attributeFilter: ["class", "style", "hidden"]});
+            element.addEventListener("transitionrun", track);
+            element.addEventListener("transitionend", track);
+          }
         }
         const element = panel.edge.element();
         const visible = allowed() && !!element;
@@ -75,14 +94,19 @@ Presentation.register({
         const slideEdge = side === "left" ? stage.left : stage.right;
         // Closed: accept both the browser edge and the slide edge in letterbox
         // layouts. Open: move the grip to the panel's inner edge for closing.
-        const edges = open ? [side === "left" ? bounds.right : bounds.left] :
+        const moving = open || (bounds && (side === "left"
+          ? bounds.right > stage.left + 1 : bounds.left < stage.right - 1));
+        const edges = moving ? [side === "left" ? bounds.right : bounds.left] :
           Math.abs(browserEdge - slideEdge) > 40 ? [browserEdge, slideEdge] : [browserEdge];
-        surfaces.forEach((handle, index) => {
+        // Keep the captured surface alive when starting at the slide edge.
+        const ordered = gesture?.panel === panel
+          ? [gesture.handle, ...surfaces.filter(handle => handle !== gesture.handle)] : surfaces;
+        ordered.forEach((handle, index) => {
           handle.hidden = !visible || index >= edges.length;
           if (handle.hidden) return;
           const boundary = edges[index];
           const left = Math.max(0, Math.min(innerWidth - 36,
-            open ? boundary - 18 : side === "left" ? boundary : boundary - 36));
+            moving ? boundary - 18 : side === "left" ? boundary : boundary - 36));
           Object.assign(handle.style, {
             left: `${left}px`, top: "0px", height: `${innerHeight}px`,
           });
@@ -115,6 +139,7 @@ Presentation.register({
       g.distance = Math.max(0, Math.min(g.width, inward));
       const hidden = g.opening ? g.width - g.distance : g.distance;
       g.element.style.transform = `translateX(${(g.panel.edge.side === "left" ? -1 : 1) * hidden}px)`;
+      place();
     }
     window.addEventListener("pointermove", event => {
       if (gesture?.pointerId !== undefined) move(event);
@@ -142,6 +167,13 @@ Presentation.register({
       clearTimeout(wheelTimer);
       wheelTimer = setTimeout(() => finish(), 180);
     }
+    // A wheel sequence stays with its original grip even as that grip moves.
+    window.addEventListener("wheel", event => {
+      if (gesture && gesture.pointerId === undefined) {
+        wheel(event, gesture.panel, gesture.handle);
+        event.stopImmediatePropagation();
+      }
+    }, {capture: true, passive: false});
     window.addEventListener("pointerup", event => {
       if (gesture?.pointerId !== event.pointerId) return;
       event.preventDefault(); event.stopImmediatePropagation(); finish();
@@ -170,9 +202,7 @@ Presentation.register({
     Presentation.subscribe(() => {
       if (gesture && !allowed()) finish(true);
       place();
-      // Position open grips after the panel's own closing/opening transition.
-      clearTimeout(placementTimer);
-      placementTimer = setTimeout(place, 320);
+      track();
     });
     return {};
   },

@@ -5,3 +5,8 @@
 `module.js` registriert Bildbearbeitung, Bibliothek, Dock und Quellen-Speichern. `snapshot()` enthält vorbereitete/geänderte Positionen mit Quellenrevision. Unit-Tests liegen in `tests/`.
 
 `module.json` ist die Ressourcenregistrierung. Eigene Beschriftungen liegen in `locales.json`. Nach Quellenänderungen den gemeinsamen Build ausführen; generierte Dateien unter `runtime/` nicht von Hand bearbeiten.
+
+In der Bibliothek scrollen vertikale Fingerbewegungen nativ. Ein kurzer Klick
+fügt das Medium mittig ein; bewusstes horizontales Herausziehen nach links
+platziert es auf der Folie. Scroll-/Wheel-Ereignisse brechen einen noch nicht
+begonnenen Einfügevorgang ab, auch bei von Sidecar übersetzten Gesten.

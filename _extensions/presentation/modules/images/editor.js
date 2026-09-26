@@ -775,7 +775,6 @@ Presentation.factories.images = function (context) {
   panel.addEventListener("pointerdown", (event) => {
     const button = event.target.closest("[data-asset]");
     if (!button || event.button !== 0) return;
-    event.preventDefault();
     event.stopPropagation();
     gesture = {
       type: "add",
@@ -784,8 +783,14 @@ Presentation.factories.images = function (context) {
       startY: event.clientY,
       pointer: event.pointerId,
     };
-    button.setPointerCapture(event.pointerId);
   });
+  // Sidecar can deliver scrolling as wheel events between pointer down/up.
+  // Neither those sequences nor native touch scrolling are insert gestures.
+  const cancelLibraryGesture = () => {
+    if (gesture?.type === "add" && !gesture.ghost) cancelGesture();
+  };
+  panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
+  panel.addEventListener("scroll", cancelLibraryGesture, true);
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {
       if ((!editing && !armed) || event.button !== 0) return;
@@ -821,16 +826,19 @@ Presentation.factories.images = function (context) {
     "pointermove",
     (event) => {
       if (!gesture || gesture.pointer !== event.pointerId) return;
-      event.preventDefault();
       if (gesture.type === "add") {
-        if (
-          Math.hypot(
-            event.clientX - gesture.startX,
-            event.clientY - gesture.startY,
-          ) < 6 &&
-          !gesture.ghost
-        )
-          return;
+        if (!gesture.ghost) {
+          const dx = event.clientX - gesture.startX;
+          const dy = event.clientY - gesture.startY;
+          if (Math.hypot(dx, dy) < 8) return;
+          // The library sits on the right: only a deliberate drag toward the
+          // slide inserts media. Vertical movement remains native scrolling.
+          if (dx >= -8 || -dx < Math.abs(dy) * 1.3) {
+            cancelGesture();
+            return;
+          }
+        }
+        event.preventDefault();
         if (!gesture.ghost) {
           const ghost = document.createElement("img");
           ghost.src = catalog.get(gesture.asset).src;
@@ -845,6 +853,7 @@ Presentation.factories.images = function (context) {
         });
         return;
       }
+      event.preventDefault();
       const p = point(event),
         old = gesture.item,
         item = state[currentId()][gesture.index];

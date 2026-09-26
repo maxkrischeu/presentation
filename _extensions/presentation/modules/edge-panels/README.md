@@ -11,7 +11,10 @@ einer kurzen Pause ohne weitere Scrollereignisse.
 
 36 CSS-Pixel breite Eingabeflächen reservieren die Geste vor dem Folienwechsel.
 Bei schwarzen Seitenrändern gibt es Griffe am Browserrand und am Folienrand.
-Die Flächen werden bei Größen- und Vollbildwechseln neu positioniert. In
+Die Griffe folgen der tatsächlichen Menükante beim Ziehen und während der
+Öffnungs-/Schließanimation. Laufende Scrollgesten bleiben ihrem Griff zugeordnet,
+auch wenn er sich unter dem Zeiger wegbewegt. Die Flächen werden bei Größen-
+und Vollbildwechseln neu positioniert. In
 Arbeitsmodi (z. B. Zeichnen) und bei modalen Dialogen sind sie ausgeblendet.
 
 Panels melden `edge: {side, command, element, viewport}` im bestehenden
