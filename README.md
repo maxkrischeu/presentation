@@ -39,7 +39,7 @@ quarto preview meine-praesentation.qmd
 ## Anpassen
 
 - **`.qmd`**: Titel und Inhalte ändern; `## Überschrift` beginnt eine Folie.
-- **`_quarto.yml`**: gemeinsame Einstellungen, beispielsweise `lang: de` oder `lang: en`.
+- **`_quarto.yml`**: gemeinsame Einstellungen und Platzhalter für Name, Fach, Schule und Logo.
 - **`assets/`**: eigene Bilder, GIFs und Videos ablegen.
 
 Das Template zeigt Aufgabenboxen und Quizfragen. Weitere Optionen stehen in der

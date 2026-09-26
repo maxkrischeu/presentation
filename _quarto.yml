@@ -2,14 +2,54 @@ project:
   type: presentation
 
 lang: de
+author: "Max Mustermann"
 date: today
 date-format: "D. MMMM YYYY"
 
 presentation:
+  lang: de
+
+  logo: assets/logo.svg
   logo-text: date
+  header-text: "Mein Thema"
   slide-number: true
+  subject: "Mein Fach"
+  class: "Meine Lerngruppe"
+
+  teacher: "Max Mustermann"
+  teacher-url: "https://example.org/profil"
+  institution: "Musterschule"
+  institution-url: "https://example.org"
+
+  dock:
+    enabled: true
+    items:
+      - prev
+      - next
+      - overview
+      - draw
+      - board
+      - assets
+      - position
+      - python
+      - laser
+      - magnifier
+      - fullscreen
+      - speaker
+      - help
+      - search
+      - blackout
+      - more
 
   fragments: auto
+  fragment-effect: fade
 
   media:
     folders: [assets]
+    items:
+      - id: ideen
+        src: assets/ideen.svg
+        label: "Beispielbild"
+
+  laser:
+    fade-delay: 1
