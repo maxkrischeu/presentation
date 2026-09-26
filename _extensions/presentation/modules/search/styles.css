@@ -1,0 +1,24 @@
+.presentation-search-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(var(--presentation-stage-width, 100vw) - 24px);
+  background: white;
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+.presentation-search-controls[hidden] { display: none; }
+.presentation-search-controls input {
+  width: clamp(90px, 18vw, 240px);
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid #cbd2df;
+  border-radius: 5px;
+  font: 16px var(--r-main-font, sans-serif);
+  color: #172033;
+  background: white;
+}
+.presentation-search-controls [role="status"] { font-size: 12px; white-space: nowrap; }
+.presentation-search-controls button { flex-shrink: 0; }
+.reveal mark.presentation-search-match { background: #ffe88a; color: #172033; }
+.reveal mark.presentation-search-match.current { background: #ffbe55; outline: 2px solid #b76700; }

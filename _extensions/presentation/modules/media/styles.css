@@ -1,0 +1,10 @@
+.reveal .presentation-media-box { box-sizing:border-box; max-width:100%; margin-left:auto; margin-right:auto; }
+.reveal .presentation-media-box[data-media-align="left"] { margin-left:0; margin-right:auto; }
+.reveal .presentation-media-box[data-media-align="right"] { margin-left:auto; margin-right:0; }
+.reveal .presentation-inline-media { width:100%; }
+.reveal .presentation-inline-media > img,
+.reveal .presentation-inline-media > video,
+.reveal .presentation-inline-media > iframe { display:block; width:100%; height:100%; max-width:100%; max-height:100%; margin:0; object-fit:contain; border:0; }
+.reveal .presentation-inline-media:not([data-media-height]) > img,
+.reveal .presentation-inline-media:not([data-media-height]) > video { height:auto; }
+.reveal .presentation-inline-media:not([data-media-height]) > iframe { aspect-ratio:16/9; height:auto; }

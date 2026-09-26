@@ -17,6 +17,8 @@
     "Points earned": "Erreichte Punkte",
     "Not checked yet": "Noch nicht geprüft",
     "Score: {score}": "Punktestand: {score}",
-    "Total quiz score": "Gesamtpunktzahl im Quiz"
+    "Total quiz score": "Gesamtpunktzahl im Quiz",
+    "Available terms": "Verfügbare Begriffe",
+    "Gap {number}": "Lücke {number}"
   }
 }

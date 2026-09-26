@@ -9,6 +9,7 @@ Presentation.register({
       modes: [
         {
           id: "laser",
+          icon: "<path d=\"m3 19 9-9 3 3-9 9Z M16 8l4-4m-5 1V2m4 7h3\"/>",
           label: "Laser Pointer",
           key: "L",
           navigation: true,

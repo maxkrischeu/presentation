@@ -1,5 +1,16 @@
 # Dokumentvorschau
 
+Empfohlene Schreibweise:
+
+```markdown
+::: {.document src="material/arbeitsblatt.pdf" title="Arbeitsblatt" height="fill"}
+:::
+```
+
+`title` ist optional (sonst Dateiname). `width`, `height` und `align` entsprechen
+den gemeinsamen Medienblöcken. Aktuell werden PDF-Dateien unterstützt.
+Die bisherige Linkschreibweise bleibt gültig:
+
 Ein alleinstehender Markdown-Link mit `.pdf-preview` wird zur PDF.js-Vorschau:
 
 ```markdown

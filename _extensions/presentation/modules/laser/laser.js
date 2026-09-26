@@ -1,6 +1,9 @@
 /* Temporary laser ink. No storage, PDF output or Chalkboard state is touched. */
 Presentation.factories.laser = function (context) {
   const { deck } = context;
+  const seconds = Number(document.getElementById('presentation-laser-settings')?.dataset.fadeDelay ?? 1);
+  const fadeDelay = Number.isFinite(seconds) && seconds >= 0 ? seconds * 1000 : 1000;
+  const fadeDuration = 1500;
   const canvas = document.createElement("canvas");
   canvas.className = "presentation-laser-canvas";
   canvas.hidden = true;
@@ -112,7 +115,7 @@ Presentation.factories.laser = function (context) {
     frame = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!active) return;
-    if (releasedAt !== null && now - releasedAt >= 2500) strokes = [];
+    if (releasedAt !== null && now - releasedAt >= fadeDelay + fadeDuration) strokes = [];
     const sx = canvas.width,
       sy = canvas.height,
       unit = sx / (deck.getConfig().width - 72);
@@ -124,7 +127,7 @@ Presentation.factories.laser = function (context) {
       ctx.globalAlpha =
         releasedAt === null
           ? 1
-          : Math.max(0, 1 - Math.max(0, now - releasedAt - 1000) / 1500);
+          : Math.max(0, 1 - Math.max(0, now - releasedAt - fadeDelay) / fadeDuration);
       ctx.strokeStyle = s.color;
       ctx.fillStyle = s.color;
       ctx.shadowColor = s.color;
@@ -186,7 +189,7 @@ Presentation.factories.laser = function (context) {
     pointer = e.pointerId;
     canvas.setPointerCapture(pointer);
     cursor = point(e);
-    if (releasedAt !== null && performance.now() - releasedAt >= 2500)
+    if (releasedAt !== null && performance.now() - releasedAt >= fadeDelay + fadeDuration)
       strokes = [];
     releasedAt = null;
     stroke = { color, points: [cursor] };

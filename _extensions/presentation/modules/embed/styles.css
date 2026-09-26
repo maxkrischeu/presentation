@@ -1,0 +1,5 @@
+.reveal .presentation-embed { display:flex; flex-direction:column; height:420px; max-width:100%; margin:0 auto; border:1px solid #ccd5e3; border-radius:8px; overflow:hidden; box-sizing:border-box; background:white; }
+.reveal .presentation-embed iframe { display:block; width:100%; flex:1; min-height:0; max-width:none; max-height:none; border:0; margin:0; }
+.reveal .presentation-embed-bar { display:flex; justify-content:space-between; gap:16px; padding:8px 14px; font-size:16px; color:var(--presentation-muted); }
+.reveal.overview .presentation-embed iframe { pointer-events:none; }
+@media print { .reveal .presentation-embed { height:auto !important; } .presentation-embed iframe {display:none !important;} }

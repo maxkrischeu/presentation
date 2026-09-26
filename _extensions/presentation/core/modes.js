@@ -47,7 +47,12 @@ Presentation.mountModes = function (context) {
       return;
     }
     if (active !== "standard" && !command.allowIn?.includes(active)) return;
-    if (command.kind === "panel") command.run();
+    if (command.kind === "panel") {
+      // Preserve the target panel so its command can still toggle it closed.
+      for (const panel of orderedPanels())
+        if (panel.id !== command.panel && panel.isOpen()) panel.close();
+      command.run();
+    }
     else {
       closePanels();
       (command.enter || command.run)?.();
@@ -79,7 +84,7 @@ Presentation.mountModes = function (context) {
       const editable =
         event.target.isContentEditable ||
         event.target.closest?.(
-          'input, textarea, select, [role="textbox"], dialog[open]',
+          'input, textarea, select, [role="textbox"], [data-presentation-keyboard="local"], dialog[open]',
         );
       if (editable) return;
       const key = event.key.toLowerCase();
@@ -115,7 +120,7 @@ Presentation.mountModes = function (context) {
         !event.altKey
       ) {
         consume();
-        if (!event.repeat && !mode) invoke("search");
+        if (!event.repeat && (!mode || mode.id === "search")) invoke("search");
         return;
       }
       if (event.ctrlKey || event.metaKey || event.altKey) return;

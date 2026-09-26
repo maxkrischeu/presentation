@@ -36,6 +36,37 @@ def validate_snapshot(data):
 def package(output, page, snapshot, destination, pdf):
     """Keep relative paths intact, including lazy-loaded plugin resources."""
     output = output.resolve()
+    document = page.read_text()
+    document = re.sub(r'<div\b[^>]*class="presentation-media-resources"[^>]*>.*?</div>', '', document, flags=re.S)
+    used = {item['asset'] for items in snapshot['modules']['images']['slides'].values() for item in items}
+    def prune_catalog(match):
+        opening, content, closing = match.groups()
+        scope_match = re.search(r'data-scope=["\']([^"\']+)', opening)
+        scope = scope_match[1] if scope_match else ''
+        def keep_image(image):
+            identifier = re.search(r'data-asset-id=["\']([^"\']+)', image[0])
+            if not identifier: return ''
+            identifier = html.unescape(identifier[1])
+            return image[0] if any(asset == scope + ':' + identifier or (scope == 'slide' and asset.endswith(':' + identifier)) for asset in used) else ''
+        return opening + re.sub(r'<img\b[^>]*>', keep_image, content) + closing
+    document = re.sub(r'(<template\b[^>]*class=["\']presentation-assets-source["\'][^>]*>)(.*?)(</template>)', prune_catalog, document, flags=re.S)
+    document = re.sub(r'(<template id="presentation-prepared-layout">).*?(</template>)', r'\g<1>{}\2', document, flags=re.S)
+    # Session imports may not yet exist in the rendered catalog.
+    for entry in snapshot['modules']['images'].get('assets', []):
+        if entry.get('id') not in used: continue
+        scope, identifier = entry['id'].split(':', 1)
+        src = str(entry.get('src', ''))
+        parsed = urlsplit(src)
+        if parsed.scheme not in ('', 'http', 'https', 'data'): raise ValueError('Invalid media URL.')
+        if parsed.scheme == 'data' and not src.startswith(('data:image/', 'data:video/')): raise ValueError('Invalid media data.')
+        attrs = {'data-asset-id': identifier, 'data-media-kind': entry.get('kind', 'image'), 'src': src, 'alt': entry.get('label', '')}
+        tag = '<img ' + ' '.join(key + '="' + html.escape(str(value), quote=True) + '"' for key, value in attrs.items()) + '>'
+        # Put authoritative session entries first; the catalog ignores duplicates.
+        catalog = '<template class="presentation-assets-source" data-scope="' + html.escape(scope, quote=True) + '">' + tag + '</template>'
+        if scope in ('global', 'lesson'):
+            document = document.replace('<body', catalog + '<body', 1)
+        else:
+            document = re.sub(r'(<section\b[^>]*id="' + re.escape(scope) + r'"[^>]*>)', lambda match: match[0] + catalog.replace('data-scope="' + html.escape(scope, quote=True) + '"', 'data-scope="slide"'), document, count=1)
     files = {page.resolve()}
     for directory in (page.parent / (page.stem + '_files') / 'libs',):
         if directory.is_dir():
@@ -45,7 +76,7 @@ def package(output, page, snapshot, destination, pdf):
     while pending:
         file = pending.pop()
         if file.suffix not in ('.html', '.css'): continue
-        text = file.read_text(errors='replace')
+        text = document if file == page.resolve() else file.read_text(errors='replace')
         refs = re.findall(r'(?:src|href|poster)=["\']([^"\']+)', text) + re.findall(r'url\(["\']?([^\)"\']+)', text)
         for ref in refs:
             url = urlsplit(html.unescape(ref))
@@ -53,7 +84,6 @@ def package(output, page, snapshot, destination, pdf):
             path = ((output if url.path.startswith('/') else file.parent) / unquote(url.path).lstrip('/')).resolve()
             if path.is_relative_to(output) and path.is_file() and path not in files:
                 files.add(path); pending.append(path)
-    document = page.read_text()
     document = re.sub(r'(<template id="presentation-source-layout">).*?(</template>)', r'\g<1>{}\2', document, flags=re.S)
     payload = json.dumps(snapshot, ensure_ascii=True).replace('<', '\\u003c')
     document = re.sub(r'(<head[^>]*>)', lambda match: match[0] + '<script>window.__presentationSession=' + payload + ';</script>', document, count=1, flags=re.I)

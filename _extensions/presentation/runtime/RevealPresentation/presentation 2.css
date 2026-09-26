@@ -176,6 +176,13 @@ html.print-pdf .reveal .slides section.presentation-slide {
 .reveal .column {
   min-width: 0;
 }
+/* Quarto's native video shortcode is upgraded from <video> to a Video.js
+   container. Center either form without touching the player's controls. */
+.reveal .slides .video-js,
+.reveal .slides video:not(.vjs-tech) {
+  display: block;
+  margin-inline: auto;
+}
 .reveal .statement,
 .reveal .result {
   padding: 18px 24px;
@@ -271,6 +278,7 @@ html.print-pdf .reveal .slides section.presentation-slide {
   height: calc(100% - 62px);
   overscroll-behavior: contain;
 }
+
 
 /* ui/dock.css */
 .presentation-dock {
@@ -433,6 +441,20 @@ body:has(.reveal.overview)
   box-shadow: 0 4px 24px #0002;
 }
 
+/* Only the standard launcher scrolls; floating tool palettes stay unclipped. */
+.presentation-standard-controls {
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  touch-action: pan-x;
+  padding: 3px;
+}
+.presentation-standard-controls > button {
+  flex: 0 0 36px;
+}
+
 /* modules/documents/styles.css */
 .reveal .presentation-document-preview {
   height: var(--document-height, var(--document-auto-height, 420px));
@@ -516,6 +538,13 @@ body:has(.reveal.overview)
   padding: 8px 12px;
   white-space: nowrap;
 }
+
+/* modules/embed/styles.css */
+.reveal .presentation-embed { display:flex; flex-direction:column; height:420px; max-width:100%; margin:0 auto; border:1px solid #ccd5e3; border-radius:8px; overflow:hidden; box-sizing:border-box; background:white; }
+.reveal .presentation-embed iframe { display:block; width:100%; flex:1; min-height:0; max-width:none; max-height:none; border:0; margin:0; }
+.reveal .presentation-embed-bar { display:flex; justify-content:space-between; gap:16px; padding:8px 14px; font-size:16px; color:var(--presentation-muted); }
+.reveal.overview .presentation-embed iframe { pointer-events:none; }
+@media print { .reveal .presentation-embed { height:auto !important; } .presentation-embed iframe {display:none !important;} }
 
 /* modules/exports/styles.css */
 .presentation-export-dialog {
@@ -605,6 +634,29 @@ body:has(.reveal.overview)
 .presentation-export-hidden:has(input:disabled) { color: #767e8b; }
 .presentation-export-dialog footer { margin-top: 20px; }
 
+/* modules/fragments/styles.css */
+/* Overview and print show all content without changing the current fragment step. */
+.reveal.overview .slides .fragment,
+html.print-pdf .reveal .slides .fragment {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+@media print {
+  .reveal .slides .fragment { opacity:1 !important; visibility:visible !important; transform:none !important; transition:none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal .slides .presentation-auto-fragment { transition:none !important; transform:none !important; transition:none !important; }
+}
+/* The list marker belongs to its text step, including nested list items. */
+html:not(.print-pdf) .reveal:not(.overview) li:has(> .presentation-auto-fragment:not(.visible))::marker {
+  color: transparent;
+}
+@media print {
+  .reveal li:has(> .presentation-auto-fragment)::marker { color:var(--presentation-blue) !important; }
+}
+
 /* modules/images/styles.css */
 .reveal .presentation-asset-layer {
   position: absolute;
@@ -625,7 +677,17 @@ body:has(.reveal.overview)
   position: absolute;
   box-sizing: border-box;
 }
-.reveal .presentation-placed-image img {
+.reveal:not(.overview) .presentation-placed-image.presentation-image-concealed {
+  visibility: hidden;
+}
+html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
+  visibility: visible;
+}
+@media print {
+  .reveal .presentation-placed-image.presentation-image-concealed { visibility: visible !important; }
+}
+.reveal .presentation-placed-image img,
+.reveal .presentation-placed-image video {
   display: block;
   width: 100%;
   height: 100%;
@@ -633,6 +695,23 @@ body:has(.reveal.overview)
   max-height: none;
   margin: 0;
   object-fit: contain;
+}
+.reveal .presentation-placed-image video { pointer-events: auto; }
+.reveal .presentation-asset-layer.editing video { pointer-events: none; }
+.presentation-media-video-preview {
+  display: grid;
+  place-items: center;
+  min-height: 110px;
+  color: #3973bc;
+  background: #eef4fb;
+  font-size: 48px;
+}
+.presentation-video-tile { position: relative; }
+.presentation-video-tile video { width: 100%; max-height: 180px; pointer-events: none; }
+.presentation-video-tile::after {
+  content: '▶'; position: absolute; top: 30%; left: 44%;
+  color: white; background: #24334bcc; border-radius: 50%; padding: 5px 10px;
+  pointer-events: none;
 }
 .reveal .presentation-asset-layer.editing .presentation-placed-image {
   cursor: move;
@@ -1019,6 +1098,21 @@ body:has(.reveal.overview)
   outline-offset: 1px;
 }
 
+.presentation-image-properties label[hidden] { display: none; }
+
+/* Ephemeral guides live in the same coordinate system as the placed media. */
+.presentation-alignment-guide {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2147483647;
+  border-color: var(--presentation-alignment-color, #d33682);
+  border-style: dashed;
+  border-width: 0;
+}
+.presentation-alignment-x { top: 0; bottom: 0; border-left-width: 1px; }
+.presentation-alignment-y { left: 0; right: 0; border-top-width: 1px; }
+@media print { .presentation-alignment-guide { display: none !important; } }
+
 /* modules/laser/styles.css */
 .presentation-laser-controls {
   display: flex;
@@ -1111,6 +1205,18 @@ html.print-pdf .presentation-laser-canvas {
 html.print-pdf .presentation-magnifier {
   display: none !important;
 }
+
+/* modules/media/styles.css */
+.reveal .presentation-media-box { box-sizing:border-box; max-width:100%; margin-left:auto; margin-right:auto; }
+.reveal .presentation-media-box[data-media-align="left"] { margin-left:0; margin-right:auto; }
+.reveal .presentation-media-box[data-media-align="right"] { margin-left:auto; margin-right:0; }
+.reveal .presentation-inline-media { width:100%; }
+.reveal .presentation-inline-media > img,
+.reveal .presentation-inline-media > video,
+.reveal .presentation-inline-media > iframe { display:block; width:100%; height:100%; max-width:100%; max-height:100%; margin:0; object-fit:contain; border:0; }
+.reveal .presentation-inline-media:not([data-media-height]) > img,
+.reveal .presentation-inline-media:not([data-media-height]) > video { height:auto; }
+.reveal .presentation-inline-media:not([data-media-height]) > iframe { aspect-ratio:16/9; height:auto; }
 
 /* modules/overview/styles.css */
 /* These overrides are confined to overview. Normal slides and PDF retain their
@@ -1790,6 +1896,45 @@ html .reveal .drop.active {
   margin: 0 0 30px;
 }
 
+/* Row-major ordering preserves the same reading and fragment order. */
+.reveal .quiz-question .quiz-options {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.reveal .quiz-columns .quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--quiz-answer-row-gap, 10px) var(--quiz-answer-column-gap, 20px);
+}
+.reveal .quiz-columns .quiz-options .option-button {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.reveal .quiz-option-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Answer surfaces own their text colors, including selection and assessment.
+   Keep semantic emphasis without inheriting the slide's dark accent colors. */
+.reveal .quiz-question .option-button :is(strong, b, em, i, code, a),
+.reveal .quiz-question .option-button code span,
+.reveal .quiz-question .option-button a:is(:visited, :hover, :focus, :active) {
+  color: inherit;
+}
+.reveal .quiz-question .option-button code {
+  background: var(--quiz-answer-code-background, rgb(0 0 0 / 18%));
+  padding: 0.05em 0.22em;
+  border-radius: 0.2em;
+}
+.reveal .quiz-question .option-button a {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
 /* modules/quiz/intro.css */
 /* Quiz opener: the title alone is centered; the optional subtitle hangs below.
    Override these variables on .quiz-intro or an individual slide. */
@@ -1959,4 +2104,161 @@ html .reveal .drop.active {
   .reveal .pdf-page:has(.quiz-results) {
     display: none !important;
   }
+}
+
+/* modules/quiz/cloze.css */
+.reveal .quiz-cloze-slot { display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; min-width:3.5em; min-height:1.55em; border:2px dashed #93a4be; border-radius:6px; margin:0 .12em; padding:.05em .15em; background:#f0f5fb; }
+.reveal .quiz-cloze-slot:empty::before { content:attr(data-number); color:#65748b; font-size:.6em; }
+.reveal .quiz-cloze-bank { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px; min-height:64px; padding:16px; margin:24px 0; border:1px solid #ccd5e3; border-radius:8px; background:#f5f8fc; }
+.reveal .quiz-cloze-token { font:inherit; font-size:.8em; border:2px solid transparent; border-radius:5px; padding:.15em .45em; background:#2c3e50; color:white; cursor:grab; }
+.reveal .quiz-cloze-slot .quiz-cloze-token { font-size:inherit; }
+.reveal .quiz-cloze-token[aria-pressed=true] { border-color:#3973bc; background:#3873b8; }
+.reveal .quiz-cloze-slot.correct { border-color:#218c50; background:#e7f5ed; }
+.reveal .quiz-cloze-slot.incorrect { border-color:#a93226; background:#fce9e7; }
+.reveal .quiz-cloze-slot.correct button { background:#218c50; }
+.reveal .quiz-cloze-slot.incorrect button { background:#a93226; }
+.reveal .quiz-cloze-slot:focus-visible,.reveal .quiz-cloze-token:focus-visible,.reveal .quiz-cloze-bank:focus-visible { outline:3px solid #3973bc; outline-offset:3px; }
+
+/* Keep the familiar Check color while preserving the disabled interaction. */
+.reveal .quiz-cloze .check-button:disabled { background-color:#2980b9; cursor:not-allowed; }
+
+/* modules/quiz/image-answers.css */
+/* Image answers reuse the quiz's selection, scoring and reveal behavior. */
+.reveal .quiz-images .quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--quiz-answer-row-gap, 12px) var(--quiz-answer-column-gap, 20px);
+}
+.reveal .quiz-images .quiz-options .option-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--quiz-image-answer-height, 140px);
+  min-width: 0;
+  margin: 0;
+  padding: 12px 48px;
+}
+.reveal .quiz-images .option-button .quiz-option-number {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  line-height: 1;
+}
+.reveal .quiz-images .option-button :is(p, figure, .quarto-figure) {
+  margin: 0;
+  padding: 0;
+}
+.reveal .quiz-images .option-button :is(p, figure, .quarto-figure, span.correct) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reveal .quiz-images .option-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  object-fit: contain;
+}
+.reveal .quiz-images .option-button figcaption {
+  display: none;
+}
+
+.reveal .quiz-question[data-quiz-columns="1"] .quiz-options {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* modules/search/styles.css */
+.presentation-search-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: calc(var(--presentation-stage-width, 100vw) - 24px);
+  background: white;
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+.presentation-search-controls[hidden] { display: none; }
+.presentation-search-controls input {
+  width: clamp(90px, 18vw, 240px);
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid #cbd2df;
+  border-radius: 5px;
+  font: 16px var(--r-main-font, sans-serif);
+  color: #172033;
+  background: white;
+}
+.presentation-search-controls [role="status"] { font-size: 12px; white-space: nowrap; }
+.presentation-search-controls button { flex-shrink: 0; }
+.reveal mark.presentation-search-match { background: #ffe88a; color: #172033; }
+.reveal mark.presentation-search-match.current { background: #ffbe55; outline: 2px solid #b76700; }
+
+/* modules/tasks/styles.css */
+.reveal .presentation-task {
+  --task-accent: #f59f00;
+  --task-background: #fff5e8;
+  --task-border: #c4cde1;
+  margin: 24px 0;
+  border: 1px solid var(--task-border);
+  border-left: 6px solid var(--task-accent);
+  border-radius: 4px;
+  background: #fff;
+  text-align: left;
+}
+.reveal .presentation-task-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.3em minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--task-background);
+  border-radius: 0 3px 0 0;
+  color: var(--presentation-navy);
+  font-size: .85em;
+  font-weight: 700;
+}
+.reveal .presentation-task-icon {
+  width: 1.3em;
+  height: 1.3em;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.reveal .presentation-task-time {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: 1em;
+  color: inherit;
+}
+.reveal .presentation-task-body { padding: 18px 24px; }
+.reveal .presentation-task-body > :first-child,
+.reveal .presentation-task-body > .fragment:first-child > :first-child { margin-top: 0; }
+.reveal .presentation-task-body > :last-child,
+.reveal .presentation-task-body > .fragment:last-child > :last-child { margin-bottom: 0; }
+
+/* The runtime measures in slide coordinates, independent of preview scale. */
+.reveal .presentation-task-fill {
+  box-sizing: border-box;
+  height: var(--presentation-task-fill-height, auto);
+  margin-bottom: 0;
+}
+
+.reveal .presentation-task-title {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

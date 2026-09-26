@@ -1,3 +1,5 @@
 name: "RevealPresentation"
 script:
   - "runtime.js"
+stylesheet:
+  - "presentation.css"

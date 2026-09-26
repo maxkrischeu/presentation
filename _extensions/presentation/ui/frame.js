@@ -46,5 +46,6 @@ Presentation.factories.frame = function (context) {
       el.title = el.textContent;
     });
   });
-  return { dock: template.dataset.dock === "true" };
+  return { dock: template.dataset.dock === "true",
+    dockItems: template.dataset.dockItems ? JSON.parse(template.dataset.dockItems) : null };
 };

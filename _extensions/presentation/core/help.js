@@ -1,8 +1,6 @@
 Presentation.mountHelp = function (context) {
   const { deck, t } = context;
   const update = () => {
-    const search = document.querySelector(".searchinput");
-    if (search) search.placeholder = t("Search...");
     const table = document.querySelector(".overlay-help table");
     if (!table || table.dataset.presentationKeys) return;
     table.dataset.presentationKeys = "true";

@@ -1,5 +1,13 @@
 {
   "id": "laser",
-  "scripts": ["laser.js", "module.js"],
-  "styles": ["styles.css"]
+  "scripts": [
+    "laser.js",
+    "module.js"
+  ],
+  "styles": [
+    "styles.css"
+  ],
+  "filters": [
+    "filter.lua"
+  ]
 }

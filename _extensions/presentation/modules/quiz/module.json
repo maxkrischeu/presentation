@@ -1,7 +1,18 @@
 {
   "id": "quiz",
-  "scripts": ["quiz.js", "module.js"],
-  "styles": ["quiz.css", "integrations.css", "intro.css", "results.css"],
+  "scripts": [
+    "cloze.js",
+    "quiz.js",
+    "module.js"
+  ],
+  "styles": [
+    "quiz.css",
+    "integrations.css",
+    "intro.css",
+    "results.css",
+    "cloze.css",
+    "image-answers.css"
+  ],
   "plugins": [
     {
       "name": "RevealQuiz",
@@ -18,5 +29,8 @@
         }
       }
     }
+  ],
+  "filters": [
+    "filter.lua"
   ]
 }

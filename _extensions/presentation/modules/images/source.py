@@ -39,7 +39,7 @@ def headings(text):
             f = re.match(r'^ {0,3}(`{3,}|~{3,})', line)
             if f:
                 fence = (f[1][0], len(f[1]))
-            elif re.match(r'^#{1,6}\s+\S', line):
+            elif re.match(r'^ {0,3}#{1,6}(?:[ \t]|$)', line.rstrip('\r\n')):
                 result.append((offset, offset + len(line), line))
         offset += len(line)
     return result
@@ -83,7 +83,7 @@ def layout_blocks(text):
                     attributes = shlex.split(div[1])
                 except ValueError:
                     attributes = []
-                if '.placed-image' in attributes:
+                if '.placed-image' in attributes or (any(c in attributes for c in ('.image', '.video')) and 'position=free' in attributes):
                     placed = offset
             opening = re.match(r'^ {0,3}(`{3,}|~{3,})(.*)', line)
             if opening:
@@ -122,6 +122,12 @@ def clean_items(items, slide):
         if reference not in (asset, asset.split(':', 1)[1]):
             raise ValueError('Invalid source reference.')
         clean.append(dict(asset=asset, reference=reference, transparency=transparency, layer=layer, rotation=(rotation+180)%360-180, **nums))
+        if 'src' in item:
+            src = item['src']
+            if not isinstance(src, str) or not src or src.startswith('//') or (re.match(r'^[a-zA-Z][\w+.-]*:', src) and not src.startswith(('http://', 'https://'))):
+                raise ValueError('Invalid media source.')
+            clean[-1]['src'] = src
+
         if 'height' in item:
             clean[-1]['height'] = nums['h']*100
     return clean
@@ -160,7 +166,9 @@ def save_layout(path, expected, index, slide, items, count):
                     updated = line[:attr.start()+1] + '#' + new_id + ' ' + line[attr.start()+1:]
                 else:
                     # Remove optional closing ATX markers before appending attributes.
-                    updated = re.sub(r'\s+#+\s*$', '', line.rstrip()) + ' {#' + new_id + '}' + newline
+                    opening = re.match(r'^( {0,3}#{1,6})(.*)$', line.rstrip())
+                    body = re.sub(r'[ \t]+#+[ \t]*$', '', opening[2])
+                    updated = opening[1] + body + ' {#' + new_id + '}' + newline
                 text = text[:start] + updated + text[end:]
                 end = start + len(updated)
             insertion = end
@@ -171,6 +179,18 @@ def save_layout(path, expected, index, slide, items, count):
                     item['reference'] = new_id + item['reference'][len(slide):]
         def number(value):
             return f'{value:.2f}'.rstrip('0').rstrip('.') or '0'
+        # Keep authored labels when the positioning editor rewrites geometry.
+        labels = {}
+        for line in text.splitlines():
+            if not re.match(r'^ {0,3}:{3,}\s*\{', line):
+                continue
+            try:
+                tokens = shlex.split(line[line.index('{')+1:line.rfind('}')])
+            except ValueError:
+                continue
+            attrs = dict(token.split('=', 1) for token in tokens if '=' in token)
+            if attrs.get('position') == 'free' and 'src' in attrs:
+                labels[html.unescape(attrs['src'])] = {key: html.unescape(attrs[key]) for key in ('title', 'alt') if key in attrs}
         entries = []
         for item in clean:
             reference = item['reference']
@@ -179,18 +199,26 @@ def save_layout(path, expected, index, slide, items, count):
             def attribute(key, value):
                 escaped = html.escape(str(value), quote=True).replace('\n', '&#10;').replace('\r', '&#13;')
                 return key + '="' + escaped + '"'
-            entry = [attribute('asset', reference), attribute('x', number(item['x']*100)), attribute('y', number(item['y']*100))]
+            media_src = item.get('src')
+            if not media_src:
+                media_src = re.sub(r'^(?:global:|lesson:)?file:', '', reference) if re.match(r'^(?:global:|lesson:)?file:', reference) else None
+            media_kind = 'video' if media_src and re.search(r'\.(?:mp4|webm|m4v)(?:[?#]|$)', media_src, re.I) else 'image'
+            suffix = '%' if media_src else ''
+            entry = ([attribute('src', media_src), attribute('position', 'free')] if media_src else [attribute('asset', reference)])
+            if media_src:
+                entry.extend(attribute(key, value) for key, value in labels.get(media_src, {}).items())
+            entry += [attribute('x', number(item['x']*100)+suffix), attribute('y', number(item['y']*100)+suffix)]
             if abs(item['w']-.25) > .000001:
-                entry.append(attribute('width', number(item['w']*100)))
+                entry.append(attribute('width', number(item['w']*100)+suffix))
             if 'height' in item:
-                entry.append(attribute('height', number(item['height'])))
+                entry.append(attribute('height', number(item['height'])+suffix))
             if item['layer'] != 1:
                 entry.append(attribute('layer', item['layer']))
             if abs(item['rotation']) > .005:
                 entry.append(attribute('rotation', number(item['rotation'])))
             if item['transparency'] != 0:
                 entry.append(attribute('transparency', number(item['transparency'])))
-            entries.append('::: {.placed-image ' + ' '.join(entry) + '}' + newline + ':::')
+            entries.append('::: {.' + (media_kind if media_src else 'placed-image') + ' ' + ' '.join(entry) + '}' + newline + ':::')
         block = (newline + newline).join(entries)
         # The friendly block belongs to its surrounding slide. Legacy JSON retains
         # its explicit target until this save migrates it to that slide's section.

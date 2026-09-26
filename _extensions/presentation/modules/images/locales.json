@@ -46,6 +46,8 @@
     "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).",
     "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.",
     "Image saved in assets.": "Bild im assets-Ordner gespeichert.",
-    "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position."
+    "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.",
+    "Media Library": "Medienbibliothek",
+    "Close Media Library": "Medienbibliothek schließen"
   }
 }

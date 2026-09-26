@@ -20,7 +20,7 @@
     },
     "formats": {
       "revealjs": {
-        "lang": "de",
+        "lang": "en",
         "width": 1280,
         "height": 720,
         "margin": 0,
@@ -39,9 +39,6 @@
         "theme": [
           "default",
           "ui/theme.scss"
-        ],
-        "css": [
-          "presentation.css"
         ],
         "filters": [
           "ui/filter.lua"

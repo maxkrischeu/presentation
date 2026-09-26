@@ -40,6 +40,7 @@ Presentation.register({
         },
         {
           id: "board",
+          icon: "<rect x=\"3\" y=\"3\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 21l2-5m6 5-2-5M7 12l6-5\"/>",
           label: "Chalkboard",
           key: "B",
           enter: api.board,

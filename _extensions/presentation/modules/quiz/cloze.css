@@ -1,0 +1,14 @@
+.reveal .quiz-cloze-slot { display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; min-width:3.5em; min-height:1.55em; border:2px dashed #93a4be; border-radius:6px; margin:0 .12em; padding:.05em .15em; background:#f0f5fb; }
+.reveal .quiz-cloze-slot:empty::before { content:attr(data-number); color:#65748b; font-size:.6em; }
+.reveal .quiz-cloze-bank { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px; min-height:64px; padding:16px; margin:24px 0; border:1px solid #ccd5e3; border-radius:8px; background:#f5f8fc; }
+.reveal .quiz-cloze-token { font:inherit; font-size:.8em; border:2px solid transparent; border-radius:5px; padding:.15em .45em; background:#2c3e50; color:white; cursor:grab; }
+.reveal .quiz-cloze-slot .quiz-cloze-token { font-size:inherit; }
+.reveal .quiz-cloze-token[aria-pressed=true] { border-color:#3973bc; background:#3873b8; }
+.reveal .quiz-cloze-slot.correct { border-color:#218c50; background:#e7f5ed; }
+.reveal .quiz-cloze-slot.incorrect { border-color:#a93226; background:#fce9e7; }
+.reveal .quiz-cloze-slot.correct button { background:#218c50; }
+.reveal .quiz-cloze-slot.incorrect button { background:#a93226; }
+.reveal .quiz-cloze-slot:focus-visible,.reveal .quiz-cloze-token:focus-visible,.reveal .quiz-cloze-bank:focus-visible { outline:3px solid #3973bc; outline-offset:3px; }
+
+/* Keep the familiar Check color while preserving the disabled interaction. */
+.reveal .quiz-cloze .check-button:disabled { background-color:#2980b9; cursor:not-allowed; }

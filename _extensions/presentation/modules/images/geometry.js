@@ -18,6 +18,34 @@ Presentation.imageGeometry = {
       h: item.w * ratio * s + item.h * c,
     };
   },
+  align(item, others, ratio, tolerance, center = {x: .5, y: .5}) {
+    const bounds = (value) => {
+      const size = this.extents(value, ratio);
+      const x = value.x + value.w / 2, y = value.y + value.h / 2;
+      return {x: [x - size.w / 2, x, x + size.w / 2],
+              y: [y - size.h / 2, y, y + size.h / 2]};
+    };
+    const anchors = bounds(item), guides = {};
+    const targets = {x: [0, center.x, 1], y: [0, center.y, 1]};
+    for (const other of others) {
+      const box = bounds(other);
+      targets.x.push(...box.x); targets.y.push(...box.y);
+    }
+    const result = {...item};
+    for (const axis of ['x', 'y']) {
+      let best = tolerance[axis], delta = 0;
+      for (const target of targets[axis]) for (const anchor of anchors[axis]) {
+        const distance = target - anchor;
+        if (Math.abs(distance) < best) {
+          // Never snap a rotated bounding box outside the content area.
+          if (anchors[axis][0] + distance < -1e-9 || anchors[axis][2] + distance > 1 + 1e-9) continue;
+          best = Math.abs(distance); delta = distance; guides[axis] = target;
+        }
+      }
+      result[axis] += delta;
+    }
+    return {item: result, guides};
+  },
   fit(item, ratio) {
     let cx = item.x + item.w / 2,
       cy = item.y + item.h / 2;

@@ -17,7 +17,17 @@
   position: absolute;
   box-sizing: border-box;
 }
-.reveal .presentation-placed-image img {
+.reveal:not(.overview) .presentation-placed-image.presentation-image-concealed {
+  visibility: hidden;
+}
+html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
+  visibility: visible;
+}
+@media print {
+  .reveal .presentation-placed-image.presentation-image-concealed { visibility: visible !important; }
+}
+.reveal .presentation-placed-image img,
+.reveal .presentation-placed-image video {
   display: block;
   width: 100%;
   height: 100%;
@@ -25,6 +35,23 @@
   max-height: none;
   margin: 0;
   object-fit: contain;
+}
+.reveal .presentation-placed-image video { pointer-events: auto; }
+.reveal .presentation-asset-layer.editing video { pointer-events: none; }
+.presentation-media-video-preview {
+  display: grid;
+  place-items: center;
+  min-height: 110px;
+  color: #3973bc;
+  background: #eef4fb;
+  font-size: 48px;
+}
+.presentation-video-tile { position: relative; }
+.presentation-video-tile video { width: 100%; max-height: 180px; pointer-events: none; }
+.presentation-video-tile::after {
+  content: '▶'; position: absolute; top: 30%; left: 44%;
+  color: white; background: #24334bcc; border-radius: 50%; padding: 5px 10px;
+  pointer-events: none;
 }
 .reveal .presentation-asset-layer.editing .presentation-placed-image {
   cursor: move;
@@ -410,3 +437,18 @@
   outline: 2px solid var(--presentation-blue);
   outline-offset: 1px;
 }
+
+.presentation-image-properties label[hidden] { display: none; }
+
+/* Ephemeral guides live in the same coordinate system as the placed media. */
+.presentation-alignment-guide {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2147483647;
+  border-color: var(--presentation-alignment-color, #d33682);
+  border-style: dashed;
+  border-width: 0;
+}
+.presentation-alignment-x { top: 0; bottom: 0; border-left-width: 1px; }
+.presentation-alignment-y { left: 0; right: 0; border-top-width: 1px; }
+@media print { .presentation-alignment-guide { display: none !important; } }

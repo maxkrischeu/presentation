@@ -121,3 +121,42 @@
   text-align: center;
   margin: 0 0 30px;
 }
+
+/* Row-major ordering preserves the same reading and fragment order. */
+.reveal .quiz-question .quiz-options {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.reveal .quiz-columns .quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--quiz-answer-row-gap, 10px) var(--quiz-answer-column-gap, 20px);
+}
+.reveal .quiz-columns .quiz-options .option-button {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.reveal .quiz-option-number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Answer surfaces own their text colors, including selection and assessment.
+   Keep semantic emphasis without inheriting the slide's dark accent colors. */
+.reveal .quiz-question .option-button :is(strong, b, em, i, code, a),
+.reveal .quiz-question .option-button code span,
+.reveal .quiz-question .option-button a:is(:visited, :hover, :focus, :active) {
+  color: inherit;
+}
+.reveal .quiz-question .option-button code {
+  background: var(--quiz-answer-code-background, rgb(0 0 0 / 18%));
+  padding: 0.05em 0.22em;
+  border-radius: 0.2em;
+}
+.reveal .quiz-question .option-button a {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}

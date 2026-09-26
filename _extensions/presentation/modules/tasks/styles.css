@@ -1,0 +1,62 @@
+.reveal .presentation-task {
+  --task-accent: #f59f00;
+  --task-background: #fff5e8;
+  --task-border: #c4cde1;
+  margin: 24px 0;
+  border: 1px solid var(--task-border);
+  border-left: 6px solid var(--task-accent);
+  border-radius: 4px;
+  background: #fff;
+  text-align: left;
+}
+.reveal .presentation-task-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.3em minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  background: var(--task-background);
+  border-radius: 0 3px 0 0;
+  color: var(--presentation-navy);
+  font-size: .85em;
+  font-weight: 700;
+}
+.reveal .presentation-task-icon {
+  width: 1.3em;
+  height: 1.3em;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.reveal .presentation-task-time {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: 1em;
+  color: inherit;
+}
+.reveal .presentation-task-body { padding: 18px 24px; }
+.reveal .presentation-task-body > :first-child,
+.reveal .presentation-task-body > .fragment:first-child > :first-child { margin-top: 0; }
+.reveal .presentation-task-body > :last-child,
+.reveal .presentation-task-body > .fragment:last-child > :last-child { margin-bottom: 0; }
+
+/* The runtime measures in slide coordinates, independent of preview scale. */
+.reveal .presentation-task-fill {
+  box-sizing: border-box;
+  height: var(--presentation-task-fill-height, auto);
+  margin-bottom: 0;
+}
+
+.reveal .presentation-task-title {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

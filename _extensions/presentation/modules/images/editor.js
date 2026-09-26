@@ -18,6 +18,29 @@ Presentation.factories.images = function (context) {
     prepared = readTemplate("presentation-prepared-layout");
   const renderedRevision = source.revision || window.__presentationSession?.id;
   const sourceIds = new Map();
+  const revealSources = new Map();
+  function bindRevealSources() {
+    revealSources.clear();
+    for (const [id, items] of Object.entries(state)) {
+      const available = new Set((prepared[id] || []).map((_, index) => index));
+      // Sessions made before source IDs were stable contain random IDs. Match
+      // those once on restore, without changing editor/history identities.
+      const bind = (item, index) => {
+        if (index < 0) return;
+        revealSources.set(item._id, index);
+        available.delete(index);
+      };
+      for (const item of items)
+        bind(item, (prepared[id] || []).findIndex((entry, index) => available.has(index) && entry._id === item._id));
+      for (const item of items.filter(item => !revealSources.has(item._id))) {
+        const candidates = [...available].filter(index => prepared[id][index].asset === item.asset);
+        const exact = candidates.find(index => ['x','y','w','h','rotation','layer','transparency'].every(key => prepared[id][index][key] === item[key]));
+        bind(item, exact ?? candidates[0] ?? -1);
+      }
+      // Reset/restore may switch back to the original source objects.
+      (prepared[id] || []).forEach((entry, index) => revealSources.set(entry._id, index));
+    }
+  }
   let sourceToken = null,
     sourceLiveReload = false,
     sourceConnection = Promise.resolve();
@@ -38,8 +61,8 @@ Presentation.factories.images = function (context) {
         continue;
       }
       const preload = new Image();
-      preload.src = img.src;
-      catalog.set(id, { id, scope, src: img.src, label: img.alt, preload });
+
+      catalog.set(id, { id, scope, src: img.src, source: img.dataset.mediaSource || img.getAttribute("src"), label: img.alt, kind: img.dataset.mediaKind || "image", preload });
       list.push(id);
     }
   }
@@ -68,10 +91,10 @@ Presentation.factories.images = function (context) {
   const panel = document.createElement("aside");
   panel.className = "presentation-asset-library";
   panel.hidden = true;
-  panel.setAttribute("aria-label", Presentation.t("Image Library"));
+  panel.setAttribute("aria-label", Presentation.t("Media Library"));
   panel.dataset.preventSwipe = "true";
   panel.innerHTML =
-    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Image Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Image Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Image source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
+    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Media Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Media Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Image source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
   const shell = document.createElement("div");
   shell.className = "slide-menu-wrapper presentation-assets-shell";
   const backdrop = document.createElement("div");
@@ -364,6 +387,9 @@ Presentation.factories.images = function (context) {
         const node = document.createElement("div");
         node.className = "presentation-placed-image";
         node.dataset.index = index;
+        const sourceIndex = revealSources.get(item._id) ?? -1;
+        const anchor = layer.parentElement.querySelector(`[data-presentation-image-step="${sourceIndex + 1}"]`);
+        node._revealAnchor = anchor;
         const chosen = active && selected === index;
         node.classList.toggle("selected", chosen);
         Object.assign(node.style, {
@@ -374,8 +400,22 @@ Presentation.factories.images = function (context) {
           transform: `rotate(${item.rotation}deg)`,
           zIndex: item.layer,
         });
-        const img = document.createElement("img");
-        img.src = catalog.get(item.asset).src;
+        const media = catalog.get(item.asset);
+        const img = document.createElement(media.kind === 'video' ? 'video' : 'img');
+        if (media.kind === 'video') {
+          img.controls = !active;
+          img.preload = 'auto';
+          if (media.poster) img.poster = media.poster;
+          videoPreview(media).then(() => {
+            if (media.poster) img.poster = media.poster;
+          }).catch(() => {});
+          img.addEventListener('loadedmetadata', () => {
+            if (!media.poster && img.paused) img.currentTime = Math.min(0.1, img.duration / 2 || 0);
+          }, {once: true});
+          img.playsInline = true;
+          img.dataset.preventSwipe = 'true';
+        }
+        img.src = media.src;
         img.alt = catalog.get(item.asset).label;
         img.draggable = false;
         img.style.opacity = 1 - (item.transparency ?? 0) / 100;
@@ -402,12 +442,24 @@ Presentation.factories.images = function (context) {
             "Rotate image · Snap: 45° · Shift: 15°",
           );
           // Anchored to the local image frame: the offset rotates with the image.
-          target.append(handle);
+          if (media.kind !== 'video') target.append(handle);
         }
       });
     }
+    if (gesture?.type === 'move' && gesture.guides) {
+      const layer = layers.get(currentId());
+      for (const [axis, position] of Object.entries(gesture.guides)) {
+        const line = document.createElement('div');
+        line.className = `presentation-alignment-guide presentation-alignment-${axis}`;
+        line.setAttribute('aria-hidden', 'true');
+        line.style[axis === 'x' ? 'left' : 'top'] = `${position * 100}%`;
+        layer.append(line);
+      }
+    }
     const selectedItem = editing ? state[currentId()]?.[selected] : null;
     properties.hidden = !selectedItem;
+    const videoSelected = selectedItem && catalog.get(selectedItem.asset)?.kind === 'video';
+    for (const name of ['rotation', 'transparency']) fields[name].closest('label').hidden = !!videoSelected;
     for (const [property, field] of Object.entries(fields)) {
       field.disabled = !selectedItem;
       if (document.activeElement !== field)
@@ -426,9 +478,27 @@ Presentation.factories.images = function (context) {
     bar.querySelector("[data-library=redo]").disabled =
       !history.canRedo(selectedIdentity());
     bar.querySelector("[data-library=delete]").disabled = selected === null;
+    updateImageVisibility();
     context.changed();
   }
+  function updateImageVisibility() {
+    for (const layer of [...layers.values(), ...backgrounds.values()]) {
+      for (const node of layer.querySelectorAll('.presentation-placed-image')) {
+        let anchor = node._revealAnchor;
+        let concealed = false;
+        while (anchor && anchor !== layer.parentElement) {
+          if (anchor.classList.contains('fragment') && !anchor.classList.contains('visible')) concealed = true;
+          anchor = anchor.parentElement;
+        }
+        node.classList.toggle('presentation-image-concealed', concealed && !editing && !armed);
+      }
+    }
+  }
+  deck.on('fragmentshown', updateImageVisibility);
+  deck.on('fragmenthidden', updateImageVisibility);
+  const previewObservers = [];
   function library() {
+    previewObservers.splice(0).forEach(observer => observer.disconnect());
     const container = panel.querySelector(".presentation-asset-catalog");
     container.replaceChildren();
     const localItems = locals.get(currentId()) || [];
@@ -455,14 +525,40 @@ Presentation.factories.images = function (context) {
           button = document.createElement("button");
         button.dataset.asset = id;
         button.title = asset.label;
-        const img = document.createElement("img");
-        img.src = asset.src;
+        const img = document.createElement(asset.kind === 'video' ? 'span' : 'img');
+        if (asset.kind === 'video') { img.className = 'presentation-media-video-preview'; img.textContent = '▶'; }
+        else { img.loading = 'lazy'; img.src = asset.src; }
         img.alt = "";
         img.draggable = false;
+        if (/\.gif(?:[?#]|$)/i.test(asset.src)) {
+          img.addEventListener('load', () => {
+            const still = document.createElement('canvas');
+            still.width = img.naturalWidth; still.height = img.naturalHeight;
+            still.style.cssText = 'width:100%;height:auto;display:block';
+            still.getContext('2d').drawImage(img,0,0);
+            if (!button.matches(':hover')) img.replaceWith(still);
+            button.addEventListener('pointerenter', () => still.replaceWith(img));
+            button.addEventListener('pointerleave', () => img.replaceWith(still));
+          }, {once:true});
+        }
         const label = document.createElement("span");
         label.textContent = asset.label;
         button.append(img, label);
         grid.append(button);
+        if (asset.kind === 'video') {
+          button.classList.add('presentation-video-tile');
+          const observer = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            observer.disconnect();
+            const preview = document.createElement('video');
+            preview.muted = true; preview.playsInline = true; preview.preload = 'metadata';
+            preview.addEventListener('loadedmetadata', () => { if (preview.duration > .1) preview.currentTime = .1; }, {once:true});
+            preview.src = asset.src;
+            img.replaceWith(preview);
+          }, {root:container});
+          observer.observe(img);
+          previewObservers.push(observer);
+        }
       }
     }
     if (!container.children.length) {
@@ -554,6 +650,10 @@ Presentation.factories.images = function (context) {
       version: 1,
       revision: renderedRevision,
       slides: copy(state),
+      assets: [...new Set(Object.values(state).flat().map(item => item.asset))].map(id => {
+        const asset=catalog.get(id), url=new URL(asset.src,location.href);
+        return {id,kind:asset.kind,src:url.origin===location.origin ? url.pathname : asset.src,label:asset.label};
+      }),
     }),
     saveToSource: () => actions.source(),
     restore: () => actions.restore(),
@@ -593,10 +693,9 @@ Presentation.factories.images = function (context) {
     const id = currentId(),
       p = point(event);
     if (p.x < 0 || p.x > 1 || p.y < 0 || p.y > 1) return;
-    const img = new Image();
-    img.src = catalog.get(asset).src;
+    let img;
     try {
-      await img.decode();
+      img = await loadMedia(catalog.get(asset));
     } catch {
       announce(Presentation.t("This image could not be loaded."));
       return;
@@ -753,10 +852,19 @@ Presentation.factories.images = function (context) {
         dy = p.y - gesture.start.y;
       const ratio = contentRatio(currentId());
       if (gesture.type === "move") {
-        Object.assign(
-          item,
-          geometry.fit({ ...old, x: old.x + dx, y: old.y + dy }, ratio),
-        );
+        const moved = geometry.fit({ ...old, x: old.x + dx, y: old.y + dy }, ratio);
+        gesture.guides = {};
+        if (event.altKey) Object.assign(item, moved);
+        else {
+          const slide = deck.getCurrentSlide().getBoundingClientRect();
+          const center = {x: (slide.left + slide.width / 2 - p.rect.left) / p.rect.width,
+                          y: (slide.top + slide.height / 2 - p.rect.top) / p.rect.height};
+          const aligned = geometry.align(moved,
+            state[currentId()].filter((_, index) => index !== gesture.index), ratio,
+            {x: 6 / p.rect.width, y: 6 / p.rect.height}, center);
+          Object.assign(item, aligned.item);
+          gesture.guides = aligned.guides;
+        }
       } else if (gesture.type === "rotate") {
         const cx = old.x + old.w / 2,
           cy = old.y + old.h / 2;
@@ -781,6 +889,7 @@ Presentation.factories.images = function (context) {
     const completed = gesture;
     gesture = null;
     panel.classList.remove("dragging");
+    document.querySelectorAll('.presentation-alignment-guide').forEach(line => line.remove());
     if (completed.type === "add") {
       if (completed.ghost) {
         completed.ghost.remove();
@@ -869,15 +978,8 @@ Presentation.factories.images = function (context) {
       const target = sourceIds.get(id) || id;
       const items = copy(state[id] || []).map((item) => ({
         ...item,
-        ...(Math.abs(
-          item.h -
-            (item.w *
-              contentRatio(id) *
-              catalog.get(item.asset).preload.naturalHeight) /
-              catalog.get(item.asset).preload.naturalWidth,
-        ) > 0.00001
-          ? { height: item.h * 100 }
-          : {}),
+        height: item.h * 100,
+        src: catalog.get(item.asset)?.source,
         reference:
           item.asset.startsWith("lesson:") ? item.asset :
           item.asset.startsWith("global:") &&
@@ -911,6 +1013,7 @@ Presentation.factories.images = function (context) {
         source.revision = result.revision;
         sourceIds.set(id, result.slide);
         prepared[id] = copy(state[id] || []);
+        bindRevealSources();
         announce(
           sourceLiveReload
             ? Presentation.t("Saved to Quarto source. Preview is updating…")
@@ -966,18 +1069,63 @@ Presentation.factories.images = function (context) {
       input.value = "";
     }
   });
-  deck.on("slidechanged", close);
+  deck.on('slidechanged', () => {
+    document.querySelectorAll('.presentation-placed-image video').forEach(video => video.pause());
+    close();
+  });
+  deck.on('fragmenthidden', () => {
+    document.querySelectorAll('.presentation-image-concealed video').forEach(video => video.pause());
+  });
   deck.on("overviewshown", close);
-  api.ready = Promise.all(
-    [...catalog.values()].map((asset) =>
-      asset.preload.decode().catch(() => {}),
-    ),
-  )
-    .then(() => {
+  // Cache a decoded frame independently of the DOM nodes rebuilt by editing.
+  function videoPreview(asset) {
+    if (asset.previewPromise) return asset.previewPromise;
+    asset.previewPromise = new Promise((resolve, reject) => {
+      const video = document.createElement('video');
+      video.preload = 'auto';
+      video.muted = true;
+      video.playsInline = true;
+      const timer = setTimeout(() => finish(new Error('Video preview timed out.')), 15000);
+      function finish(error) {
+        clearTimeout(timer);
+        video.onloadedmetadata = video.onseeked = video.onerror = null;
+        video.removeAttribute('src');
+        video.load();
+        if (error) { asset.previewPromise = null; reject(error); }
+        else resolve(asset.preload);
+      }
+      video.onloadedmetadata = () => {
+        asset.preload = {naturalWidth: video.videoWidth, naturalHeight: video.videoHeight};
+        video.currentTime = Math.min(0.1, video.duration / 2 || 0);
+      };
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.min(1280, video.videoWidth);
+          canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          asset.poster = canvas.toDataURL('image/jpeg', 0.85);
+        } catch (_) { /* Remote media without CORS still use the decoded video frame. */ }
+        finish();
+      };
+      video.onerror = () => finish(new Error('Video could not be loaded.'));
+      video.src = asset.src;
+    });
+    return asset.previewPromise;
+  }
+  async function loadMedia(asset) {
+    if (asset.loaded) return asset.preload;
+    if (asset.kind === 'video') await videoPreview(asset);
+    else { asset.preload.src = asset.src; await asset.preload.decode(); }
+    asset.loaded = true;
+    return asset.preload;
+  }
+  api.ready = Promise.resolve().then(async () => {
+      // Load dimensions only for placements actually authored on slides.
       for (const [id, layout] of Object.entries(prepared)) {
         if (layout.format !== "friendly" || !layers.has(id)) continue;
         const ratio = contentRatio(id);
-        prepared[id] = layout.images.map((entry) => {
+        prepared[id] = await Promise.all(layout.images.map(async (entry, index) => {
           const asset = catalog.has(id + ":" + entry.asset)
             ? id + ":" + entry.asset
             : /^(global|lesson):/.test(entry.asset)
@@ -985,7 +1133,7 @@ Presentation.factories.images = function (context) {
               : "global:" + entry.asset;
           if (!allowed(id, asset))
             throw Error("Unknown layout image: " + entry.asset);
-          const image = catalog.get(asset).preload,
+          const image = await loadMedia(catalog.get(asset)),
             w = (entry.width ?? 25) / 100;
           const h =
             entry.height !== undefined
@@ -993,6 +1141,7 @@ Presentation.factories.images = function (context) {
               : (w * ratio * image.naturalHeight) / image.naturalWidth;
           return geometry.fit(
             {
+              _id: `source:${id}:${index}`,
               asset,
               x: entry.x !== undefined ? entry.x / 100 : (1 - w) / 2,
               y: entry.y !== undefined ? entry.y / 100 : (1 - h) / 2,
@@ -1004,7 +1153,7 @@ Presentation.factories.images = function (context) {
             },
             ratio,
           );
-        });
+        }));
       }
       state = validate({ version: 1, slides: prepared }).clean;
       for (const [id, items] of Object.entries(state))
@@ -1029,6 +1178,7 @@ Presentation.factories.images = function (context) {
           ),
         );
       }
+      bindRevealSources();
       refresh();
     })
     .catch((error) => {
@@ -1049,8 +1199,8 @@ Presentation.factories.images = function (context) {
     if (catalog.has(id)) return id;
     // Explicitly configured images take precedence over automatic discovery.
     if ([...catalog.values()].some(asset => asset.src === entry.data && !asset.id.includes(':file:'))) return null;
-    const preload = new Image(); preload.src = entry.data;
-    catalog.set(id, {id, scope: entry.scope, src: entry.data, label: entry.label, preload});
+    const preload = new Image();
+    catalog.set(id, {id, scope: entry.scope, src: entry.data || new URL(entry.src, location.href).href, source: entry.src, label: entry.label, kind: entry.kind || 'image', preload});
     (entry.scope === 'lesson' ? lessonAssets : globals).push(id);
     return id;
   }
@@ -1074,17 +1224,21 @@ Presentation.factories.images = function (context) {
     const slide = currentId();
     try {
       for (const file of files) {
-        if (!file.type.startsWith('image/')) continue;
+        if (!file.type.startsWith('image/') && !['video/mp4','video/webm'].includes(file.type)) continue;
         if (file.size > 12 * 1024 * 1024) throw Error(Presentation.t('Image is too large (maximum 12 MB).'));
         const url = URL.createObjectURL(file), img = new Image();
         let bytes;
         try {
+          if (file.type === 'image/gif' || file.type.startsWith('video/')) {
+            bytes = await new Promise((resolve,reject) => {const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});
+          } else {
           img.src = url; await img.decode();
           if (img.naturalWidth * img.naturalHeight > 32000000) throw Error(Presentation.t('Image dimensions are too large.'));
           const canvas = document.createElement('canvas');
           canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
           canvas.getContext('2d').drawImage(img,0,0);
           bytes=canvas.toDataURL('image/png').split(',')[1];
+          }
         } finally { URL.revokeObjectURL(url); }
         const result = await assetRequest({action:'import',name:file.name || 'clipboard',bytes});
         const asset = addDiscovered(result.asset) || [...catalog.values()].find(a=>a.src===result.asset.data)?.id;

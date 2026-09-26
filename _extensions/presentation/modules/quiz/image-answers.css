@@ -1,0 +1,49 @@
+/* Image answers reuse the quiz's selection, scoring and reveal behavior. */
+.reveal .quiz-images .quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--quiz-answer-row-gap, 12px) var(--quiz-answer-column-gap, 20px);
+}
+.reveal .quiz-images .quiz-options .option-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--quiz-image-answer-height, 140px);
+  min-width: 0;
+  margin: 0;
+  padding: 12px 48px;
+}
+.reveal .quiz-images .option-button .quiz-option-number {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  line-height: 1;
+}
+.reveal .quiz-images .option-button :is(p, figure, .quarto-figure) {
+  margin: 0;
+  padding: 0;
+}
+.reveal .quiz-images .option-button :is(p, figure, .quarto-figure, span.correct) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reveal .quiz-images .option-button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  object-fit: contain;
+}
+.reveal .quiz-images .option-button figcaption {
+  display: none;
+}
+
+.reveal .quiz-question[data-quiz-columns="1"] .quiz-options {
+  grid-template-columns: minmax(0, 1fr);
+}

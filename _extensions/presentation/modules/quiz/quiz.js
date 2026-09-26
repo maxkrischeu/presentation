@@ -242,6 +242,7 @@ window.RevealQuiz = function () {
         heading.prepend(number);
       });
       const maximum = (slide) =>
+        slide.classList.contains("quiz-cloze") ? slide.querySelectorAll('.answer, .quiz-cloze-slot').length :
         slide.classList.contains("quiz-multiple")
           ? Array.from(slide.querySelectorAll("li")).filter((option) =>
               option.querySelector("span.correct"),
@@ -373,6 +374,22 @@ window.RevealQuiz = function () {
       deck.getSlides().forEach((slide, index) => {
         let quizQuestion = slide.classList.contains("quiz-question");
         if (quizQuestion) {
+          if (slide.classList.contains("quiz-cloze")) {
+            const reset = resetButton.cloneNode(true);
+            const api = Presentation.factories.quizCloze({
+              slide, settings,
+              controls: [checkButton.cloneNode(true), againButton.cloneNode(true), reset, feedbackElement.cloneNode(true)],
+              record(points) { if (!scores.has(slide)) scores.set(slide, points); updateScores(); },
+              score: () => scores.has(slide) ? scores.get(slide) : null,
+            });
+            if (!settings.disableReset) reset.addEventListener('click', resetAll);
+            resetQuestions.push(api.reset);
+            sessionQuestions.push({slide, capture: api.capture, restore(entry) {
+              if (entry.score !== null && entry.score !== undefined) scores.set(slide, entry.score);
+              api.restore(entry);
+            }});
+            return;
+          }
           let cloneCheckBtn = checkButton.cloneNode(true);
           let cloneResetBtn = resetButton.cloneNode(true);
           const cloneAgainBtn = againButton.cloneNode(true);
@@ -394,9 +411,18 @@ window.RevealQuiz = function () {
           if (settings.shuffleOptions) {
             options = shuffleArray(Array.from(options));
             options.forEach((opt) => {
-              slide.appendChild(opt);
+              opt.parentElement.appendChild(opt);
             });
           }
+
+          // Number in final display order, including shuffled questions.
+          options.forEach((option, index) => {
+            option.parentElement.classList.add("quiz-options");
+            const number = document.createElement("span");
+            number.className = "quiz-option-number";
+            number.textContent = `${index + 1}. `;
+            (option.querySelector(":scope > p") || option).prepend(number);
+          });
 
           // Native Reveal fragments: question first, then answers in display order.
           // Controls and feedback share the final answer's step (also on rewind).
@@ -408,7 +434,7 @@ window.RevealQuiz = function () {
             .filter(
               (element) =>
                 !element.matches(
-                  "h1,h2,h3,h4,h5,h6,ul,ol,aside,template,script,style",
+                  "h1,h2,h3,h4,h5,h6,ul,ol,aside,template,script,style,[hidden]",
                 ) && !element.querySelector(".option-button"),
             )
             .forEach((element) => revealAt(element, 0));
@@ -452,14 +478,23 @@ window.RevealQuiz = function () {
                     selectedOptions.push(this);
                   }
                 } else {
-                  // Single choice: only one selection allowed
+                  // Clicking the selected answer again clears it.
+                  const wasSelected = selectedOptions.includes(this);
                   options.forEach((opt) => opt.classList.remove("selected"));
-                  this.classList.add("selected");
-                  selectedOptions = [this];
+                  if (!wasSelected) this.classList.add("selected");
+                  selectedOptions = wasSelected ? [] : [this];
                 }
                 cloneCheckBtn.disabled = selectedOptions.length === 0;
               }
             });
+          });
+          slide.addEventListener("click", (event) => {
+            if (isAnswered || !selectedOptions.length || cloneFeedbackElement.textContent) return;
+            if (event.target.closest('.option-button, button, a, input, select, textarea, video, audio, iframe, canvas, [contenteditable], .presentation-placed-image, .presentation-image-proxy')) return;
+            options.forEach((option) => option.classList.remove("selected", "correct", "incorrect"));
+            selectedOptions = [];
+            cloneFeedbackElement.textContent = "";
+            cloneCheckBtn.disabled = true;
           });
           if (!settings.disableReset) {
             cloneResetBtn.addEventListener("click", resetAll);
@@ -553,10 +588,7 @@ window.RevealQuiz = function () {
                 // Single choice logic (original)
                 let selectedOption = selectedOptions[0];
                 let isCorrect =
-                  selectedOption.querySelector("span") &&
-                  selectedOption
-                    .querySelector("span")
-                    .classList.contains("correct");
+                  !!selectedOption.querySelector("span.correct");
                 let hasExplanation =
                   selectedOption.querySelector("span") &&
                   selectedOption

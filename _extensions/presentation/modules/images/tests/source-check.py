@@ -3,9 +3,35 @@ import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from source import save_layout, revision
+from source import save_layout, revision, headings
 
 class SourceLayoutTest(unittest.TestCase):
+    def test_new_media_roundtrip(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'test.qmd'
+            path.write_text('## Media {#media}\n\n::: {.image src="assets/a.svg" position="free" x="10%" y="20%" width="30%"}\n:::\n\n::: {.image src="assets/inline.svg"}\n:::\n')
+            items = [dict(asset='global:file:assets/movie.mp4', src='assets/movie.mp4', x=.1, y=.2, w=.3, h=.4)]
+            result = save_layout(path, revision(path.read_bytes()), 1, 'media', items, 1)
+            self.assertIn('.video src="assets/movie.mp4" position="free" x="10%" y="20%" width="30%"', path.read_text())
+            self.assertIn('.image src="assets/inline.svg"', path.read_text())
+            self.assertNotIn('assets/a.svg', path.read_text())
+            save_layout(path, result['revision'], 1, 'media', items, 1)
+            self.assertEqual(path.read_text().count('.video'), 1)
+
+    def test_empty_headings_roundtrip(self):
+        for heading in ['##', '## ', '  ##', '## ###']:
+            with self.subTest(heading=heading), tempfile.TemporaryDirectory() as folder:
+                path = Path(folder) / 'test.qmd'
+                text = '## First\n\nText.\n\n' + heading + '\n\n::: {.task height="fill"}\nTask.\n:::\n'
+                path.write_text(text)
+                self.assertEqual(len(headings(text)), 2)
+                items = [dict(asset='global:cloud', x=.1, y=.2, w=.3, h=.4)]
+                result = save_layout(path, revision(path.read_bytes()), 2, 'section', items, 2)
+                self.assertEqual(len(headings(path.read_text())), 2)
+                self.assertIn('::: {.task height="fill"}', path.read_text())
+                save_layout(path, result['revision'], 2, result['slide'], items, 2)
+                self.assertEqual(path.read_text().count('.placed-image'), 1)
+
     def test_roundtrip_and_conflict(self):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / 'test.qmd'

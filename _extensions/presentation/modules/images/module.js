@@ -11,6 +11,7 @@ Presentation.register({
       modes: [
         {
           id: "position",
+          icon: "<path d=\"M12 3v18M3 12h18m-12-6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3\"/>",
           entryPanel: "images",
           label: "Position Images",
           key: "V",
@@ -41,7 +42,9 @@ Presentation.register({
       commands: [
         {
           id: "assets",
-          label: "Image Library",
+          panel: "images",
+          icon: "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><circle cx=\"8\" cy=\"9\" r=\"1.5\"/><path d=\"m4 18 6-6 4 4 3-3 4 4\"/>",
+          label: "Media Library",
           key: "I",
           kind: "panel",
           menu: "modes",

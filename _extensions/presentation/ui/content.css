@@ -23,6 +23,13 @@
 .reveal .column {
   min-width: 0;
 }
+/* Quarto's native video shortcode is upgraded from <video> to a Video.js
+   container. Center either form without touching the player's controls. */
+.reveal .slides .video-js,
+.reveal .slides video:not(.vjs-tech) {
+  display: block;
+  margin-inline: auto;
+}
 .reveal .statement,
 .reveal .result {
   padding: 18px 24px;

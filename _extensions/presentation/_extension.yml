@@ -16,7 +16,7 @@ contributes:
     format: "presentation-revealjs"
   formats:
     revealjs:
-      lang: "de"
+      lang: "en"
       width: 1280
       height: 720
       margin: 0
@@ -35,13 +35,16 @@ contributes:
       theme:
         - "default"
         - "ui/theme.scss"
-      css:
-        - "presentation.css"
       filters:
         - "ui/filter.lua"
         - "modules/annotations/rough.lua"
         - "modules/documents/filter.lua"
+        - "modules/embed/filter.lua"
+        - "modules/fragments/filter.lua"
         - "modules/images/filter.lua"
+        - "modules/laser/filter.lua"
+        - "modules/quiz/filter.lua"
+        - "modules/tasks/filter.lua"
       revealjs-plugins:
         - "runtime/RevealDrop"
         - "runtime/RevealQuiz"

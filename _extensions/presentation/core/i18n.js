@@ -1,7 +1,7 @@
 // Presentation UI only; authored slide content and asset labels are never translated.
 window.Presentation = window.Presentation || {};
 (() => {
-  const language = (document.documentElement.lang || "de")
+  const language = (document.getElementById('presentation-frame-template')?.dataset.language || document.documentElement.lang || "en")
     .toLowerCase()
     .split("-")[0];
   const de = Presentation.messages.de || {};

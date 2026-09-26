@@ -43,6 +43,7 @@ Presentation.register({
         },
         {
           id: "more",
+          panel: "menu",
           label: "Modes Menu",
           key: "M",
           kind: "panel",
@@ -54,6 +55,8 @@ Presentation.register({
         },
         {
           id: "help",
+          panel: "help",
+          icon: "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 8a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3v.1\"/>",
           label: "Keyboard Help",
           key: "?",
           kind: "panel",
@@ -61,19 +64,8 @@ Presentation.register({
           run: () => deck.toggleHelp(),
         },
         {
-          id: "search",
-          label: "Search",
-          kind: "panel",
-          run: () => {
-            const input = document.querySelector(".searchbox");
-            if (input?.style.display === "inline") {
-              input.style.display = "none";
-              input.querySelector("input")?.blur();
-            } else deck.getPlugin("search")?.open();
-          },
-        },
-        {
           id: "fullscreen",
+          icon: "<path d=\"M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6\"/>",
           label: "Fullscreen",
           key: "F",
           menu: "modes",
@@ -92,6 +84,7 @@ Presentation.register({
         },
         {
           id: "speaker",
+          icon: "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"1\"/><path d=\"M8 21h8m-4-4v4M5 7h6m-6 3h4m5-3h5v6h-5Z\"/>",
           label: "Speaker View",
           key: "S",
           menu: "modes",
@@ -116,6 +109,7 @@ Presentation.register({
       modes: [
         {
           id: "blackout",
+          icon: "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"m4 5 16 14\"/>",
           menu: false,
           label: "Black screen (standard mode)",
           key: ".",
@@ -136,19 +130,6 @@ Presentation.register({
           priority: 30,
           isOpen: () => !!document.querySelector(".overlay-help"),
           close: () => deck.toggleHelp(false),
-        },
-        {
-          id: "search",
-          priority: 30,
-          isOpen: () =>
-            document.querySelector(".searchbox")?.style.display === "inline",
-          close: () => {
-            const box = document.querySelector(".searchbox");
-            if (box) {
-              box.style.display = "none";
-              box.querySelector("input")?.blur();
-            }
-          },
         },
       ],
     };

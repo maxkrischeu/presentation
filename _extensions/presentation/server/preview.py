@@ -46,6 +46,14 @@ def page_revision(page):
     return digest.hexdigest()
 
 class Handler(SimpleHTTPRequestHandler):
+    def handle(self):
+        try:
+            super().handle()
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+            # Browsers cancel downloads when navigating, reloading or seeking.
+            # The connection is gone; do not attempt to send an error response.
+            self.close_connection = True
+
     def end_headers(self):
         self.send_header('Cache-Control', 'no-store, max-age=0')
         super().end_headers()
@@ -66,6 +74,10 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         url = urlsplit(self.path)
         output = OUTPUT
+        if url.path == '/favicon.ico' and not (output / 'favicon.ico').is_file():
+            self.send_response(204)
+            self.end_headers()
+            return
         if url.path == '/__presentation/revision':
             page = (output / unquote(parse_qs(url.query).get('page', [''])[0]).lstrip('/')).resolve()
             if not page.is_relative_to(output) or page.suffix != '.html' or not page.is_file():

@@ -1,8 +1,8 @@
 /* PDF.js preview with native-browser links, independent of slide markup. */
 Presentation.register({
   id: "documents",
-  requires: ["frame"],
-  setup({ deck, t, print }) {
+  requires: ["frame", "media"],
+  setup({ deck, t, print, get }) {
     const previews = [];
     function createPreview({ url, title, height, lazy = false }) {
       const source = new URL(url, document.baseURI);
@@ -52,6 +52,7 @@ Presentation.register({
         url: link.href, title: link.textContent, lazy: true,
         height: link.getAttribute("height") || link.dataset.height,
       });
+      get('media').apply(preview, link.dataset);
       const paragraph = link.parentElement;
       if (paragraph.tagName === "P" && paragraph.childNodes.length === 1)
         paragraph.replaceWith(preview);
@@ -62,7 +63,7 @@ Presentation.register({
       const slide = deck.getCurrentSlide();
       for (const preview of previews) {
         if (!slide?.contains(preview)) continue;
-        if (!preview.style.getPropertyValue("--document-height")) {
+        if (!preview.dataset.mediaHeight && !preview.style.getPropertyValue("--document-height")) {
           const scale = deck.getScale() || 1;
           const top = (preview.getBoundingClientRect().top - slide.getBoundingClientRect().top) / scale;
           const bottom = parseFloat(getComputedStyle(slide).paddingBottom) || 0;

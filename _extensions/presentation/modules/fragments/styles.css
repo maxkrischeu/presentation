@@ -1,0 +1,21 @@
+/* Overview and print show all content without changing the current fragment step. */
+.reveal.overview .slides .fragment,
+html.print-pdf .reveal .slides .fragment {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+@media print {
+  .reveal .slides .fragment { opacity:1 !important; visibility:visible !important; transform:none !important; transition:none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal .slides .presentation-auto-fragment { transition:none !important; transform:none !important; transition:none !important; }
+}
+/* The list marker belongs to its text step, including nested list items. */
+html:not(.print-pdf) .reveal:not(.overview) li:has(> .presentation-auto-fragment:not(.visible))::marker {
+  color: transparent;
+}
+@media print {
+  .reveal li:has(> .presentation-auto-fragment)::marker { color:var(--presentation-blue) !important; }
+}

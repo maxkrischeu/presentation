@@ -113,11 +113,11 @@ window.Presentation = window.Presentation || {};
 ;
 
 /* core/i18n.js */
-Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "Cancel": "Abbrechen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Position Images": "Bilder bearbeiten", "Image Library": "Bildbibliothek", "Save to Source": "Im Quarto-Dokument speichern", "Close Image Library": "Bildbibliothek schließen", "Image source": "Bildquelle", "Shared": "Gemeinsam", "Image editing": "Bildbearbeitung", "Undo": "Rückgängig", "Redo": "Wiederholen", "Delete Image": "Bild löschen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Resize image": "Bildgröße ändern", "Rotate image": "Bild drehen", "Rotate image · Snap: 45° · Shift: 15°": "Bild drehen · Einrasten: 45° · Umschalt: 15°", "No shared images prepared.": "Keine gemeinsamen Bilder vorbereitet.", "No images prepared for this slide.": "Keine Bilder für diese Folie vorbereitet.", "Invalid placement file.": "Ungültige Bildlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "This image could not be loaded.": "Dieses Bild konnte nicht geladen werden.", "Image selected. Close the library to move or resize it.": "Bild ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Placements saved.": "Bildpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Bildlayout-Datei ist zu groß.", "Loaded; unavailable images or slides were skipped.": "Geladen; nicht verfügbare Bilder oder Folien wurden übersprungen.", "Placements loaded.": "Bildpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Bildpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "I (image editing)": "I (Bildbearbeitung)", "Open / close image library": "Bildbibliothek öffnen / schließen", "Delete selected image": "Ausgewähltes Bild löschen", "Undo / redo (image editing)": "Rückgängig / Wiederholen (Bildbearbeitung)", "This Lesson": "Diese Stunde", "Use quarto preview to import images.": "Zum Einfügen von Bildern bitte quarto preview verwenden.", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Image saved in assets.": "Bild im assets-Ordner gespeichert.", "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz"}};
+Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "Cancel": "Abbrechen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Position Images": "Bilder bearbeiten", "Image Library": "Bildbibliothek", "Save to Source": "Im Quarto-Dokument speichern", "Close Image Library": "Bildbibliothek schließen", "Image source": "Bildquelle", "Shared": "Gemeinsam", "Image editing": "Bildbearbeitung", "Undo": "Rückgängig", "Redo": "Wiederholen", "Delete Image": "Bild löschen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Resize image": "Bildgröße ändern", "Rotate image": "Bild drehen", "Rotate image · Snap: 45° · Shift: 15°": "Bild drehen · Einrasten: 45° · Umschalt: 15°", "No shared images prepared.": "Keine gemeinsamen Bilder vorbereitet.", "No images prepared for this slide.": "Keine Bilder für diese Folie vorbereitet.", "Invalid placement file.": "Ungültige Bildlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "This image could not be loaded.": "Dieses Bild konnte nicht geladen werden.", "Image selected. Close the library to move or resize it.": "Bild ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Placements saved.": "Bildpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Bildlayout-Datei ist zu groß.", "Loaded; unavailable images or slides were skipped.": "Geladen; nicht verfügbare Bilder oder Folien wurden übersprungen.", "Placements loaded.": "Bildpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Bildpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "I (image editing)": "I (Bildbearbeitung)", "Open / close image library": "Bildbibliothek öffnen / schließen", "Delete selected image": "Ausgewähltes Bild löschen", "Undo / redo (image editing)": "Rückgängig / Wiederholen (Bildbearbeitung)", "This Lesson": "Diese Stunde", "Use quarto preview to import images.": "Zum Einfügen von Bildern bitte quarto preview verwenden.", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Image saved in assets.": "Bild im assets-Ordner gespeichert.", "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "Media Library": "Medienbibliothek", "Close Media Library": "Medienbibliothek schließen", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz", "Available terms": "Verfügbare Begriffe", "Gap {number}": "Lücke {number}", "Previous search result": "Vorheriger Treffer", "Next search result": "Nächster Treffer", "No search results": "Keine Treffer"}};
 // Presentation UI only; authored slide content and asset labels are never translated.
 window.Presentation = window.Presentation || {};
 (() => {
-  const language = (document.documentElement.lang || "de")
+  const language = (document.getElementById('presentation-frame-template')?.dataset.language || document.documentElement.lang || "en")
     .toLowerCase()
     .split("-")[0];
   const de = Presentation.messages.de || {};
@@ -231,7 +231,12 @@ Presentation.mountModes = function (context) {
       return;
     }
     if (active !== "standard" && !command.allowIn?.includes(active)) return;
-    if (command.kind === "panel") command.run();
+    if (command.kind === "panel") {
+      // Preserve the target panel so its command can still toggle it closed.
+      for (const panel of orderedPanels())
+        if (panel.id !== command.panel && panel.isOpen()) panel.close();
+      command.run();
+    }
     else {
       closePanels();
       (command.enter || command.run)?.();
@@ -263,7 +268,7 @@ Presentation.mountModes = function (context) {
       const editable =
         event.target.isContentEditable ||
         event.target.closest?.(
-          'input, textarea, select, [role="textbox"], dialog[open]',
+          'input, textarea, select, [role="textbox"], [data-presentation-keyboard="local"], dialog[open]',
         );
       if (editable) return;
       const key = event.key.toLowerCase();
@@ -299,7 +304,7 @@ Presentation.mountModes = function (context) {
         !event.altKey
       ) {
         consume();
-        if (!event.repeat && !mode) invoke("search");
+        if (!event.repeat && (!mode || mode.id === "search")) invoke("search");
         return;
       }
       if (event.ctrlKey || event.metaKey || event.altKey) return;
@@ -334,8 +339,6 @@ Presentation.mountModes = function (context) {
 Presentation.mountHelp = function (context) {
   const { deck, t } = context;
   const update = () => {
-    const search = document.querySelector(".searchinput");
-    if (search) search.placeholder = t("Search...");
     const table = document.querySelector(".overlay-help table");
     if (!table || table.dataset.presentationKeys) return;
     table.dataset.presentationKeys = "true";
@@ -430,7 +433,8 @@ Presentation.factories.frame = function (context) {
       el.title = el.textContent;
     });
   });
-  return { dock: template.dataset.dock === "true" };
+  return { dock: template.dataset.dock === "true",
+    dockItems: template.dataset.dockItems ? JSON.parse(template.dataset.dockItems) : null };
 };
 
 ;
@@ -622,9 +626,17 @@ Presentation.mountDock = function (context) {
   const standard = document.createElement("div");
   standard.className = "presentation-standard-controls";
   const buttons = [];
-  for (const command of [...Presentation.commands.values()]
-    .filter((c) => c.dock)
-    .sort((a, b) => a.dock.order - b.dock.order)) {
+  const configured = context.get("frame").dockItems;
+  const selected = configured === null
+    ? [...Presentation.commands.values()].filter(c => c.dock)
+        .sort((a, b) => a.dock.order - b.dock.order)
+    : configured.map(id => {
+        const command = Presentation.commands.get(id);
+        if (!command || !(command.icon || command.dock?.icon))
+          throw new Error(`presentation.dock.items: unknown command or missing icon: ${id}`);
+        return command;
+      });
+  for (const command of selected) {
     const button = document.createElement("button");
     button.type = "button";
     button.dataset.action = command.id;
@@ -632,11 +644,19 @@ Presentation.mountDock = function (context) {
       t(command.label) + (command.key ? " (" + command.key + ")" : "");
     button.title = label;
     button.setAttribute("aria-label", label);
-    button.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${command.dock.icon}</svg>`;
+    button.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${command.icon || command.dock.icon}</svg>`;
     button.addEventListener("click", () => invoke(command.id));
     standard.append(button);
     buttons.push({ button, command });
   }
+  standard.addEventListener("wheel", event => {
+    if (event.ctrlKey || standard.scrollWidth <= standard.clientWidth) return;
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? standard.clientWidth : 1;
+    standard.scrollLeft += delta * unit;
+    event.preventDefault();
+    event.stopPropagation();
+  }, { passive: false });
   root.append(standard);
   for (const toolbar of Presentation.toolbars) root.append(toolbar.element);
   const update = () => {
@@ -672,6 +692,8 @@ Presentation.mountDock = function (context) {
         "--presentation-footer",
       ),
     );
+    // The middle footer column remains available without covering its labels.
+    standard.style.maxWidth = `${Math.max(48, rect.width / 3 - 24)}px`;
     root.style.left = `${rect.left + rect.width / 2}px`;
     root.style.top = `${rect.bottom - (deck.isOverview() ? 58 : footer * deck.getScale())}px`;
     root.style.height = `${footer * deck.getScale()}px`;
@@ -743,6 +765,7 @@ Presentation.register({
         },
         {
           id: "more",
+          panel: "menu",
           label: "Modes Menu",
           key: "M",
           kind: "panel",
@@ -754,6 +777,8 @@ Presentation.register({
         },
         {
           id: "help",
+          panel: "help",
+          icon: "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 8a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3v.1\"/>",
           label: "Keyboard Help",
           key: "?",
           kind: "panel",
@@ -761,19 +786,8 @@ Presentation.register({
           run: () => deck.toggleHelp(),
         },
         {
-          id: "search",
-          label: "Search",
-          kind: "panel",
-          run: () => {
-            const input = document.querySelector(".searchbox");
-            if (input?.style.display === "inline") {
-              input.style.display = "none";
-              input.querySelector("input")?.blur();
-            } else deck.getPlugin("search")?.open();
-          },
-        },
-        {
           id: "fullscreen",
+          icon: "<path d=\"M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6\"/>",
           label: "Fullscreen",
           key: "F",
           menu: "modes",
@@ -792,6 +806,7 @@ Presentation.register({
         },
         {
           id: "speaker",
+          icon: "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"1\"/><path d=\"M8 21h8m-4-4v4M5 7h6m-6 3h4m5-3h5v6h-5Z\"/>",
           label: "Speaker View",
           key: "S",
           menu: "modes",
@@ -816,6 +831,7 @@ Presentation.register({
       modes: [
         {
           id: "blackout",
+          icon: "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"m4 5 16 14\"/>",
           menu: false,
           label: "Black screen (standard mode)",
           key: ".",
@@ -837,19 +853,6 @@ Presentation.register({
           isOpen: () => !!document.querySelector(".overlay-help"),
           close: () => deck.toggleHelp(false),
         },
-        {
-          id: "search",
-          priority: 30,
-          isOpen: () =>
-            document.querySelector(".searchbox")?.style.display === "inline",
-          close: () => {
-            const box = document.querySelector(".searchbox");
-            if (box) {
-              box.style.display = "none";
-              box.querySelector("input")?.blur();
-            }
-          },
-        },
       ],
     };
   },
@@ -861,8 +864,8 @@ Presentation.register({
 /* PDF.js preview with native-browser links, independent of slide markup. */
 Presentation.register({
   id: "documents",
-  requires: ["frame"],
-  setup({ deck, t, print }) {
+  requires: ["frame", "media"],
+  setup({ deck, t, print, get }) {
     const previews = [];
     function createPreview({ url, title, height, lazy = false }) {
       const source = new URL(url, document.baseURI);
@@ -912,6 +915,7 @@ Presentation.register({
         url: link.href, title: link.textContent, lazy: true,
         height: link.getAttribute("height") || link.dataset.height,
       });
+      get('media').apply(preview, link.dataset);
       const paragraph = link.parentElement;
       if (paragraph.tagName === "P" && paragraph.childNodes.length === 1)
         paragraph.replaceWith(preview);
@@ -922,7 +926,7 @@ Presentation.register({
       const slide = deck.getCurrentSlide();
       for (const preview of previews) {
         if (!slide?.contains(preview)) continue;
-        if (!preview.style.getPropertyValue("--document-height")) {
+        if (!preview.dataset.mediaHeight && !preview.style.getPropertyValue("--document-height")) {
           const scale = deck.getScale() || 1;
           const top = (preview.getBoundingClientRect().top - slide.getBoundingClientRect().top) / scale;
           const bottom = parseFloat(getComputedStyle(slide).paddingBottom) || 0;
@@ -3864,6 +3868,7 @@ Presentation.register({
         },
         {
           id: "board",
+          icon: "<rect x=\"3\" y=\"3\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 21l2-5m6 5-2-5M7 12l6-5\"/>",
           label: "Chalkboard",
           key: "B",
           enter: api.board,
@@ -3887,6 +3892,52 @@ Presentation.register({
       ],
     };
   },
+});
+
+;
+
+/* modules/embed/module.js */
+Presentation.register({
+  id: 'embed', requires: ['frame','media'],
+  setup({deck,t,print,get}) {
+    const embeds = [...deck.getSlidesElement().querySelectorAll('.presentation-embed')];
+    for (const box of embeds) {
+      const link = box.querySelector('a');
+      const url = new URL(link.href);
+      if (!['file:','http:','https:'].includes(url.protocol)) continue;
+      const title = box.dataset.embedTitle;
+      get('media').apply(box);
+      if(!box.dataset.mediaWidth) box.style.width='100%';
+      const bar = document.createElement('div');
+      bar.className = 'presentation-embed-bar';
+      const label = document.createElement('span');label.textContent = title;
+      link.textContent = t('Open separately');link.target = '_blank';link.rel = 'noopener noreferrer';
+      bar.append(label,link);box.replaceChildren(bar);
+      if (!print) {
+        const frame = document.createElement('iframe');
+        frame.title = title;
+        frame.dataset.source = url.href;
+        // Scripts may run inside the resource, without access to the deck.
+        frame.setAttribute('sandbox','allow-scripts allow-forms allow-popups');
+        frame.referrerPolicy = 'no-referrer';
+        box.prepend(frame);
+      }
+    }
+    function layout() {
+      const slide = deck.getCurrentSlide();
+      for (const box of embeds) {
+        if (!slide?.contains(box)) continue;
+        if (!box.dataset.mediaHeight && !print) {
+          const top = (box.getBoundingClientRect().top-slide.getBoundingClientRect().top)/(deck.getScale()||1);
+          box.style.height = `${Math.max(120,slide.clientHeight-top-parseFloat(getComputedStyle(slide).paddingBottom)-4)}px`;
+        }
+        const frame = box.querySelector('iframe[data-source]');
+        if(frame){frame.src=frame.dataset.source;delete frame.dataset.source;}
+      }
+    }
+    deck.on('slidechanged',layout);deck.on('resize',layout);requestAnimationFrame(layout);
+    return {};
+  }
 });
 
 ;
@@ -4090,6 +4141,34 @@ Presentation.imageGeometry = {
       h: item.w * ratio * s + item.h * c,
     };
   },
+  align(item, others, ratio, tolerance, center = {x: .5, y: .5}) {
+    const bounds = (value) => {
+      const size = this.extents(value, ratio);
+      const x = value.x + value.w / 2, y = value.y + value.h / 2;
+      return {x: [x - size.w / 2, x, x + size.w / 2],
+              y: [y - size.h / 2, y, y + size.h / 2]};
+    };
+    const anchors = bounds(item), guides = {};
+    const targets = {x: [0, center.x, 1], y: [0, center.y, 1]};
+    for (const other of others) {
+      const box = bounds(other);
+      targets.x.push(...box.x); targets.y.push(...box.y);
+    }
+    const result = {...item};
+    for (const axis of ['x', 'y']) {
+      let best = tolerance[axis], delta = 0;
+      for (const target of targets[axis]) for (const anchor of anchors[axis]) {
+        const distance = target - anchor;
+        if (Math.abs(distance) < best) {
+          // Never snap a rotated bounding box outside the content area.
+          if (anchors[axis][0] + distance < -1e-9 || anchors[axis][2] + distance > 1 + 1e-9) continue;
+          best = Math.abs(distance); delta = distance; guides[axis] = target;
+        }
+      }
+      result[axis] += delta;
+    }
+    return {item: result, guides};
+  },
   fit(item, ratio) {
     let cx = item.x + item.w / 2,
       cy = item.y + item.h / 2;
@@ -4244,6 +4323,29 @@ Presentation.factories.images = function (context) {
     prepared = readTemplate("presentation-prepared-layout");
   const renderedRevision = source.revision || window.__presentationSession?.id;
   const sourceIds = new Map();
+  const revealSources = new Map();
+  function bindRevealSources() {
+    revealSources.clear();
+    for (const [id, items] of Object.entries(state)) {
+      const available = new Set((prepared[id] || []).map((_, index) => index));
+      // Sessions made before source IDs were stable contain random IDs. Match
+      // those once on restore, without changing editor/history identities.
+      const bind = (item, index) => {
+        if (index < 0) return;
+        revealSources.set(item._id, index);
+        available.delete(index);
+      };
+      for (const item of items)
+        bind(item, (prepared[id] || []).findIndex((entry, index) => available.has(index) && entry._id === item._id));
+      for (const item of items.filter(item => !revealSources.has(item._id))) {
+        const candidates = [...available].filter(index => prepared[id][index].asset === item.asset);
+        const exact = candidates.find(index => ['x','y','w','h','rotation','layer','transparency'].every(key => prepared[id][index][key] === item[key]));
+        bind(item, exact ?? candidates[0] ?? -1);
+      }
+      // Reset/restore may switch back to the original source objects.
+      (prepared[id] || []).forEach((entry, index) => revealSources.set(entry._id, index));
+    }
+  }
   let sourceToken = null,
     sourceLiveReload = false,
     sourceConnection = Promise.resolve();
@@ -4264,8 +4366,8 @@ Presentation.factories.images = function (context) {
         continue;
       }
       const preload = new Image();
-      preload.src = img.src;
-      catalog.set(id, { id, scope, src: img.src, label: img.alt, preload });
+
+      catalog.set(id, { id, scope, src: img.src, source: img.dataset.mediaSource || img.getAttribute("src"), label: img.alt, kind: img.dataset.mediaKind || "image", preload });
       list.push(id);
     }
   }
@@ -4294,10 +4396,10 @@ Presentation.factories.images = function (context) {
   const panel = document.createElement("aside");
   panel.className = "presentation-asset-library";
   panel.hidden = true;
-  panel.setAttribute("aria-label", Presentation.t("Image Library"));
+  panel.setAttribute("aria-label", Presentation.t("Media Library"));
   panel.dataset.preventSwipe = "true";
   panel.innerHTML =
-    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Image Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Image Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Image source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
+    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Media Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Media Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Image source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
   const shell = document.createElement("div");
   shell.className = "slide-menu-wrapper presentation-assets-shell";
   const backdrop = document.createElement("div");
@@ -4590,6 +4692,9 @@ Presentation.factories.images = function (context) {
         const node = document.createElement("div");
         node.className = "presentation-placed-image";
         node.dataset.index = index;
+        const sourceIndex = revealSources.get(item._id) ?? -1;
+        const anchor = layer.parentElement.querySelector(`[data-presentation-image-step="${sourceIndex + 1}"]`);
+        node._revealAnchor = anchor;
         const chosen = active && selected === index;
         node.classList.toggle("selected", chosen);
         Object.assign(node.style, {
@@ -4600,8 +4705,22 @@ Presentation.factories.images = function (context) {
           transform: `rotate(${item.rotation}deg)`,
           zIndex: item.layer,
         });
-        const img = document.createElement("img");
-        img.src = catalog.get(item.asset).src;
+        const media = catalog.get(item.asset);
+        const img = document.createElement(media.kind === 'video' ? 'video' : 'img');
+        if (media.kind === 'video') {
+          img.controls = !active;
+          img.preload = 'auto';
+          if (media.poster) img.poster = media.poster;
+          videoPreview(media).then(() => {
+            if (media.poster) img.poster = media.poster;
+          }).catch(() => {});
+          img.addEventListener('loadedmetadata', () => {
+            if (!media.poster && img.paused) img.currentTime = Math.min(0.1, img.duration / 2 || 0);
+          }, {once: true});
+          img.playsInline = true;
+          img.dataset.preventSwipe = 'true';
+        }
+        img.src = media.src;
         img.alt = catalog.get(item.asset).label;
         img.draggable = false;
         img.style.opacity = 1 - (item.transparency ?? 0) / 100;
@@ -4628,12 +4747,24 @@ Presentation.factories.images = function (context) {
             "Rotate image · Snap: 45° · Shift: 15°",
           );
           // Anchored to the local image frame: the offset rotates with the image.
-          target.append(handle);
+          if (media.kind !== 'video') target.append(handle);
         }
       });
     }
+    if (gesture?.type === 'move' && gesture.guides) {
+      const layer = layers.get(currentId());
+      for (const [axis, position] of Object.entries(gesture.guides)) {
+        const line = document.createElement('div');
+        line.className = `presentation-alignment-guide presentation-alignment-${axis}`;
+        line.setAttribute('aria-hidden', 'true');
+        line.style[axis === 'x' ? 'left' : 'top'] = `${position * 100}%`;
+        layer.append(line);
+      }
+    }
     const selectedItem = editing ? state[currentId()]?.[selected] : null;
     properties.hidden = !selectedItem;
+    const videoSelected = selectedItem && catalog.get(selectedItem.asset)?.kind === 'video';
+    for (const name of ['rotation', 'transparency']) fields[name].closest('label').hidden = !!videoSelected;
     for (const [property, field] of Object.entries(fields)) {
       field.disabled = !selectedItem;
       if (document.activeElement !== field)
@@ -4652,9 +4783,27 @@ Presentation.factories.images = function (context) {
     bar.querySelector("[data-library=redo]").disabled =
       !history.canRedo(selectedIdentity());
     bar.querySelector("[data-library=delete]").disabled = selected === null;
+    updateImageVisibility();
     context.changed();
   }
+  function updateImageVisibility() {
+    for (const layer of [...layers.values(), ...backgrounds.values()]) {
+      for (const node of layer.querySelectorAll('.presentation-placed-image')) {
+        let anchor = node._revealAnchor;
+        let concealed = false;
+        while (anchor && anchor !== layer.parentElement) {
+          if (anchor.classList.contains('fragment') && !anchor.classList.contains('visible')) concealed = true;
+          anchor = anchor.parentElement;
+        }
+        node.classList.toggle('presentation-image-concealed', concealed && !editing && !armed);
+      }
+    }
+  }
+  deck.on('fragmentshown', updateImageVisibility);
+  deck.on('fragmenthidden', updateImageVisibility);
+  const previewObservers = [];
   function library() {
+    previewObservers.splice(0).forEach(observer => observer.disconnect());
     const container = panel.querySelector(".presentation-asset-catalog");
     container.replaceChildren();
     const localItems = locals.get(currentId()) || [];
@@ -4681,14 +4830,40 @@ Presentation.factories.images = function (context) {
           button = document.createElement("button");
         button.dataset.asset = id;
         button.title = asset.label;
-        const img = document.createElement("img");
-        img.src = asset.src;
+        const img = document.createElement(asset.kind === 'video' ? 'span' : 'img');
+        if (asset.kind === 'video') { img.className = 'presentation-media-video-preview'; img.textContent = '▶'; }
+        else { img.loading = 'lazy'; img.src = asset.src; }
         img.alt = "";
         img.draggable = false;
+        if (/\.gif(?:[?#]|$)/i.test(asset.src)) {
+          img.addEventListener('load', () => {
+            const still = document.createElement('canvas');
+            still.width = img.naturalWidth; still.height = img.naturalHeight;
+            still.style.cssText = 'width:100%;height:auto;display:block';
+            still.getContext('2d').drawImage(img,0,0);
+            if (!button.matches(':hover')) img.replaceWith(still);
+            button.addEventListener('pointerenter', () => still.replaceWith(img));
+            button.addEventListener('pointerleave', () => img.replaceWith(still));
+          }, {once:true});
+        }
         const label = document.createElement("span");
         label.textContent = asset.label;
         button.append(img, label);
         grid.append(button);
+        if (asset.kind === 'video') {
+          button.classList.add('presentation-video-tile');
+          const observer = new IntersectionObserver(entries => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            observer.disconnect();
+            const preview = document.createElement('video');
+            preview.muted = true; preview.playsInline = true; preview.preload = 'metadata';
+            preview.addEventListener('loadedmetadata', () => { if (preview.duration > .1) preview.currentTime = .1; }, {once:true});
+            preview.src = asset.src;
+            img.replaceWith(preview);
+          }, {root:container});
+          observer.observe(img);
+          previewObservers.push(observer);
+        }
       }
     }
     if (!container.children.length) {
@@ -4780,6 +4955,10 @@ Presentation.factories.images = function (context) {
       version: 1,
       revision: renderedRevision,
       slides: copy(state),
+      assets: [...new Set(Object.values(state).flat().map(item => item.asset))].map(id => {
+        const asset=catalog.get(id), url=new URL(asset.src,location.href);
+        return {id,kind:asset.kind,src:url.origin===location.origin ? url.pathname : asset.src,label:asset.label};
+      }),
     }),
     saveToSource: () => actions.source(),
     restore: () => actions.restore(),
@@ -4819,10 +4998,9 @@ Presentation.factories.images = function (context) {
     const id = currentId(),
       p = point(event);
     if (p.x < 0 || p.x > 1 || p.y < 0 || p.y > 1) return;
-    const img = new Image();
-    img.src = catalog.get(asset).src;
+    let img;
     try {
-      await img.decode();
+      img = await loadMedia(catalog.get(asset));
     } catch {
       announce(Presentation.t("This image could not be loaded."));
       return;
@@ -4979,10 +5157,19 @@ Presentation.factories.images = function (context) {
         dy = p.y - gesture.start.y;
       const ratio = contentRatio(currentId());
       if (gesture.type === "move") {
-        Object.assign(
-          item,
-          geometry.fit({ ...old, x: old.x + dx, y: old.y + dy }, ratio),
-        );
+        const moved = geometry.fit({ ...old, x: old.x + dx, y: old.y + dy }, ratio);
+        gesture.guides = {};
+        if (event.altKey) Object.assign(item, moved);
+        else {
+          const slide = deck.getCurrentSlide().getBoundingClientRect();
+          const center = {x: (slide.left + slide.width / 2 - p.rect.left) / p.rect.width,
+                          y: (slide.top + slide.height / 2 - p.rect.top) / p.rect.height};
+          const aligned = geometry.align(moved,
+            state[currentId()].filter((_, index) => index !== gesture.index), ratio,
+            {x: 6 / p.rect.width, y: 6 / p.rect.height}, center);
+          Object.assign(item, aligned.item);
+          gesture.guides = aligned.guides;
+        }
       } else if (gesture.type === "rotate") {
         const cx = old.x + old.w / 2,
           cy = old.y + old.h / 2;
@@ -5007,6 +5194,7 @@ Presentation.factories.images = function (context) {
     const completed = gesture;
     gesture = null;
     panel.classList.remove("dragging");
+    document.querySelectorAll('.presentation-alignment-guide').forEach(line => line.remove());
     if (completed.type === "add") {
       if (completed.ghost) {
         completed.ghost.remove();
@@ -5095,15 +5283,8 @@ Presentation.factories.images = function (context) {
       const target = sourceIds.get(id) || id;
       const items = copy(state[id] || []).map((item) => ({
         ...item,
-        ...(Math.abs(
-          item.h -
-            (item.w *
-              contentRatio(id) *
-              catalog.get(item.asset).preload.naturalHeight) /
-              catalog.get(item.asset).preload.naturalWidth,
-        ) > 0.00001
-          ? { height: item.h * 100 }
-          : {}),
+        height: item.h * 100,
+        src: catalog.get(item.asset)?.source,
         reference:
           item.asset.startsWith("lesson:") ? item.asset :
           item.asset.startsWith("global:") &&
@@ -5137,6 +5318,7 @@ Presentation.factories.images = function (context) {
         source.revision = result.revision;
         sourceIds.set(id, result.slide);
         prepared[id] = copy(state[id] || []);
+        bindRevealSources();
         announce(
           sourceLiveReload
             ? Presentation.t("Saved to Quarto source. Preview is updating…")
@@ -5192,18 +5374,63 @@ Presentation.factories.images = function (context) {
       input.value = "";
     }
   });
-  deck.on("slidechanged", close);
+  deck.on('slidechanged', () => {
+    document.querySelectorAll('.presentation-placed-image video').forEach(video => video.pause());
+    close();
+  });
+  deck.on('fragmenthidden', () => {
+    document.querySelectorAll('.presentation-image-concealed video').forEach(video => video.pause());
+  });
   deck.on("overviewshown", close);
-  api.ready = Promise.all(
-    [...catalog.values()].map((asset) =>
-      asset.preload.decode().catch(() => {}),
-    ),
-  )
-    .then(() => {
+  // Cache a decoded frame independently of the DOM nodes rebuilt by editing.
+  function videoPreview(asset) {
+    if (asset.previewPromise) return asset.previewPromise;
+    asset.previewPromise = new Promise((resolve, reject) => {
+      const video = document.createElement('video');
+      video.preload = 'auto';
+      video.muted = true;
+      video.playsInline = true;
+      const timer = setTimeout(() => finish(new Error('Video preview timed out.')), 15000);
+      function finish(error) {
+        clearTimeout(timer);
+        video.onloadedmetadata = video.onseeked = video.onerror = null;
+        video.removeAttribute('src');
+        video.load();
+        if (error) { asset.previewPromise = null; reject(error); }
+        else resolve(asset.preload);
+      }
+      video.onloadedmetadata = () => {
+        asset.preload = {naturalWidth: video.videoWidth, naturalHeight: video.videoHeight};
+        video.currentTime = Math.min(0.1, video.duration / 2 || 0);
+      };
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.min(1280, video.videoWidth);
+          canvas.height = Math.round(canvas.width * video.videoHeight / video.videoWidth);
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          asset.poster = canvas.toDataURL('image/jpeg', 0.85);
+        } catch (_) { /* Remote media without CORS still use the decoded video frame. */ }
+        finish();
+      };
+      video.onerror = () => finish(new Error('Video could not be loaded.'));
+      video.src = asset.src;
+    });
+    return asset.previewPromise;
+  }
+  async function loadMedia(asset) {
+    if (asset.loaded) return asset.preload;
+    if (asset.kind === 'video') await videoPreview(asset);
+    else { asset.preload.src = asset.src; await asset.preload.decode(); }
+    asset.loaded = true;
+    return asset.preload;
+  }
+  api.ready = Promise.resolve().then(async () => {
+      // Load dimensions only for placements actually authored on slides.
       for (const [id, layout] of Object.entries(prepared)) {
         if (layout.format !== "friendly" || !layers.has(id)) continue;
         const ratio = contentRatio(id);
-        prepared[id] = layout.images.map((entry) => {
+        prepared[id] = await Promise.all(layout.images.map(async (entry, index) => {
           const asset = catalog.has(id + ":" + entry.asset)
             ? id + ":" + entry.asset
             : /^(global|lesson):/.test(entry.asset)
@@ -5211,7 +5438,7 @@ Presentation.factories.images = function (context) {
               : "global:" + entry.asset;
           if (!allowed(id, asset))
             throw Error("Unknown layout image: " + entry.asset);
-          const image = catalog.get(asset).preload,
+          const image = await loadMedia(catalog.get(asset)),
             w = (entry.width ?? 25) / 100;
           const h =
             entry.height !== undefined
@@ -5219,6 +5446,7 @@ Presentation.factories.images = function (context) {
               : (w * ratio * image.naturalHeight) / image.naturalWidth;
           return geometry.fit(
             {
+              _id: `source:${id}:${index}`,
               asset,
               x: entry.x !== undefined ? entry.x / 100 : (1 - w) / 2,
               y: entry.y !== undefined ? entry.y / 100 : (1 - h) / 2,
@@ -5230,7 +5458,7 @@ Presentation.factories.images = function (context) {
             },
             ratio,
           );
-        });
+        }));
       }
       state = validate({ version: 1, slides: prepared }).clean;
       for (const [id, items] of Object.entries(state))
@@ -5255,6 +5483,7 @@ Presentation.factories.images = function (context) {
           ),
         );
       }
+      bindRevealSources();
       refresh();
     })
     .catch((error) => {
@@ -5275,8 +5504,8 @@ Presentation.factories.images = function (context) {
     if (catalog.has(id)) return id;
     // Explicitly configured images take precedence over automatic discovery.
     if ([...catalog.values()].some(asset => asset.src === entry.data && !asset.id.includes(':file:'))) return null;
-    const preload = new Image(); preload.src = entry.data;
-    catalog.set(id, {id, scope: entry.scope, src: entry.data, label: entry.label, preload});
+    const preload = new Image();
+    catalog.set(id, {id, scope: entry.scope, src: entry.data || new URL(entry.src, location.href).href, source: entry.src, label: entry.label, kind: entry.kind || 'image', preload});
     (entry.scope === 'lesson' ? lessonAssets : globals).push(id);
     return id;
   }
@@ -5300,17 +5529,21 @@ Presentation.factories.images = function (context) {
     const slide = currentId();
     try {
       for (const file of files) {
-        if (!file.type.startsWith('image/')) continue;
+        if (!file.type.startsWith('image/') && !['video/mp4','video/webm'].includes(file.type)) continue;
         if (file.size > 12 * 1024 * 1024) throw Error(Presentation.t('Image is too large (maximum 12 MB).'));
         const url = URL.createObjectURL(file), img = new Image();
         let bytes;
         try {
+          if (file.type === 'image/gif' || file.type.startsWith('video/')) {
+            bytes = await new Promise((resolve,reject) => {const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(',')[1]);reader.onerror=reject;reader.readAsDataURL(file);});
+          } else {
           img.src = url; await img.decode();
           if (img.naturalWidth * img.naturalHeight > 32000000) throw Error(Presentation.t('Image dimensions are too large.'));
           const canvas = document.createElement('canvas');
           canvas.width=img.naturalWidth; canvas.height=img.naturalHeight;
           canvas.getContext('2d').drawImage(img,0,0);
           bytes=canvas.toDataURL('image/png').split(',')[1];
+          }
         } finally { URL.revokeObjectURL(url); }
         const result = await assetRequest({action:'import',name:file.name || 'clipboard',bytes});
         const asset = addDiscovered(result.asset) || [...catalog.values()].find(a=>a.src===result.asset.data)?.id;
@@ -5365,6 +5598,7 @@ Presentation.register({
       modes: [
         {
           id: "position",
+          icon: "<path d=\"M12 3v18M3 12h18m-12-6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3\"/>",
           entryPanel: "images",
           label: "Position Images",
           key: "V",
@@ -5395,7 +5629,9 @@ Presentation.register({
       commands: [
         {
           id: "assets",
-          label: "Image Library",
+          panel: "images",
+          icon: "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><circle cx=\"8\" cy=\"9\" r=\"1.5\"/><path d=\"m4 18 6-6 4 4 3-3 4 4\"/>",
+          label: "Media Library",
           key: "I",
           kind: "panel",
           menu: "modes",
@@ -5433,6 +5669,9 @@ Presentation.register({
 /* Temporary laser ink. No storage, PDF output or Chalkboard state is touched. */
 Presentation.factories.laser = function (context) {
   const { deck } = context;
+  const seconds = Number(document.getElementById('presentation-laser-settings')?.dataset.fadeDelay ?? 1);
+  const fadeDelay = Number.isFinite(seconds) && seconds >= 0 ? seconds * 1000 : 1000;
+  const fadeDuration = 1500;
   const canvas = document.createElement("canvas");
   canvas.className = "presentation-laser-canvas";
   canvas.hidden = true;
@@ -5544,7 +5783,7 @@ Presentation.factories.laser = function (context) {
     frame = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!active) return;
-    if (releasedAt !== null && now - releasedAt >= 2500) strokes = [];
+    if (releasedAt !== null && now - releasedAt >= fadeDelay + fadeDuration) strokes = [];
     const sx = canvas.width,
       sy = canvas.height,
       unit = sx / (deck.getConfig().width - 72);
@@ -5556,7 +5795,7 @@ Presentation.factories.laser = function (context) {
       ctx.globalAlpha =
         releasedAt === null
           ? 1
-          : Math.max(0, 1 - Math.max(0, now - releasedAt - 1000) / 1500);
+          : Math.max(0, 1 - Math.max(0, now - releasedAt - fadeDelay) / fadeDuration);
       ctx.strokeStyle = s.color;
       ctx.fillStyle = s.color;
       ctx.shadowColor = s.color;
@@ -5618,7 +5857,7 @@ Presentation.factories.laser = function (context) {
     pointer = e.pointerId;
     canvas.setPointerCapture(pointer);
     cursor = point(e);
-    if (releasedAt !== null && performance.now() - releasedAt >= 2500)
+    if (releasedAt !== null && performance.now() - releasedAt >= fadeDelay + fadeDuration)
       strokes = [];
     releasedAt = null;
     stroke = { color, points: [cursor] };
@@ -5710,6 +5949,7 @@ Presentation.register({
       modes: [
         {
           id: "laser",
+          icon: "<path d=\"m3 19 9-9 3 3-9 9Z M16 8l4-4m-5 1V2m4 7h3\"/>",
           label: "Laser Pointer",
           key: "L",
           navigation: true,
@@ -6063,6 +6303,7 @@ Presentation.register({
       modes: [
         {
           id: "magnifier",
+          icon: "<circle cx=\"10\" cy=\"10\" r=\"7\"/><path d=\"m15 15 6 6M7 10h6m-3-3v6\"/>",
           label: "Magnifier",
           key: "H",
           navigation: true,
@@ -6075,6 +6316,39 @@ Presentation.register({
       toolbar: { element: api.controls, modes: ["magnifier"] },
     };
   },
+});
+
+;
+
+/* modules/media/layout.js */
+Presentation.register({
+  id:'media', requires:['frame'],
+  setup({deck}) {
+    function apply(box, attributes=box.dataset) {
+      box.classList.add('presentation-media-box');
+      box.dataset.mediaAlign=attributes.mediaAlign || 'center';
+      for(const key of ['Width','Height']) if(attributes['media'+key]) box.dataset['media'+key]=attributes['media'+key];
+      if(box.dataset.mediaWidth) box.style.width=box.dataset.mediaWidth;
+    }
+    function layout() {
+      const slide=deck.getCurrentSlide();
+      if(!slide) return;
+      const scale=deck.getScale()||1;
+      for(const box of slide.querySelectorAll('.presentation-media-box')) {
+        const height=box.dataset.mediaHeight;
+        if(height==='fill') {
+          const top=(box.getBoundingClientRect().top-slide.getBoundingClientRect().top)/scale;
+          box.style.height=Math.max(0,slide.clientHeight-parseFloat(getComputedStyle(slide).paddingBottom)-top-4)+'px';
+        } else if(height?.endsWith('%')) {
+          box.style.height=slide.clientHeight*parseFloat(height)/100+'px';
+        } else if(height) box.style.height=height;
+      }
+    }
+    deck.getSlidesElement().querySelectorAll('.presentation-media-box').forEach(box=>apply(box));
+    deck.on('slidechanged',layout);deck.on('resize',layout);deck.on('ready',layout);
+    requestAnimationFrame(layout);
+    return {apply,layout};
+  }
 });
 
 ;
@@ -6701,6 +6975,7 @@ Presentation.register({
       modes: [
         {
           id: "python",
+          icon: "<path d=\"m5 7 5 5-5 5m8 0h6\"/><rect x=\"2\" y=\"3\" width=\"20\" height=\"18\" rx=\"2\"/>",
           label: "Python Console",
           key: "T",
           enter: api.toggleDrop,
@@ -6713,6 +6988,78 @@ Presentation.register({
     };
   },
 });
+
+;
+
+/* modules/quiz/cloze.js */
+/* Cloze interaction owns placements; the quiz engine owns scoring and sessions. */
+Presentation.factories.quizCloze = function ({slide, settings, controls, record, score}) {
+  const t = Presentation.t;
+  const answers = [...slide.querySelectorAll('.answer')].map(el => el.textContent.trim());
+  const slots = [], tokens = [];
+  let selected = null, checked = false;
+  const bank = document.createElement('div');bank.className='quiz-cloze-bank';
+  bank.dataset.presentationKeyboard='local';
+  bank.setAttribute('aria-label',t('Available terms'));
+  const [check,again,reset,feedback] = controls;
+  const row=document.createElement('div');row.className='button-container';
+  if(settings.includeScore){const label=document.createElement('div');label.className='score';label.setAttribute('role','status');row.append(label);}
+  feedback.setAttribute('role','status');
+  const actions=document.createElement('div');actions.className='quiz-action-group';actions.append(check,again,reset);row.append(feedback,actions);
+  function choose(index){selected=selected===index?null:index;tokens.forEach((token,i)=>token.setAttribute('aria-pressed',String(i===selected)));}
+  function place(index,slot){
+    if(checked || index===null || !tokens[index])return;
+    const token=tokens[index],old=token.parentElement;
+    const previous=slot?.querySelector('.quiz-cloze-token');
+    if(previous===token){choose(null);return;}
+    if(previous)old.append(previous);
+    (slot||bank).append(token);choose(null);update();
+  }
+  function update(){check.disabled=checked||slots.some(slot=>!slot.querySelector('.quiz-cloze-token'));tokens.forEach(token=>{token.disabled=checked;token.draggable=!checked;});}
+  function dropTarget(element,slot){
+    element.addEventListener('dragover',e=>{if(!checked){e.preventDefault();e.dataTransfer.dropEffect='move';}});
+    element.addEventListener('drop',e=>{e.preventDefault();e.stopPropagation();const value=e.dataTransfer.getData('application/x-presentation-cloze');if(!value)return;try{const data=JSON.parse(value);if(data.slide===slide.id)place(data.index,slot);}catch{}});
+  }
+  [...slide.querySelectorAll('.answer')].forEach((answer,i)=>{
+    const slot=document.createElement('span');slot.className='quiz-cloze-slot';slot.tabIndex=0;slot.dataset.presentationKeyboard='local';slot.setAttribute('role','group');slot.setAttribute('aria-label',t('Gap {number}',{number:i+1}));slot.dataset.number=i+1;
+    slot.addEventListener('click',e=>{if(e.target===slot)place(selected,slot);});
+    slot.addEventListener('keydown',e=>{if(e.target!==slot)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();place(selected,slot);}if(e.key==='Backspace'||e.key==='Delete'){e.preventDefault();e.stopPropagation();const token=slot.querySelector('button');if(token)place(tokens.indexOf(token),null);}});
+    dropTarget(slot,slot);answer.replaceWith(slot);slots.push(slot);
+    const token=document.createElement('button');token.type='button';token.className='quiz-cloze-token';token.textContent=answers[i];token.draggable=true;
+    token.addEventListener('click',e=>{e.stopPropagation();if(!checked)choose(i);});
+    token.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')e.stopPropagation();});
+    token.addEventListener('dragstart',e=>{e.dataTransfer.setData('application/x-presentation-cloze',JSON.stringify({slide:slide.id,index:i}));e.dataTransfer.effectAllowed='move';});
+    tokens.push(token);
+  });
+  bank.tabIndex=0;dropTarget(bank,null);bank.addEventListener('click',e=>{if(e.target===bank)place(selected,null);});
+  bank.addEventListener('keydown',e=>{if(e.target===bank&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.stopPropagation();place(selected,null);}});
+  const firstContent = [...slide.children].find(el => !el.matches('h1,h2,h3,h4,h5,h6,aside,script,style,template'));
+  slide.insertBefore(bank, firstContent || null);
+  slide.append(row);
+  // The text and term bank appear together, without revealing individual solutions.
+  [...slide.children].filter(el=>!el.matches('h1,h2,h3,aside,script,style,template,[hidden]')).forEach(el=>{el.classList.add('fragment');el.dataset.fragmentIndex='0';});
+  function resetAttempt(){
+    checked=false;selected=null;feedback.textContent='';
+    slots.forEach(slot=>slot.classList.remove('correct','incorrect'));
+    const shuffled=[...tokens];for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
+    bank.append(...shuffled);choose(null);update();
+  }
+  function assess(){
+    if(check.disabled)return;
+    checked=true;let points=0;
+    slots.forEach((slot,i)=>{const correct=slot.textContent.trim()===answers[i];slot.classList.add(correct?'correct':'incorrect');if(correct)points++;});
+    const full=points===slots.length;
+    feedback.textContent=full?settings.defaultCorrect:points?t('Partly correct!'):settings.defaultIncorrect;
+    feedback.style.color=full?'#27ae60':points?'#a87600':'#c0392b';
+    record(points);update();
+  }
+  check.addEventListener('click',assess);again.addEventListener('click',resetAttempt);reset.disabled=settings.disableReset;
+  resetAttempt();
+  return {reset:resetAttempt,capture:()=>({slide:slide.id,placements:slots.map(slot=>tokens.indexOf(slot.querySelector('button'))),checked,score:score()}),restore(entry){
+    resetAttempt();const used=new Set();(entry.placements||[]).forEach((index,i)=>{if(slots[i]&&Number.isInteger(index)&&tokens[index]&&!used.has(index)){place(index,slots[i]);used.add(index);}});
+    if(entry.checked)assess();
+  }};
+};
 
 ;
 
@@ -6961,6 +7308,7 @@ window.RevealQuiz = function () {
         heading.prepend(number);
       });
       const maximum = (slide) =>
+        slide.classList.contains("quiz-cloze") ? slide.querySelectorAll('.answer, .quiz-cloze-slot').length :
         slide.classList.contains("quiz-multiple")
           ? Array.from(slide.querySelectorAll("li")).filter((option) =>
               option.querySelector("span.correct"),
@@ -7092,6 +7440,22 @@ window.RevealQuiz = function () {
       deck.getSlides().forEach((slide, index) => {
         let quizQuestion = slide.classList.contains("quiz-question");
         if (quizQuestion) {
+          if (slide.classList.contains("quiz-cloze")) {
+            const reset = resetButton.cloneNode(true);
+            const api = Presentation.factories.quizCloze({
+              slide, settings,
+              controls: [checkButton.cloneNode(true), againButton.cloneNode(true), reset, feedbackElement.cloneNode(true)],
+              record(points) { if (!scores.has(slide)) scores.set(slide, points); updateScores(); },
+              score: () => scores.has(slide) ? scores.get(slide) : null,
+            });
+            if (!settings.disableReset) reset.addEventListener('click', resetAll);
+            resetQuestions.push(api.reset);
+            sessionQuestions.push({slide, capture: api.capture, restore(entry) {
+              if (entry.score !== null && entry.score !== undefined) scores.set(slide, entry.score);
+              api.restore(entry);
+            }});
+            return;
+          }
           let cloneCheckBtn = checkButton.cloneNode(true);
           let cloneResetBtn = resetButton.cloneNode(true);
           const cloneAgainBtn = againButton.cloneNode(true);
@@ -7113,9 +7477,18 @@ window.RevealQuiz = function () {
           if (settings.shuffleOptions) {
             options = shuffleArray(Array.from(options));
             options.forEach((opt) => {
-              slide.appendChild(opt);
+              opt.parentElement.appendChild(opt);
             });
           }
+
+          // Number in final display order, including shuffled questions.
+          options.forEach((option, index) => {
+            option.parentElement.classList.add("quiz-options");
+            const number = document.createElement("span");
+            number.className = "quiz-option-number";
+            number.textContent = `${index + 1}. `;
+            (option.querySelector(":scope > p") || option).prepend(number);
+          });
 
           // Native Reveal fragments: question first, then answers in display order.
           // Controls and feedback share the final answer's step (also on rewind).
@@ -7127,7 +7500,7 @@ window.RevealQuiz = function () {
             .filter(
               (element) =>
                 !element.matches(
-                  "h1,h2,h3,h4,h5,h6,ul,ol,aside,template,script,style",
+                  "h1,h2,h3,h4,h5,h6,ul,ol,aside,template,script,style,[hidden]",
                 ) && !element.querySelector(".option-button"),
             )
             .forEach((element) => revealAt(element, 0));
@@ -7171,14 +7544,23 @@ window.RevealQuiz = function () {
                     selectedOptions.push(this);
                   }
                 } else {
-                  // Single choice: only one selection allowed
+                  // Clicking the selected answer again clears it.
+                  const wasSelected = selectedOptions.includes(this);
                   options.forEach((opt) => opt.classList.remove("selected"));
-                  this.classList.add("selected");
-                  selectedOptions = [this];
+                  if (!wasSelected) this.classList.add("selected");
+                  selectedOptions = wasSelected ? [] : [this];
                 }
                 cloneCheckBtn.disabled = selectedOptions.length === 0;
               }
             });
+          });
+          slide.addEventListener("click", (event) => {
+            if (isAnswered || !selectedOptions.length || cloneFeedbackElement.textContent) return;
+            if (event.target.closest('.option-button, button, a, input, select, textarea, video, audio, iframe, canvas, [contenteditable], .presentation-placed-image, .presentation-image-proxy')) return;
+            options.forEach((option) => option.classList.remove("selected", "correct", "incorrect"));
+            selectedOptions = [];
+            cloneFeedbackElement.textContent = "";
+            cloneCheckBtn.disabled = true;
           });
           if (!settings.disableReset) {
             cloneResetBtn.addEventListener("click", resetAll);
@@ -7272,10 +7654,7 @@ window.RevealQuiz = function () {
                 // Single choice logic (original)
                 let selectedOption = selectedOptions[0];
                 let isCorrect =
-                  selectedOption.querySelector("span") &&
-                  selectedOption
-                    .querySelector("span")
-                    .classList.contains("correct");
+                  !!selectedOption.querySelector("span.correct");
                 let hasExplanation =
                   selectedOption.querySelector("span") &&
                   selectedOption
@@ -7397,6 +7776,176 @@ Presentation.register({
       reset: () => plugin.reset?.(),
     };
   },
+});
+
+;
+
+/* modules/search/module.js */
+Presentation.register({
+  id: "search",
+  requires: ["frame"],
+  interactiveOnly: true,
+  setup({ deck, t, changed }) {
+    let active = false, matches = [], current = -1;
+    const controls = document.createElement("div");
+    controls.className = "presentation-search-controls";
+    const input = document.createElement("input");
+    input.type = "search";
+    input.placeholder = t("Search...");
+    input.setAttribute("aria-label", t("Search"));
+    const status = document.createElement("span");
+    status.setAttribute("role", "status");
+    controls.append(input, status);
+    function button(label, icon, action) {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.title = t(label);
+      el.setAttribute("aria-label", t(label));
+      el.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${icon}</svg>`;
+      el.addEventListener("click", action);
+      controls.append(el);
+      return el;
+    }
+    const prev = button("Previous search result", '<path d="m14 5-7 7 7 7"/>', () => navigate(-1));
+    const next = button("Next search result", '<path d="m10 5 7 7-7 7"/>', () => navigate(1));
+    button("Done", '<path d="m4 12 5 5L20 6"/>', stop);
+    function clear() {
+      for (const mark of matches) {
+        const parent = mark.parentNode;
+        mark.replaceWith(document.createTextNode(mark.textContent));
+        parent?.normalize();
+      }
+      matches = [];
+      current = -1;
+    }
+    function update() {
+      status.textContent = matches.length ? `${current + 1} / ${matches.length}` : input.value.trim() ? t("No search results") : "";
+      prev.disabled = next.disabled = matches.length === 0;
+    }
+    function search() {
+      clear();
+      const query = input.value.trim();
+      if (query) {
+        // Escape regex syntax: searches are always literal, never executable patterns.
+        const pattern = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "giu");
+        for (const slide of deck.getSlides()) {
+          const walker = document.createTreeWalker(slide, NodeFilter.SHOW_TEXT, {
+            acceptNode(node) {
+              return node.parentElement.closest('script,style,template,svg,canvas,header,footer,aside,nav,button,input,[role="status"]')
+                ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+            },
+          });
+          const nodes = [];
+          while (walker.nextNode()) nodes.push(walker.currentNode);
+          for (const node of nodes) {
+            const hits = [...node.data.matchAll(pattern)];
+            if (!hits.length) continue;
+            const fragment = document.createDocumentFragment();
+            let offset = 0;
+            for (const hit of hits) {
+              fragment.append(document.createTextNode(node.data.slice(offset, hit.index)));
+              const mark = document.createElement("mark");
+              mark.className = "presentation-search-match";
+              mark.textContent = hit[0];
+              fragment.append(mark);
+              matches.push(mark);
+              offset = hit.index + hit[0].length;
+            }
+            fragment.append(document.createTextNode(node.data.slice(offset)));
+            node.replaceWith(fragment);
+          }
+        }
+      }
+      update();
+    }
+    function navigate(direction) {
+      if (!matches.length) return;
+      matches[current]?.classList.remove("current");
+      current = current < 0 ? (direction < 0 ? matches.length - 1 : 0)
+        : (current + direction + matches.length) % matches.length;
+      const mark = matches[current];
+      mark.classList.add("current");
+      const slide = mark.closest("section");
+      const indices = deck.getIndices(slide);
+      const fragment = mark.closest(".fragment");
+      deck.slide(indices.h, indices.v, fragment ? Number(fragment.dataset.fragmentIndex) : -1);
+      update();
+    }
+    function stop() {
+      active = false;
+      clear();
+      input.value = "";
+      input.blur();
+      update();
+      changed();
+    }
+    input.addEventListener("input", search);
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        event.stopPropagation();
+        navigate(event.shiftKey ? -1 : 1);
+      } else if (event.key.toLowerCase() === "f" && event.shiftKey && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        event.stopPropagation();
+        stop();
+      }
+    });
+    deck.getRevealElement().addEventListener("click", event => {
+      if (!active || !event.target.closest("section")) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      stop();
+    }, true);
+    update();
+    return {
+      modes: [{
+        id: "search", label: "Search",
+        icon: '<circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/>',
+        enter() { active = true; changed(); requestAnimationFrame(() => input.focus()); },
+        exit: stop, isActive: () => active,
+      }],
+      toolbar: { element: controls, modes: ["search"] },
+    };
+  },
+});
+
+;
+
+/* modules/tasks/tasks.js */
+Presentation.register({
+  id: 'tasks',
+  requires: ['frame'],
+  setup({ deck }) {
+    const boxes = [...deck.getSlidesElement().querySelectorAll('.presentation-task-fill')];
+    function layout() {
+      for (const box of boxes) {
+        const slide = box.closest('section');
+        if (!slide || !box.getClientRects().length) continue;
+        // offset geometry excludes Reveal's scale and fragment transitions.
+        let top = 0;
+        let node = box;
+        while (node && node !== slide) {
+          top += node.offsetTop;
+          node = node.offsetParent;
+        }
+        if (node !== slide) continue;
+        const bottom = parseFloat(getComputedStyle(slide).paddingBottom) || 0;
+        const height = Math.max(0, slide.clientHeight - bottom - top);
+        box.style.setProperty('--presentation-task-fill-height', `${height}px`);
+      }
+    }
+    for (const event of ['ready', 'slidechanged', 'resize', 'overviewshown', 'overviewhidden']) {
+      deck.on(event, layout);
+    }
+    const observer = new ResizeObserver(layout);
+    for (const slide of new Set(boxes.map(box => box.closest('section')))) {
+      if (slide) observer.observe(slide);
+    }
+    document.fonts?.ready.then(layout);
+    layout();
+    return {};
+  }
 });
 
 ;
