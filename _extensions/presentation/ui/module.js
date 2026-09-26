@@ -122,6 +122,11 @@ Presentation.register({
         {
           id: "menu",
           priority: 30,
+          edge: {
+            side: "left", command: "more",
+            element: () => document.querySelector(".slide-menu"),
+            viewport: () => document.querySelector(".slide-menu").parentElement.getBoundingClientRect(),
+          },
           isOpen: () => menu?.isOpen(),
           close: () => menu?.closeMenu(),
         },

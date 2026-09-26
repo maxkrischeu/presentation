@@ -1271,6 +1271,8 @@ Presentation.factories.images = function (context) {
   return Object.assign(api, {
     done,
     libraryOpen: () => !panel.hidden,
+    libraryElement: () => panel,
+    libraryViewport: () => shell.getBoundingClientRect(),
     undo: () => actions.undo(),
     redo: () => actions.redo(),
     remove,

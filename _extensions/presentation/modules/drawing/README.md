@@ -22,7 +22,7 @@ für die zusammengehörigen Pointer-, Touch- und Mausereignisse.
 ## Zeichnen und halten
 
 Am Ende einer Linie, eines Dreiecks, Vierecks oder Kreises den Stift/Finger bzw.
-die gedrückte Maustaste etwa 0,7 Sekunden ruhig halten. Eindeutige Formen werden
+die gedrückte Maustaste etwa 0,65 Sekunden ruhig halten. Eindeutige Formen werden
 begradigt; annähernd rechtwinklige Vierecke werden zu Rechtecken, auch gedreht.
 Loslassen übernimmt die Form. Weiterzeichnen stellt den ursprünglichen Strich
 wieder her. Kleine Zeichen und unklare Konturen bleiben Freihand.
@@ -31,3 +31,8 @@ wieder her. Kleine Zeichen und unklare Konturen bleiben Freihand.
 Bewegungstoleranz und Abbruch. Die Engine ersetzt nur den aktuellen Strich und
 behält seine Identität für Objektradierer, Replay und Export. Modus-/Folienwechsel,
 Fokusverlust und abgebrochene Touchgesten beenden ausstehende Erkennungen.
+
+Die Haltegeste toleriert bis zu 9 CSS-Pixel Bewegung beim Stillhalten.
+Erkennung toleriert leicht gekrümmte Linien, Lücken am Formschluss und
+unregelmäßige Seiten; sehr kleine Zeichen, offene Bögen und mehrfach
+nachgezogene Kritzeleien bleiben Freihand.

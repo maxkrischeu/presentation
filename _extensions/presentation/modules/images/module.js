@@ -62,6 +62,11 @@ Presentation.register({
         {
           id: "images",
           priority: 40,
+          edge: {
+            side: "right", command: "assets",
+            element: api.libraryElement,
+            viewport: api.libraryViewport,
+          },
           isOpen: api.libraryOpen,
           close: api.closeLibrary,
         },
