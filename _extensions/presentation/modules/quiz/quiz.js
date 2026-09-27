@@ -406,6 +406,7 @@ window.RevealQuiz = function () {
           let options = slide.querySelectorAll("li");
           options.forEach((opt) => {
             opt.classList.add("option-button");
+            opt.dataset.presentationNavigation = "local";
           });
 
           if (settings.shuffleOptions) {
