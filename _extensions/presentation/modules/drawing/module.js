@@ -8,7 +8,7 @@ Presentation.register({
     const penIcon = Presentation.drawingIcons.pen;
     function onKey(event) {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
-        if (!event.repeat) api.undoMove(event.shiftKey);
+        if (!event.repeat) api.undo(event.shiftKey);
         return true;
       }
       if (event.ctrlKey || event.metaKey || event.altKey) return false;
@@ -66,7 +66,8 @@ Presentation.register({
       ],
       help: [
         ["P / E", "Pen / Eraser (drawing mode)"],
-        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo lasso move"],
+        ["2 / 3 fingers", "Tap to undo / redo drawing"],
+        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo drawing"],
         ["← / → (chalkboard)", "Previous / next board"],
       ],
     };

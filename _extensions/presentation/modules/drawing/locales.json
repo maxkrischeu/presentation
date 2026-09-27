@@ -26,6 +26,9 @@
     "← / → (chalkboard)": "← / → (Tafel)",
     "Previous / next board": "Vorherige / nächste Tafel",
     "Lasso Selection": "Lasso-Auswahl",
-    "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen"
+    "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen",
+    "Undo / redo drawing": "Zeichenaktion rückgängig / wiederholen",
+    "Tap to undo / redo drawing": "Tippen: Zeichenaktion rückgängig / wiederholen",
+    "2 / 3 fingers": "2 / 3 Finger"
   }
 }

@@ -113,7 +113,7 @@ window.Presentation = window.Presentation || {};
 ;
 
 /* core/i18n.js */
-Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Cancel": "Abbrechen", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Lasso Selection": "Lasso-Auswahl", "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Position Images": "Bilder bearbeiten", "Image Library": "Bildbibliothek", "Save to Source": "Im Quarto-Dokument speichern", "Close Image Library": "Bildbibliothek schließen", "Image source": "Bildquelle", "Shared": "Gemeinsam", "Image editing": "Bildbearbeitung", "Undo": "Rückgängig", "Redo": "Wiederholen", "Delete Image": "Bild löschen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Resize image": "Bildgröße ändern", "Rotate image": "Bild drehen", "Rotate image · Snap: 45° · Shift: 15°": "Bild drehen · Einrasten: 45° · Umschalt: 15°", "No shared images prepared.": "Keine gemeinsamen Bilder vorbereitet.", "No images prepared for this slide.": "Keine Bilder für diese Folie vorbereitet.", "Invalid placement file.": "Ungültige Bildlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "This image could not be loaded.": "Dieses Bild konnte nicht geladen werden.", "Image selected. Close the library to move or resize it.": "Bild ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Placements saved.": "Bildpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Bildlayout-Datei ist zu groß.", "Loaded; unavailable images or slides were skipped.": "Geladen; nicht verfügbare Bilder oder Folien wurden übersprungen.", "Placements loaded.": "Bildpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Bildpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "I (image editing)": "I (Bildbearbeitung)", "Open / close image library": "Bildbibliothek öffnen / schließen", "Delete selected image": "Ausgewähltes Bild löschen", "Undo / redo (image editing)": "Rückgängig / Wiederholen (Bildbearbeitung)", "This Lesson": "Diese Stunde", "Use quarto preview to import images.": "Zum Einfügen von Bildern bitte quarto preview verwenden.", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Image saved in assets.": "Bild im assets-Ordner gespeichert.", "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "Media Library": "Medienbibliothek", "Close Media Library": "Medienbibliothek schließen", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz", "Available terms": "Verfügbare Begriffe", "Gap {number}": "Lücke {number}", "Previous search result": "Vorheriger Treffer", "Next search result": "Nächster Treffer", "No search results": "Keine Treffer"}};
+Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Cancel": "Abbrechen", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Lasso Selection": "Lasso-Auswahl", "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen", "Undo / redo drawing": "Zeichenaktion rückgängig / wiederholen", "Tap to undo / redo drawing": "Tippen: Zeichenaktion rückgängig / wiederholen", "2 / 3 fingers": "2 / 3 Finger", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Position Images": "Bilder bearbeiten", "Image Library": "Bildbibliothek", "Save to Source": "Im Quarto-Dokument speichern", "Close Image Library": "Bildbibliothek schließen", "Image source": "Bildquelle", "Shared": "Gemeinsam", "Image editing": "Bildbearbeitung", "Undo": "Rückgängig", "Redo": "Wiederholen", "Delete Image": "Bild löschen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Resize image": "Bildgröße ändern", "Rotate image": "Bild drehen", "Rotate image · Snap: 45° · Shift: 15°": "Bild drehen · Einrasten: 45° · Umschalt: 15°", "No shared images prepared.": "Keine gemeinsamen Bilder vorbereitet.", "No images prepared for this slide.": "Keine Bilder für diese Folie vorbereitet.", "Invalid placement file.": "Ungültige Bildlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "This image could not be loaded.": "Dieses Bild konnte nicht geladen werden.", "Image selected. Close the library to move or resize it.": "Bild ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Placements saved.": "Bildpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Bildlayout-Datei ist zu groß.", "Loaded; unavailable images or slides were skipped.": "Geladen; nicht verfügbare Bilder oder Folien wurden übersprungen.", "Placements loaded.": "Bildpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Bildpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "I (image editing)": "I (Bildbearbeitung)", "Open / close image library": "Bildbibliothek öffnen / schließen", "Delete selected image": "Ausgewähltes Bild löschen", "Undo / redo (image editing)": "Rückgängig / Wiederholen (Bildbearbeitung)", "This Lesson": "Diese Stunde", "Use quarto preview to import images.": "Zum Einfügen von Bildern bitte quarto preview verwenden.", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Image saved in assets.": "Bild im assets-Ordner gespeichert.", "Image saved in assets. Save to Source keeps its placement in the document.": "Bild in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "Media Library": "Medienbibliothek", "Close Media Library": "Medienbibliothek schließen", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz", "Available terms": "Verfügbare Begriffe", "Gap {number}": "Lücke {number}", "Previous search result": "Vorheriger Treffer", "Next search result": "Nächster Treffer", "No search results": "Keine Treffer"}};
 // Presentation UI only; authored slide content and asset labels are never translated.
 window.Presentation = window.Presentation || {};
 (() => {
@@ -2851,6 +2851,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
 
     function startErasing(x, y) {
       stopDrawing();
+      beginEdit();
       erasing = true;
       erasePoint(x, y);
     }
@@ -2955,7 +2956,9 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     }
 
     function stopErasing() {
+      var wasErasing = erasing;
       erasing = false;
+      if (wasErasing) finishEdit();
     }
 
     var smoothPoint = null;
@@ -3023,6 +3026,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     }
 
     function startDrawing(x, y) {
+      beginEdit();
       smoothPoint = { x, y };
       smoothEnd = { x, y };
       smoothRaw = { x, y };
@@ -3077,6 +3081,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     }
 
     function stopDrawing(cancel) {
+      var wasDrawing = drawing;
       if (cancel) restoreHeldStroke();
       var snapped = hold ? hold.stop() : false;
       if (drawing && smoothRaw && (!snapped || cancel)) {
@@ -3084,6 +3089,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
       }
       smoothPoint = smoothEnd = smoothRaw = heldOriginal = null;
       drawing = false;
+      if (wasDrawing) finishEdit();
     }
 
     /*****************************************************************
@@ -3559,7 +3565,10 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     function clear() {
       stopDrawing();
       if (!readOnly) {
+        stopErasing();
+        beginEdit();
         clearSlide();
+        finishEdit();
         // broadcast
         var message = new CustomEvent(messageType);
         message.content = {
@@ -3598,6 +3607,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
 
     function resetSlideDrawings() {
       stopDrawing();
+      stopErasing();
       slideStart = Date.now();
       closeChalkboard();
 
@@ -3606,10 +3616,12 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
 
       mode = 1;
       var slideData = getSlideData();
+      drawingHistories.delete(slideData);
       slideData.duration = 0;
       slideData.events = [];
       mode = 0;
       var slideData = getSlideData();
+      drawingHistories.delete(slideData);
       slideData.duration = 0;
       slideData.events = [];
 
@@ -3643,6 +3655,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
 
     function resetStorage(force) {
       stopDrawing();
+      stopErasing();
       var ok =
         force ||
         confirm(
@@ -3657,6 +3670,8 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
           closeChalkboard();
         }
 
+        drawingHistories = new WeakMap();
+        pendingEdit = null;
         storage = [
           {
             width: Reveal.getConfig().width,
@@ -3688,7 +3703,60 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     }
 
     // Lasso edits retain vector strokes and carry their existing erasure masks.
-    var lassoHistory = [], lassoFuture = [];
+    // One transaction per stroke, eraser gesture, clear or lasso move.
+    // Histories belong to the slide's data object and individual board.
+    var drawingHistories = new WeakMap(), pendingEdit = null;
+    function paintEvent(event, scope) {
+      return ["draw", "erase", "clear"].includes(event.type) && event.board === scope;
+    }
+    function editSnapshot(source) {
+      var data = source?.data || getSlideData();
+      var id = source ? source.mode : mode;
+      var page = source ? source.board : board;
+      var scope = id === 1 ? page : undefined;
+      return {data, mode:id, board:page, scope,
+        events:JSON.parse(JSON.stringify((source?.events || data.events).filter(e=>paintEvent(e,scope))))};
+    }
+    function editHistory(snapshot) {
+      var pages = drawingHistories.get(snapshot.data);
+      if (!pages) { pages = new Map(); drawingHistories.set(snapshot.data,pages); }
+      if (!pages.has(snapshot.scope)) pages.set(snapshot.scope,{past:[],future:[]});
+      return pages.get(snapshot.scope);
+    }
+    function rememberEdit(before) {
+      if (!before) return;
+      var after = editSnapshot({...before,events:before.data.events});
+      if (JSON.stringify(before.events) === JSON.stringify(after.events)) return;
+      var history = editHistory(before);
+      history.past.push({before,after}); history.future=[];
+      if(history.past.length>50)history.past.shift();
+    }
+    function beginEdit() { if(!pendingEdit)pendingEdit=editSnapshot(); }
+    function finishEdit() { var before=pendingEdit;pendingEdit=null;rememberEdit(before); }
+    function restoreEdit(snapshot) {
+      snapshot.data.events = snapshot.data.events.filter(e=>!paintEvent(e,snapshot.scope))
+        .concat(JSON.parse(JSON.stringify(snapshot.events))).sort((a,b)=>a.time-b.time);
+      if(snapshot.data===getSlideData() && snapshot.mode===mode && (mode===0||snapshot.board===board))redrawCurrentBoard();
+      storageChanged();
+    }
+    this.drawingUndo = function (redo) {
+      stopDrawing(); stopErasing();
+      var current=editSnapshot(), history=editHistory(current);
+      var source=redo?history.future:history.past,target=redo?history.past:history.future;
+      var entry=source[source.length-1];if(!entry)return;
+      var expected=redo?entry.before:entry.after;
+      if(JSON.stringify(current.events)!==JSON.stringify(expected.events))return;
+      source.pop();target.push(entry);restoreEdit(redo?entry.after:entry.before);
+    };
+    this.drawingGestureSnapshot = editSnapshot;
+    this.cancelDrawingGesture = function (snapshot) {
+      // Discard the first finger's provisional ink without adding an undo step.
+      hold?.stop(); drawing=false;erasing=false;
+      smoothPoint=smoothEnd=smoothRaw=heldOriginal=null;
+      pendingEdit=null;
+      restoreEdit(snapshot);
+    };
+
     function lassoSnapshot() {
       return { data: getSlideData(), mode: mode, board: board,
         events: JSON.parse(JSON.stringify(getSlideData().events)) };
@@ -3769,19 +3837,11 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     this.lassoCommit = function (before, moved) {
       if (!moved) { this.lassoRestore(before); return; }
       var after = lassoSnapshot();
-      lassoHistory.push({before, after}); lassoFuture = [];
-      if (lassoHistory.length > 30) lassoHistory.shift();
+      rememberEdit(editSnapshot(before));
       after.data.duration = Math.max(after.data.duration, Date.now()-slideStart+1);
       storageChanged();
     };
-    this.lassoUndo = function (redo) {
-      var source = redo ? lassoFuture : lassoHistory, target = redo ? lassoHistory : lassoFuture;
-      var entry = source[source.length-1]; if (!entry) return;
-      var expected = redo ? entry.before : entry.after;
-      if (expected.data !== getSlideData() || expected.mode !== mode || expected.board !== board || JSON.stringify(expected.data.events) !== JSON.stringify(expected.events)) return;
-      source.pop(); target.push(entry);
-      this.lassoRestore(redo ? entry.after : entry.before); storageChanged();
-    };
+    this.lassoUndo = this.drawingUndo;
 
     this.toggleNotesCanvas = toggleNotesCanvas;
     this.toggleChalkboard = toggleChalkboard;
@@ -4003,6 +4063,59 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
 
 ;
 
+/* modules/drawing/gestures.js */
+/* Short two/three-finger taps. Normal one-finger drawing remains immediate. */
+Presentation.factories.drawingGestures = function ({active, begin, cancel, undo}) {
+  let gesture = null;
+  const withinSurface = target => target.closest?.('#notescanvas canvas, #chalkboard canvas');
+  const stop = event => {event.preventDefault();event.stopImmediatePropagation();};
+  const inspect = event => {
+    for (const touch of event.touches) {
+      if (!gesture.origins.has(touch.identifier)) gesture.origins.set(touch.identifier,{x:touch.clientX,y:touch.clientY});
+      const start=gesture.origins.get(touch.identifier);
+      if(Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>12)gesture.moved=true;
+    }
+  };
+  document.addEventListener('touchstart',event=>{
+    if(!gesture){
+      if(!active() || !withinSurface(event.target))return;
+      gesture={start:performance.now(),snapshot:begin(),origins:new Map(),count:0,moved:false,multi:false};
+    }
+    inspect(event);
+    gesture.count=Math.max(gesture.count,event.touches.length);
+    if(!gesture.multi && event.touches.length>=2 && !gesture.moved && performance.now()-gesture.start<=180){
+      gesture.multi=true;cancel(gesture.snapshot);
+    }
+    if(gesture.multi)stop(event);
+  },{capture:true,passive:false});
+  document.addEventListener('touchmove',event=>{
+    if(!gesture)return;
+    inspect(event);
+    if(gesture.multi)stop(event);
+  },{capture:true,passive:false});
+  document.addEventListener('touchend',event=>{
+    if(!gesture)return;
+    if(gesture.multi)stop(event);
+    if(event.touches.length)return;
+    const completed=gesture;gesture=null;
+    if(completed.multi && !completed.moved && performance.now()-completed.start<400 && active()){
+      if(completed.count===2)undo(false);
+      if(completed.count===3)undo(true);
+    }
+  },{capture:true,passive:false});
+  document.addEventListener('touchcancel',event=>{
+    if(gesture?.multi)stop(event);
+    gesture=null;
+  },{capture:true,passive:false});
+  // Prevent the lasso and compatibility mouse stream from acting on a multi-tap.
+  for(const type of ['pointerdown','pointermove','pointerup','pointercancel','mousedown','mouseup','click'])
+    document.addEventListener(type,event=>{if(gesture?.multi)stop(event);}, {capture:true,passive:false});
+  window.addEventListener('blur',()=>{gesture=null;});
+  return {reset(){gesture=null;}};
+};
+
+;
+
 /* modules/drawing/drawing.js */
 /* All knowledge of Chalkboard's DOM is confined to this adapter.
    Quarto's bundled Chalkboard 2.3.3 exposes commands but no notes-mode getter. */
@@ -4129,7 +4242,15 @@ Presentation.factories.drawing = function (context) {
     }),
   );
   const lasso = Presentation.factories.drawingLasso(plugin, onChange);
+  const undo = (redo) => { lasso.clear(); plugin.drawingUndo(redo); captureNotes(); onChange(); };
+  const gestures = Presentation.factories.drawingGestures({
+    active: () => drawing() || boarding(),
+    begin: () => plugin.drawingGestureSnapshot(),
+    cancel: snapshot => { lasso.clear(); plugin.cancelDrawingGesture(snapshot); },
+    undo,
+  });
   const stop = () => {
+    gestures.reset();
     lasso.set(false);
     if (drawing() && !deck.isOverview()) captureNotes();
     if (boarding()) plugin.toggleChalkboard();
@@ -4141,7 +4262,7 @@ Presentation.factories.drawing = function (context) {
     captureNotes,
     lasso: () => lasso.set(!lasso.active()),
     selecting: lasso.active,
-    undoMove: (redo) => { lasso.undo(redo); captureNotes(); },
+    undo,
     visibilityState: () => ({ ...drawingsShown }),
     snapshot: () => ({
       drawingData: JSON.parse(plugin.getData()),
@@ -4460,7 +4581,7 @@ Presentation.register({
     const penIcon = Presentation.drawingIcons.pen;
     function onKey(event) {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
-        if (!event.repeat) api.undoMove(event.shiftKey);
+        if (!event.repeat) api.undo(event.shiftKey);
         return true;
       }
       if (event.ctrlKey || event.metaKey || event.altKey) return false;
@@ -4518,7 +4639,8 @@ Presentation.register({
       ],
       help: [
         ["P / E", "Pen / Eraser (drawing mode)"],
-        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo lasso move"],
+        ["2 / 3 fingers", "Tap to undo / redo drawing"],
+        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo drawing"],
         ["← / → (chalkboard)", "Previous / next board"],
       ],
     };

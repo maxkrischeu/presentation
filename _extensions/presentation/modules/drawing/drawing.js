@@ -123,7 +123,15 @@ Presentation.factories.drawing = function (context) {
     }),
   );
   const lasso = Presentation.factories.drawingLasso(plugin, onChange);
+  const undo = (redo) => { lasso.clear(); plugin.drawingUndo(redo); captureNotes(); onChange(); };
+  const gestures = Presentation.factories.drawingGestures({
+    active: () => drawing() || boarding(),
+    begin: () => plugin.drawingGestureSnapshot(),
+    cancel: snapshot => { lasso.clear(); plugin.cancelDrawingGesture(snapshot); },
+    undo,
+  });
   const stop = () => {
+    gestures.reset();
     lasso.set(false);
     if (drawing() && !deck.isOverview()) captureNotes();
     if (boarding()) plugin.toggleChalkboard();
@@ -135,7 +143,7 @@ Presentation.factories.drawing = function (context) {
     captureNotes,
     lasso: () => lasso.set(!lasso.active()),
     selecting: lasso.active,
-    undoMove: (redo) => { lasso.undo(redo); captureNotes(); },
+    undo,
     visibilityState: () => ({ ...drawingsShown }),
     snapshot: () => ({
       drawingData: JSON.parse(plugin.getData()),

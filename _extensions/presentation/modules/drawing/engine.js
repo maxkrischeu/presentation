@@ -1581,6 +1581,7 @@
 
     function startErasing(x, y) {
       stopDrawing();
+      beginEdit();
       erasing = true;
       erasePoint(x, y);
     }
@@ -1685,7 +1686,9 @@
     }
 
     function stopErasing() {
+      var wasErasing = erasing;
       erasing = false;
+      if (wasErasing) finishEdit();
     }
 
     var smoothPoint = null;
@@ -1753,6 +1756,7 @@
     }
 
     function startDrawing(x, y) {
+      beginEdit();
       smoothPoint = { x, y };
       smoothEnd = { x, y };
       smoothRaw = { x, y };
@@ -1807,6 +1811,7 @@
     }
 
     function stopDrawing(cancel) {
+      var wasDrawing = drawing;
       if (cancel) restoreHeldStroke();
       var snapped = hold ? hold.stop() : false;
       if (drawing && smoothRaw && (!snapped || cancel)) {
@@ -1814,6 +1819,7 @@
       }
       smoothPoint = smoothEnd = smoothRaw = heldOriginal = null;
       drawing = false;
+      if (wasDrawing) finishEdit();
     }
 
     /*****************************************************************
@@ -2289,7 +2295,10 @@
     function clear() {
       stopDrawing();
       if (!readOnly) {
+        stopErasing();
+        beginEdit();
         clearSlide();
+        finishEdit();
         // broadcast
         var message = new CustomEvent(messageType);
         message.content = {
@@ -2328,6 +2337,7 @@
 
     function resetSlideDrawings() {
       stopDrawing();
+      stopErasing();
       slideStart = Date.now();
       closeChalkboard();
 
@@ -2336,10 +2346,12 @@
 
       mode = 1;
       var slideData = getSlideData();
+      drawingHistories.delete(slideData);
       slideData.duration = 0;
       slideData.events = [];
       mode = 0;
       var slideData = getSlideData();
+      drawingHistories.delete(slideData);
       slideData.duration = 0;
       slideData.events = [];
 
@@ -2373,6 +2385,7 @@
 
     function resetStorage(force) {
       stopDrawing();
+      stopErasing();
       var ok =
         force ||
         confirm(
@@ -2387,6 +2400,8 @@
           closeChalkboard();
         }
 
+        drawingHistories = new WeakMap();
+        pendingEdit = null;
         storage = [
           {
             width: Reveal.getConfig().width,
@@ -2418,7 +2433,60 @@
     }
 
     // Lasso edits retain vector strokes and carry their existing erasure masks.
-    var lassoHistory = [], lassoFuture = [];
+    // One transaction per stroke, eraser gesture, clear or lasso move.
+    // Histories belong to the slide's data object and individual board.
+    var drawingHistories = new WeakMap(), pendingEdit = null;
+    function paintEvent(event, scope) {
+      return ["draw", "erase", "clear"].includes(event.type) && event.board === scope;
+    }
+    function editSnapshot(source) {
+      var data = source?.data || getSlideData();
+      var id = source ? source.mode : mode;
+      var page = source ? source.board : board;
+      var scope = id === 1 ? page : undefined;
+      return {data, mode:id, board:page, scope,
+        events:JSON.parse(JSON.stringify((source?.events || data.events).filter(e=>paintEvent(e,scope))))};
+    }
+    function editHistory(snapshot) {
+      var pages = drawingHistories.get(snapshot.data);
+      if (!pages) { pages = new Map(); drawingHistories.set(snapshot.data,pages); }
+      if (!pages.has(snapshot.scope)) pages.set(snapshot.scope,{past:[],future:[]});
+      return pages.get(snapshot.scope);
+    }
+    function rememberEdit(before) {
+      if (!before) return;
+      var after = editSnapshot({...before,events:before.data.events});
+      if (JSON.stringify(before.events) === JSON.stringify(after.events)) return;
+      var history = editHistory(before);
+      history.past.push({before,after}); history.future=[];
+      if(history.past.length>50)history.past.shift();
+    }
+    function beginEdit() { if(!pendingEdit)pendingEdit=editSnapshot(); }
+    function finishEdit() { var before=pendingEdit;pendingEdit=null;rememberEdit(before); }
+    function restoreEdit(snapshot) {
+      snapshot.data.events = snapshot.data.events.filter(e=>!paintEvent(e,snapshot.scope))
+        .concat(JSON.parse(JSON.stringify(snapshot.events))).sort((a,b)=>a.time-b.time);
+      if(snapshot.data===getSlideData() && snapshot.mode===mode && (mode===0||snapshot.board===board))redrawCurrentBoard();
+      storageChanged();
+    }
+    this.drawingUndo = function (redo) {
+      stopDrawing(); stopErasing();
+      var current=editSnapshot(), history=editHistory(current);
+      var source=redo?history.future:history.past,target=redo?history.past:history.future;
+      var entry=source[source.length-1];if(!entry)return;
+      var expected=redo?entry.before:entry.after;
+      if(JSON.stringify(current.events)!==JSON.stringify(expected.events))return;
+      source.pop();target.push(entry);restoreEdit(redo?entry.after:entry.before);
+    };
+    this.drawingGestureSnapshot = editSnapshot;
+    this.cancelDrawingGesture = function (snapshot) {
+      // Discard the first finger's provisional ink without adding an undo step.
+      hold?.stop(); drawing=false;erasing=false;
+      smoothPoint=smoothEnd=smoothRaw=heldOriginal=null;
+      pendingEdit=null;
+      restoreEdit(snapshot);
+    };
+
     function lassoSnapshot() {
       return { data: getSlideData(), mode: mode, board: board,
         events: JSON.parse(JSON.stringify(getSlideData().events)) };
@@ -2499,19 +2567,11 @@
     this.lassoCommit = function (before, moved) {
       if (!moved) { this.lassoRestore(before); return; }
       var after = lassoSnapshot();
-      lassoHistory.push({before, after}); lassoFuture = [];
-      if (lassoHistory.length > 30) lassoHistory.shift();
+      rememberEdit(editSnapshot(before));
       after.data.duration = Math.max(after.data.duration, Date.now()-slideStart+1);
       storageChanged();
     };
-    this.lassoUndo = function (redo) {
-      var source = redo ? lassoFuture : lassoHistory, target = redo ? lassoHistory : lassoFuture;
-      var entry = source[source.length-1]; if (!entry) return;
-      var expected = redo ? entry.before : entry.after;
-      if (expected.data !== getSlideData() || expected.mode !== mode || expected.board !== board || JSON.stringify(expected.data.events) !== JSON.stringify(expected.events)) return;
-      source.pop(); target.push(entry);
-      this.lassoRestore(redo ? entry.after : entry.before); storageChanged();
-    };
+    this.lassoUndo = this.drawingUndo;
 
     this.toggleNotesCanvas = toggleNotesCanvas;
     this.toggleChalkboard = toggleChalkboard;
