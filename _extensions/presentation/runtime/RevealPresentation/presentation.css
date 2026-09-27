@@ -2454,3 +2454,30 @@ html .reveal .drop.active {
   min-width: 0;
   overflow-wrap: anywhere;
 }
+
+/* modules/text-selection/styles.css */
+.reveal.presentation-selection-managed:not(.presentation-selecting-text) .slides,
+.reveal.presentation-selection-managed:not(.presentation-selecting-text) .slides * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.reveal.presentation-selection-managed .slides :is(input, textarea, [contenteditable]:not([contenteditable="false"]), [role="textbox"]),
+.reveal.presentation-selection-managed .slides [contenteditable]:not([contenteditable="false"]) * {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+.reveal.presentation-selecting-text .slides,
+.reveal.presentation-selecting-text .slides :is(p, li, span, h1, h2, h3, h4, h5, h6, pre, code, strong, em, blockquote, td, th) {
+  -webkit-user-select: text;
+  user-select: text;
+  cursor: text;
+}
+.presentation-selection-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.presentation-selection-controls[hidden] { display: none; }
+.presentation-selection-controls > span { font-size: 16px; white-space: nowrap; }

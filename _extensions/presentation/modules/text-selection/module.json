@@ -1,0 +1,5 @@
+{
+  "id": "text-selection",
+  "scripts": ["module.js"],
+  "styles": ["styles.css"]
+}
