@@ -18,5 +18,5 @@ Fokusverlust und ein zweiter Finger beenden einen ausstehenden Haltevorgang.
 
 Maus-/Trackpad-Gesten verwenden natives HTML-Drag-and-drop. Touch behält die
 Haltegeste. Die Bibliothek hat keine persistente Auswahl und keine graue Hover-Markierung.
-Nur das gerade gehaltene Medium wird hervorgehoben; Tastaturfokus erhält einen
-eigenen Umriss. Die Ziehvorschau enthält nur die Bildfläche, ohne Kachel oder Titel.
+Ein gemeinsamer Rahmen kennzeichnet genau ein Ziel für Maus, Tastatur oder
+Halten. Scrollen hebt diesen Rahmen auf. Die Ziehvorschau enthält nur die Bildfläche, ohne Kachel oder Titel.

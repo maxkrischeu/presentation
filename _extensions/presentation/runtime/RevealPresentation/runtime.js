@@ -556,98 +556,25 @@ Presentation.factories.transitions = function (context) {
 
 ;
 
-/* ui/scroll-feedback.js */
-/* Shared boundary feedback for scrollable panels; owners supply their content. */
+/* ui/panel-scroll.js */
+/* Native browser scrolling. Only gestures on the external grip need forwarding. */
 Presentation.panelScrollers = new WeakMap();
 Presentation.scrollPanelBy = (viewport, delta) => Presentation.panelScrollers.get(viewport)?.(delta);
-Presentation.scrollFeedback = function (viewport, content, options = {}) {
-  const getContent = () => typeof content === "function" ? content() : content;
-  let animation, touch, timer, offset = 0, scrollLimit = 0, suppressClickUntil = 0;
-  const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const settle = () => {
-    clearTimeout(timer);
-    if (!offset) return;
-    const from = offset;
-    offset = 0;
-    const list = getContent();
-    if (!list) return;
-    list.style.transform = "";
-    animation?.cancel();
-    animation = list.animate([
-      {transform: `translateY(${from}px)`}, {transform: "translateY(0)"},
-    ], {duration: reducedMotion() ? 100 : 220, easing: "ease-out"});
-  };
-  const rebound = delta => {
-    const list = getContent();
-    if (!list) return;
-    // A trackpad sends many small deltas. Accumulate them instead of
-    // restarting an animation from zero for every event.
-    animation?.cancel();
-    clearTimeout(timer);
-    if (offset && Math.sign(offset) !== Math.sign(delta)) offset = 0;
-    const limit = reducedMotion() ? 8 : 22;
-    offset += delta * 0.3 * (1 - Math.abs(offset) / limit);
-    offset = Math.max(-limit, Math.min(limit, offset));
-    list.style.transform = `translateY(${offset}px)`;
-    timer = setTimeout(settle, 130);
-  };
-  const atEdge = delta => {
-    if (!offset) {
-      animation?.cancel();
-      scrollLimit = Math.max(0, viewport.scrollHeight - viewport.clientHeight);
-    }
-    return delta > 0 ? viewport.scrollTop <= 1 : viewport.scrollTop >= scrollLimit - 1;
+Presentation.mountPanelScroll = function (viewport, options = {}) {
+  let suppressClickUntil = 0;
+  const scrolling = () => {
+    options.onScroll?.();
+    suppressClickUntil = Date.now() + 200;
   };
   Presentation.panelScrollers.set(viewport, delta => {
-    options.onScroll?.();
-    if (options.isDragging?.()) return;
-    // Vertical gestures on the external grip belong to this viewport too.
-    if (atEdge(-delta)) rebound(-delta);
-    else {
-      settle();
-      animation?.cancel();
-      const before = viewport.scrollTop;
-      viewport.scrollTop += delta;
-      const remaining = delta - (viewport.scrollTop - before);
-      if (Math.abs(remaining) > 1) rebound(-remaining);
-    }
-    suppressClickUntil = Date.now() + 250;
+    scrolling();
+    if (!options.isDragging?.()) viewport.scrollBy({top: delta, behavior: "instant"});
   });
-  viewport.addEventListener("wheel", event => {
-    if (event.ctrlKey || !event.deltaY) return;
-    options.onScroll?.();
-    if (options.isDragging?.()) return;
-    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientHeight : 1;
-    const delta = -event.deltaY * unit;
-    if (atEdge(delta)) {
-      // Keep the translated list from creating real overflow at the edge.
-      event.preventDefault();
-      rebound(delta);
-    } else settle();
-    suppressClickUntil = Date.now() + 250;
-  }, {passive: false});
-  // Native scrolling cancels Pointer Events. Touch Events continue through
-  // the gesture, including a fresh outward swipe at an existing boundary.
-  viewport.addEventListener("touchstart", event => {
-    touch = event.touches.length === 1 ? {y: event.touches[0].clientY, lastY: event.touches[0].clientY} : null;
-  }, {passive: true});
-  viewport.addEventListener("touchmove", event => {
-    if (!touch || event.touches.length !== 1 || event.defaultPrevented || options.isDragging?.()) return;
-    const y = event.touches[0].clientY;
-    if (Math.abs(y - touch.y) < 8) return;
-    const step = y - touch.lastY;
-    touch.lastY = y;
-    suppressClickUntil = Date.now() + 350;
-    options.onScroll?.();
-    if (atEdge(step)) {
-      if (event.cancelable) event.preventDefault();
-      rebound(step);
-    } else settle();
-  }, {passive: false});
-  for (const name of ["touchend", "touchcancel"])
-    viewport.addEventListener(name, () => { touch = null; settle(); }, {passive: true});
+  viewport.addEventListener("scroll", scrolling, {passive: true});
+  // A new intentional click is allowed immediately; a scroll-generated click is not.
+  viewport.addEventListener("pointerdown", () => { suppressClickUntil = 0; }, {passive: true});
   viewport.addEventListener("click", event => {
-    if (Date.now() < suppressClickUntil) {
+    if (event.detail && Date.now() < suppressClickUntil) {
       event.preventDefault(); event.stopImmediatePropagation();
     }
   }, true);
@@ -682,7 +609,7 @@ Presentation.mountMenu = function (context) {
     );
     list.closest(".slide-menu-panel").classList.add("slide-menu-custom-panel");
     list.replaceChildren();
-    Presentation.scrollFeedback(list.closest(".slide-menu-panel"), list);
+    Presentation.mountPanelScroll(list.closest(".slide-menu-panel"));
     const commands = [...Presentation.commands.values()]
       .filter((c) => c.menu === group)
       .sort((a, b) =>
@@ -5742,6 +5669,23 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
+  // One visual library target, shared by pointer, keyboard and hold feedback.
+  let libraryTarget = null, lastLibraryPointer = null;
+  function highlightLibrary(button) {
+    const target = gesture?.type === "add" && gesture.held ? gesture.button : button;
+    if (target === libraryTarget) return;
+    libraryTarget?.classList.remove("is-library-target");
+    libraryTarget = target;
+    libraryTarget?.classList.add("is-library-target");
+  }
+  panel.addEventListener("focusin", event => highlightLibrary(event.target.closest("[data-asset]")));
+  panel.addEventListener("pointermove", event => {
+    if (event.pointerType === "touch") return;
+    if (lastLibraryPointer?.x === event.clientX && lastLibraryPointer?.y === event.clientY) return;
+    lastLibraryPointer = {x: event.clientX, y: event.clientY};
+    highlightLibrary(event.target.closest("[data-asset]"));
+  });
+  panel.addEventListener("pointerleave", () => highlightLibrary(null));
   let nativeDrag = null;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
@@ -5768,6 +5712,7 @@ Presentation.factories.images = function (context) {
     // Pointer interaction ends an old keyboard focus indication. The library
     // has no persistent selection; only the one currently held item is marked.
     if (panel.contains(document.activeElement)) document.activeElement.blur();
+    highlightLibrary(button);
     event.stopPropagation();
     gesture = {
       type: "add",
@@ -5784,6 +5729,7 @@ Presentation.factories.images = function (context) {
       if (gesture !== pending || pending.ghost) return;
       pending.held = true;
       button.classList.add("is-held");
+      highlightLibrary(button);
       panel.setPointerCapture(pending.pointer);
     }, 350);
   });
@@ -5874,12 +5820,13 @@ Presentation.factories.images = function (context) {
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
     if (gesture?.type === "add") cancelGesture();
+    const focused = panel.querySelector("[data-asset]:focus-visible");
+    highlightLibrary(focused);
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
   panel.addEventListener("scroll", cancelLibraryGesture, true);
   const catalogViewport = panel.querySelector(".presentation-asset-catalog");
-  Presentation.scrollFeedback(catalogViewport,
-    () => catalogViewport.firstElementChild,
+  Presentation.mountPanelScroll(catalogViewport,
     {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.ghost});
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {

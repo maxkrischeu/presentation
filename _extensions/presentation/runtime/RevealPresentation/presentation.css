@@ -475,7 +475,7 @@ body:has(.reveal.overview)
   outline-offset: -3px;
 }
 .slide-menu-wrapper .slide-menu-panel {
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: contain;
 }
 
 /* modules/dialogs/styles.css */
@@ -916,7 +916,7 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   overflow: auto;
   min-height: 0;
   padding: 0 0 16px;
-  overscroll-behavior: none;
+  overscroll-behavior: contain;
 }
 .presentation-asset-catalog h3 {
   font: inherit;
@@ -944,7 +944,7 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   font: inherit;
   text-align: center;
 }
-.presentation-asset-grid button:focus-visible {
+.presentation-asset-grid button.is-library-target {
   outline: 2px solid #8eb9f5;
   outline-offset: -3px;
 }
@@ -1250,6 +1250,8 @@ html.print-pdf .reveal .presentation-placed-image.presentation-image-concealed {
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
+
+.presentation-asset-grid button:focus:not(.is-library-target) { outline: none; }
 
 /* modules/laser/styles.css */
 .presentation-laser-controls {

@@ -192,5 +192,5 @@ body:has(.reveal.overview)
   outline-offset: -3px;
 }
 .slide-menu-wrapper .slide-menu-panel {
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: contain;
 }

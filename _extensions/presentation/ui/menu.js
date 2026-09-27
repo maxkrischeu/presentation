@@ -24,7 +24,7 @@ Presentation.mountMenu = function (context) {
     );
     list.closest(".slide-menu-panel").classList.add("slide-menu-custom-panel");
     list.replaceChildren();
-    Presentation.scrollFeedback(list.closest(".slide-menu-panel"), list);
+    Presentation.mountPanelScroll(list.closest(".slide-menu-panel"));
     const commands = [...Presentation.commands.values()]
       .filter((c) => c.menu === group)
       .sort((a, b) =>

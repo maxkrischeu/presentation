@@ -763,6 +763,23 @@ Presentation.factories.images = function (context) {
     if (button && event.detail === 0 && !event.pointerType)
       insertCentered(button.dataset.asset);
   });
+  // One visual library target, shared by pointer, keyboard and hold feedback.
+  let libraryTarget = null, lastLibraryPointer = null;
+  function highlightLibrary(button) {
+    const target = gesture?.type === "add" && gesture.held ? gesture.button : button;
+    if (target === libraryTarget) return;
+    libraryTarget?.classList.remove("is-library-target");
+    libraryTarget = target;
+    libraryTarget?.classList.add("is-library-target");
+  }
+  panel.addEventListener("focusin", event => highlightLibrary(event.target.closest("[data-asset]")));
+  panel.addEventListener("pointermove", event => {
+    if (event.pointerType === "touch") return;
+    if (lastLibraryPointer?.x === event.clientX && lastLibraryPointer?.y === event.clientY) return;
+    lastLibraryPointer = {x: event.clientX, y: event.clientY};
+    highlightLibrary(event.target.closest("[data-asset]"));
+  });
+  panel.addEventListener("pointerleave", () => highlightLibrary(null));
   let nativeDrag = null;
   function releaseLibraryHold(g) {
     clearTimeout(g.holdTimer);
@@ -789,6 +806,7 @@ Presentation.factories.images = function (context) {
     // Pointer interaction ends an old keyboard focus indication. The library
     // has no persistent selection; only the one currently held item is marked.
     if (panel.contains(document.activeElement)) document.activeElement.blur();
+    highlightLibrary(button);
     event.stopPropagation();
     gesture = {
       type: "add",
@@ -805,6 +823,7 @@ Presentation.factories.images = function (context) {
       if (gesture !== pending || pending.ghost) return;
       pending.held = true;
       button.classList.add("is-held");
+      highlightLibrary(button);
       panel.setPointerCapture(pending.pointer);
     }, 350);
   });
@@ -895,12 +914,13 @@ Presentation.factories.images = function (context) {
   // Neither those sequences nor native touch scrolling are insert gestures.
   const cancelLibraryGesture = () => {
     if (gesture?.type === "add") cancelGesture();
+    const focused = panel.querySelector("[data-asset]:focus-visible");
+    highlightLibrary(focused);
   };
   panel.addEventListener("wheel", cancelLibraryGesture, {passive: true});
   panel.addEventListener("scroll", cancelLibraryGesture, true);
   const catalogViewport = panel.querySelector(".presentation-asset-catalog");
-  Presentation.scrollFeedback(catalogViewport,
-    () => catalogViewport.firstElementChild,
+  Presentation.mountPanelScroll(catalogViewport,
     {onScroll: cancelLibraryGesture, isDragging: () => !!nativeDrag || !!gesture?.ghost});
   for (const layer of layers.values())
     layer.addEventListener("pointerdown", (event) => {
