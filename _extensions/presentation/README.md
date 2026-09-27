@@ -438,7 +438,7 @@ presentation:
 |---|---|
 | `teacher` | Übernimmt `author`; ohne Autor leer |
 | `lang` unter `presentation` | Übernimmt Quartos `lang`, sonst Englisch |
-| `header-text` | Übernimmt den Präsentationstitel; `false` blendet ihn aus |
+| `header-text` | Übernimmt `subtitle`; ohne Untertitel bleibt der Text leer. Ein eigener Text überschreibt den Standard, `false` blendet ihn aus |
 | `logo`, `logo-text` | Kein Logo bzw. kein Text; `logo-text: date` übernimmt `date` |
 | `subject`, `class`, `institution` | Leer |
 | `teacher-url`, `institution-url` | Kein Link |

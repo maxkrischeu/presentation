@@ -30,7 +30,7 @@ function Meta(meta)
       config.teacher = table.concat(names, ', ')
     else config.teacher = author_name(meta.author) end
   end
-  if config['header-text'] == nil then config['header-text'] = meta.title end
+  if config['header-text'] == nil then config['header-text'] = meta.subtitle end
   local function text(key)
     local value = config[key]
     if key == 'logo-text' and pandoc.utils.stringify(value or '') == 'date' then
