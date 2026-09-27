@@ -42,3 +42,5 @@ nachgezogene Kritzeleien bleiben Freihand.
 Im Zeichen- und Tafelmodus wählt das Lasso im Dock berührte oder teilweise eingeschlossene Stiftstriche vollständig aus. Innerhalb des gestrichelten Kontur ziehen, um die Gruppe zu verschieben; außerhalb tippen, um sie abzuwählen. Stift oder Radierer beenden das Lasso. Die Pfeile für Rückgängig und Wiederholen im Dock oder Cmd/Strg+Z und Cmd/Strg+Umschalt+Z steuern die Zeichenhistorie. Die gemeinsame Historie umfasst Stiftstriche, Radiervorgänge, Lasso-Verschiebungen und Leeren. Sie hält bis zu 50 Schritte pro Zeichenfläche/Tafelseite während der geöffneten Sitzung vor. Neue Aktionen verwerfen deren Wiederholschritte.
 
 Die Engine erhält Strich-IDs und speichert mitbewegte Radiermasken an den Segmenten (`cuts`). Wiedergabe und PDF-/Sitzungsexport verwenden denselben maskierten Renderer. Die Pointer-Auswahl liegt separat in `lasso.js`; Auswahlrahmen werden nicht gespeichert oder exportiert.
+
+Zeichnungen gehören zur gesamten Folie und bleiben bei allen Einblendungen sichtbar. Rückgängig und Wiederholen verwenden dieselbe Historie über alle Einblendungen hinweg.

@@ -5,3 +5,5 @@ engine.js preserves the native plugin API and resource URLs. Changes: isolated s
 Lasso editing uses the same stroke IDs, preserves pixel erasures as translated per-segment clipping masks, and participates in per-surface transactional undo/redo. Playback and export share the mask-aware stroke renderer. Pointer selection UI is isolated in lasso.js.
 
 Drawing, erasing, clearing and lasso movement share bounded per-slide/per-board histories. Dock buttons and keyboard shortcuts invoke undo/redo.
+
+Drawing surfaces are keyed by slide, independent of fragments. Loading older fragment-scoped sessions consolidates their event streams.

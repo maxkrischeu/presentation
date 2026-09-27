@@ -1858,6 +1858,29 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     /**
      * Initialize storage.
      */
+    // Older sessions stored separate canvases for each fragment. Consolidate
+    // their event streams once when loading, retaining their drawing order.
+    function mergeFragmentDrawings(data) {
+      for (var layer of data) {
+        if (!layer.data.some(entry => entry.slide.f !== undefined)) continue;
+        var slides = new Map();
+        for (var entry of [...layer.data].sort((a,b)=>(a.slide.f ?? -1)-(b.slide.f ?? -1))) {
+          var key = entry.slide.h + ":" + entry.slide.v;
+          var target = slides.get(key);
+          if (!target) {
+            target = {...entry, slide:{h:entry.slide.h,v:entry.slide.v}, events:[]};
+            target.duration = 0;
+            slides.set(key,target);
+          }
+          var offset = target.duration;
+          for (var event of entry.events) target.events.push({...event,time:(event.time || 0)+offset});
+          target.duration = target.events.reduce((end,event)=>Math.max(end,event.time), offset + (entry.duration || 0));
+        }
+        layer.data = [...slides.values()];
+      }
+      return data;
+    }
+
     function initStorage(json) {
       var success = false;
       try {
@@ -1886,7 +1909,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
           }
         }
         success = true;
-        storage = data;
+        storage = mergeFragmentDrawings(data);
       } catch (err) {
         console.warn("Cannot initialise storage!");
       }
@@ -1976,15 +1999,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
      * Get data as json string.
      */
     function getData() {
-      // cleanup slide data without events
-      for (var id = 0; id < 2; id++) {
-        for (var i = storage[id].data.length - 1; i >= 0; i--) {
-          if (storage[id].data[i].events.length == 0) {
-            storage[id].data.splice(i, 1);
-          }
-        }
-      }
-
+      // Empty surfaces may still own redo history; reading must not delete them.
       return updateStorage();
     }
 
@@ -2026,8 +2041,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
       for (var i = 0; i < storage[id].data.length; i++) {
         if (
           storage[id].data[i].slide.h === indices.h &&
-          storage[id].data[i].slide.v === indices.v &&
-          storage[id].data[i].slide.f === indices.f
+          storage[id].data[i].slide.v === indices.v
         ) {
           data = storage[id].data[i];
           return data;
@@ -2038,7 +2052,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
       );
       //console.log( indices, Reveal.getCurrentSlide() );
       storage[id].data.push({
-        slide: indices,
+        slide: { h: indices.h, v: indices.v },
         page,
         events: [],
         duration: 0,
@@ -2057,8 +2071,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
         for (var i = 0; i < storage[id].data.length; i++) {
           if (
             storage[id].data[i].slide.h === indices.h &&
-            storage[id].data[i].slide.v === indices.v &&
-            storage[id].data[i].slide.f === indices.f
+            storage[id].data[i].slide.v === indices.v
           ) {
             duration = Math.max(duration, storage[id].data[i].duration);
             break;
@@ -2630,7 +2643,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
           resetSlideDrawings();
           break;
         case "init":
-          storage = message.content.storage;
+          storage = mergeFragmentDrawings(message.content.storage);
           for (var id = 0; id < 2; id++) {
             drawingCanvas[id].scale = Math.min(
               drawingCanvas[id].width / storage[id].width,
@@ -3421,46 +3434,8 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
         }
       }
     });
-    Reveal.addEventListener("fragmentshown", function (evt) {
-      stopDrawing();
-      //		clearTimeout( slidechangeTimeout );
-      //console.log('fragmentshown');
-      if (!printMode) {
-        slideStart = Date.now() - getSlideDuration();
-        slideIndices = Reveal.getIndices();
-        closeChalkboard();
-        board = 0;
-        clearCanvas(0);
-        clearCanvas(1);
-        if (Reveal.isAutoSliding()) {
-          var event = new CustomEvent("startplayback");
-          event.timestamp = 0;
-          document.dispatchEvent(event);
-        } else if (!playback) {
-          startPlayback(getSlideDuration(), 0);
-          //				closeChalkboard();
-        }
-      }
-    });
-    Reveal.addEventListener("fragmenthidden", function (evt) {
-      stopDrawing();
-      //		clearTimeout( slidechangeTimeout );
-      //console.log('fragmenthidden');
-      if (!printMode) {
-        slideStart = Date.now() - getSlideDuration();
-        slideIndices = Reveal.getIndices();
-        closeChalkboard();
-        board = 0;
-        clearCanvas(0);
-        clearCanvas(1);
-        if (Reveal.isAutoSliding()) {
-          document.dispatchEvent(new CustomEvent("stopplayback"));
-        } else if (!playback) {
-          startPlayback(getSlideDuration());
-          closeChalkboard();
-        }
-      }
-    });
+    // Fragment changes reveal content on the same drawing surface. Keep the
+    // canvas, board, playback clock and undo history intact until slidechanged.
 
     Reveal.addEventListener("autoslideresumed", function (evt) {
       //console.log('autoslideresumed');
