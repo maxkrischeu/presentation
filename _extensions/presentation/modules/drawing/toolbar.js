@@ -1,5 +1,6 @@
 Presentation.factories.drawingToolbar = function (context, adapter) {
   const paths = {
+    lasso: '<ellipse cx="12" cy="9" rx="9" ry="6" stroke-dasharray="3 2"/><path d="M7 14c-4 6 5 9 5 4 0-2-3-3-5-2"/>',
     colors:
       '<circle cx="8" cy="8" r="4.5" style="fill:#3973bc;stroke:#fff;stroke-width:1"/><circle cx="16" cy="8" r="4.5" style="fill:#e44b55;stroke:#fff;stroke-width:1"/><circle cx="12" cy="16" r="4.5" style="fill:#f2c438;stroke:#fff;stroke-width:1"/>',
     strokeEraser:
@@ -32,6 +33,7 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
   drawingTools.innerHTML =
     tool("visibility", Presentation.t("Show / Hide Drawings"), "hide") +
     tool("colors", Presentation.t("Pen / Colors"), "draw") +
+    tool("lasso", Presentation.t("Lasso Selection"), "lasso") +
     tool("eraser", Presentation.t("Eraser"), "clear") +
     tool(
       "clear",
@@ -110,9 +112,10 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
       .setAttribute("aria-expanded", String(!palette.hidden));
     drawingTools
       .querySelector("[data-drawing=colors]")
-      .setAttribute("aria-pressed", String(!adapter.erasing()));
+      .setAttribute("aria-pressed", String(!adapter.erasing() && !adapter.selecting()));
+    drawingTools.querySelector("[data-drawing=lasso]").setAttribute("aria-pressed", String(adapter.selecting()));
     const eraserButton = drawingTools.querySelector("[data-drawing=eraser]");
-    eraserButton.setAttribute("aria-pressed", String(adapter.erasing()));
+    eraserButton.setAttribute("aria-pressed", String(adapter.erasing() && !adapter.selecting()));
     eraserButton.setAttribute("aria-expanded", String(!eraserOptions.hidden));
     const strokeEraser = adapter.eraserMode() === "stroke";
     eraserButton.innerHTML = icon(strokeEraser ? "strokeEraser" : "clear");
@@ -149,7 +152,7 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
       const action = button.dataset.drawing;
       if (action === "colors") {
         eraserOptions.hidden = true;
-        const switching = adapter.erasing();
+        const switching = adapter.erasing() || adapter.selecting();
         const open = palette.hidden;
         adapter.pen();
         palette.hidden = switching || !open;

@@ -24,6 +24,8 @@
     "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?",
     "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)",
     "← / → (chalkboard)": "← / → (Tafel)",
-    "Previous / next board": "Vorherige / nächste Tafel"
+    "Previous / next board": "Vorherige / nächste Tafel",
+    "Lasso Selection": "Lasso-Auswahl",
+    "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen"
   }
 }

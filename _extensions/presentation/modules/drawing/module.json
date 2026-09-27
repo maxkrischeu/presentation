@@ -5,6 +5,7 @@
     "shapes.js",
     "hold.js",
     "engine.js",
+    "lasso.js",
     "drawing.js",
     "toolbar.js",
     "module.js"

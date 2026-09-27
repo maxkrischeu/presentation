@@ -662,6 +662,25 @@ body:has(.reveal.overview)
   }
 }
 
+.presentation-drawing-lasso {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  display: none;
+}
+.presentation-drawing-lasso path,
+.presentation-drawing-lasso rect {
+  fill: #3973bc12;
+  stroke: #3973bc;
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+.presentation-lasso-active { cursor: crosshair !important; touch-action: none; }
+
 /* modules/edge-panels/styles.css */
 /* Dedicated hit areas keep horizontal dragging out of browser/Reveal gestures.
    Hidden in working modes so the complete drawing surface remains available. */

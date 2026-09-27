@@ -930,20 +930,15 @@
       for (var j = 0; j < slideData.events.length; j++) {
         switch (slideData.events[j].type) {
           case "draw":
-            draw[1](
-              getCanvas(template, drawings, board).getContext("2d"),
-              xOffset + slideData.events[j].x1 * scale,
-              yOffset + slideData.events[j].y1 * scale,
-              xOffset + slideData.events[j].x2 * scale,
-              yOffset + slideData.events[j].y2 * scale,
-              yOffset + slideData.events[j].color,
-            );
+            renderStroke(getCanvas(template, drawings, board).getContext("2d"), 1,
+              slideData.events[j], scale, xOffset, yOffset);
             break;
           case "erase":
             eraseWithSponge(
               getCanvas(template, drawings, board).getContext("2d"),
               xOffset + slideData.events[j].x * scale,
               yOffset + slideData.events[j].y * scale,
+              slideData.events[j].radius ? slideData.events[j].radius * scale : eraser.radius,
             );
             break;
           case "selectboard":
@@ -1040,13 +1035,13 @@
       }
     }
 
-    function eraseWithSponge(context, x, y) {
+    function eraseWithSponge(context, x, y, radius = eraser.radius) {
       context.save();
       context.beginPath();
       context.arc(
-        x + eraser.radius,
-        y + eraser.radius,
-        eraser.radius,
+        x + radius,
+        y + radius,
+        radius,
         0,
         2 * Math.PI,
         false,
@@ -1055,12 +1050,12 @@
       context.clearRect(
         x - 1,
         y - 1,
-        eraser.radius * 2 + 2,
-        eraser.radius * 2 + 2,
+        radius * 2 + 2,
+        radius * 2 + 2,
       );
       context.restore();
       if (mode == 1 && grid) {
-        redrawGrid(x + eraser.radius, y + eraser.radius, eraser.radius);
+        redrawGrid(x + radius, y + radius, radius);
       }
     }
 
@@ -1548,19 +1543,26 @@
       }
     }
 
+    function renderStroke(ctx, id, event, scale = 1, xOffset = 0, yOffset = 0) {
+      ctx.save();
+      for (var cut of event.cuts || []) {
+        ctx.beginPath();
+        ctx.rect(-100000, -100000, 200000, 200000);
+        ctx.moveTo(xOffset + (cut.x + cut.r) * scale, yOffset + cut.y * scale);
+        ctx.arc(xOffset + cut.x * scale, yOffset + cut.y * scale, cut.r * scale, 0, Math.PI * 2);
+        ctx.clip("evenodd");
+      }
+      draw[id](ctx, xOffset + event.x1 * scale, yOffset + event.y1 * scale,
+        xOffset + event.x2 * scale, yOffset + event.y2 * scale, event.color);
+      ctx.restore();
+    }
+
     function drawLine(id, event, timestamp) {
       var ctx = drawingCanvas[id].context;
       var scale = drawingCanvas[id].scale;
       var xOffset = drawingCanvas[id].xOffset;
       var yOffset = drawingCanvas[id].yOffset;
-      draw[id](
-        ctx,
-        xOffset + event.x1 * scale,
-        yOffset + event.y1 * scale,
-        xOffset + event.x2 * scale,
-        yOffset + event.y2 * scale,
-        event.color,
-      );
+      renderStroke(ctx, id, event, scale, xOffset, yOffset);
     }
 
     function eraseCircle(id, event, timestamp) {
@@ -1573,6 +1575,7 @@
         ctx,
         xOffset + event.x * scale,
         yOffset + event.y * scale,
+        event.radius ? event.radius * scale : eraser.radius,
       );
     }
 
@@ -1594,6 +1597,7 @@
 
       recordEvent({
         type: "erase",
+        radius: eraser.radius / scale,
         x,
         y,
       });
@@ -2413,6 +2417,111 @@
       }
     }
 
+    // Lasso edits retain vector strokes and carry their existing erasure masks.
+    var lassoHistory = [], lassoFuture = [];
+    function lassoSnapshot() {
+      return { data: getSlideData(), mode: mode, board: board,
+        events: JSON.parse(JSON.stringify(getSlideData().events)) };
+    }
+    function lassoGroups(events) {
+      var target = mode === 1 ? board : undefined, start = 0, groups = new Map();
+      events.forEach((e, i) => { if (e.type === "clear" && e.board === target) start = i + 1; });
+      var previous = null;
+      for (var i = start; i < events.length; i++) {
+        var e = events[i];
+        if (e.type !== "draw" || e.board !== target) { previous = null; continue; }
+        if (!e.strokeId) {
+          e.strokeId = previous && previous.x2 === e.x1 && previous.y2 === e.y1 && previous.color === e.color
+            ? previous.strokeId : strokeSession + "-lasso-" + ++strokeSequence;
+        }
+        if (!groups.has(e.strokeId)) groups.set(e.strokeId, []);
+        groups.get(e.strokeId).push(e); previous = e;
+      }
+      return groups;
+    }
+    function lassoPoint(x, y) {
+      var c = drawingCanvas[mode];
+      return { x: (x - c.xOffset) / c.scale, y: (y - c.yOffset) / c.scale };
+    }
+    function lassoScreen(p) {
+      var c = drawingCanvas[mode];
+      return { x: c.xOffset + p.x * c.scale, y: c.yOffset + p.y * c.scale };
+    }
+    this.lassoPoint = lassoPoint;
+    this.lassoScreen = lassoScreen;
+    this.lassoSnapshot = function () { lassoGroups(getSlideData().events); return lassoSnapshot(); };
+    this.lassoSelect = function (polygon) {
+      if (polygon.length < 3) return null;
+      function inside(x, y) {
+        var hit = false;
+        for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+          var a = polygon[i], b = polygon[j];
+          if ((a.y > y) !== (b.y > y) && x < (b.x - a.x) * (y - a.y) / (b.y - a.y) + a.x) hit = !hit;
+        }
+        return hit;
+      }
+      var ids = [];
+      for (var [id, segments] of lassoGroups(getSlideData().events))
+        if (segments.every(e => inside(e.x1, e.y1) && inside(e.x2, e.y2) && inside((e.x1+e.x2)/2, (e.y1+e.y2)/2))) ids.push(id);
+      return ids.length ? { ids } : null;
+    };
+    this.lassoBounds = function (selection) {
+      var segments = getSlideData().events.filter(e => e.type === "draw" && selection.ids.includes(e.strokeId));
+      if (!segments.length) return null;
+      var bounds = segments.reduce((b, e) => ({left: Math.min(b.left,e.x1,e.x2), top: Math.min(b.top,e.y1,e.y2), right: Math.max(b.right,e.x1,e.x2), bottom: Math.max(b.bottom,e.y1,e.y2)}), {left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity});
+      var a = lassoScreen({x: bounds.left, y: bounds.top}), b = lassoScreen({x: bounds.right, y: bounds.bottom});
+      return { x: a.x - 8, y: a.y - 8, width: b.x-a.x+16, height: b.y-a.y+16 };
+    };
+    this.lassoRestore = function (snapshot) {
+      snapshot.data.events = JSON.parse(JSON.stringify(snapshot.events));
+      if (snapshot.data === getSlideData() && snapshot.mode === mode && snapshot.board === board) redrawCurrentBoard();
+      storageChanged();
+    };
+    this.lassoMove = function (snapshot, ids, dx, dy) {
+      if (!snapshot.prepared) {
+      var events = JSON.parse(JSON.stringify(snapshot.events)), originals = [];
+      events.forEach((e, index) => {
+        if (e.type !== "draw" || !ids.includes(e.strokeId)) return;
+        var cuts = e.cuts || [];
+        for (var later of events.slice(index + 1)) {
+          if (later.board !== e.board) continue;
+          if (later.type === "clear") break;
+          if (later.type === "erase") {
+            var r = later.radius || eraser.radius / drawingCanvas[mode].scale;
+            // Ignore masks outside this segment's bounds, including pen width.
+            if (later.x <= Math.max(e.x1,e.x2)+8 && later.x+2*r >= Math.min(e.x1,e.x2)-8 && later.y <= Math.max(e.y1,e.y2)+8 && later.y+2*r >= Math.min(e.y1,e.y2)-8)
+              cuts.push({x:later.x+r,y:later.y+r,r});
+          }
+        }
+        e.cuts = cuts;
+        originals.push(e);
+      });
+      snapshot.prepared = { originals, rest: events.filter(e => e.type !== "draw" || !ids.includes(e.strokeId)) };
+      }
+      var moved = snapshot.prepared.originals.map(e => ({...e,
+        x1:e.x1+dx, x2:e.x2+dx, y1:e.y1+dy, y2:e.y2+dy,
+        time:Date.now()-slideStart, cuts:e.cuts.map(c=>({x:c.x+dx,y:c.y+dy,r:c.r}))}));
+      snapshot.data.events = snapshot.prepared.rest.concat(moved);
+      redrawCurrentBoard();
+      return { ids };
+    };
+    this.lassoCommit = function (before, moved) {
+      if (!moved) { this.lassoRestore(before); return; }
+      var after = lassoSnapshot();
+      lassoHistory.push({before, after}); lassoFuture = [];
+      if (lassoHistory.length > 30) lassoHistory.shift();
+      after.data.duration = Math.max(after.data.duration, Date.now()-slideStart+1);
+      storageChanged();
+    };
+    this.lassoUndo = function (redo) {
+      var source = redo ? lassoFuture : lassoHistory, target = redo ? lassoHistory : lassoFuture;
+      var entry = source[source.length-1]; if (!entry) return;
+      var expected = redo ? entry.before : entry.after;
+      if (expected.data !== getSlideData() || expected.mode !== mode || expected.board !== board || JSON.stringify(expected.data.events) !== JSON.stringify(expected.events)) return;
+      source.pop(); target.push(entry);
+      this.lassoRestore(redo ? entry.after : entry.before); storageChanged();
+    };
+
     this.toggleNotesCanvas = toggleNotesCanvas;
     this.toggleChalkboard = toggleChalkboard;
     this.colorIndex = colorIndex;
@@ -2442,14 +2551,7 @@
             var canvas = canvases.get(key),
               ctx = canvas.getContext("2d");
             if (event.type === "draw")
-              draw[id](
-                ctx,
-                event.x1,
-                event.y1,
-                event.x2,
-                event.y2,
-                event.color,
-              );
+              renderStroke(ctx, id, event);
             if (event.type === "clear")
               ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (event.type === "erase") {
@@ -2457,9 +2559,9 @@
               ctx.globalCompositeOperation = "destination-out";
               ctx.beginPath();
               ctx.arc(
-                event.x + eraser.radius,
-                event.y + eraser.radius,
-                eraser.radius,
+                event.x + (event.radius || eraser.radius),
+                event.y + (event.radius || eraser.radius),
+                event.radius || eraser.radius,
                 0,
                 Math.PI * 2,
               );

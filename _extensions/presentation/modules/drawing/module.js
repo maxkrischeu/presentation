@@ -7,6 +7,10 @@ Presentation.register({
     const toolbar = Presentation.factories.drawingToolbar(context, api);
     const penIcon = '<path d="m4 16-1 5 5-1L20 8l-4-4Z M13 7l4 4"/>';
     function onKey(event) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+        if (!event.repeat) api.undoMove(event.shiftKey);
+        return true;
+      }
       if (event.ctrlKey || event.metaKey || event.altKey) return false;
       const key = event.key.toLowerCase();
       if (["p", "e"].includes(key)) {
@@ -62,6 +66,7 @@ Presentation.register({
       ],
       help: [
         ["P / E", "Pen / Eraser (drawing mode)"],
+        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo lasso move"],
         ["← / → (chalkboard)", "Previous / next board"],
       ],
     };

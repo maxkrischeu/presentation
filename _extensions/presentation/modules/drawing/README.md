@@ -36,3 +36,9 @@ Die Haltegeste toleriert bis zu 9 CSS-Pixel Bewegung beim Stillhalten.
 Erkennung toleriert leicht gekrümmte Linien, Lücken am Formschluss und
 unregelmäßige Seiten; sehr kleine Zeichen, offene Bögen und mehrfach
 nachgezogene Kritzeleien bleiben Freihand.
+
+## Lasso-Auswahl
+
+Im Zeichen- und Tafelmodus wählt das Lasso im Dock vollständig eingeschlossene Stiftstriche aus. Innerhalb des gestrichelten Rahmens ziehen, um die Gruppe zu verschieben; außerhalb tippen, um sie abzuwählen. Stift oder Radierer beenden das Lasso. Cmd/Strg+Z und Cmd/Strg+Umschalt+Z machen eine unmittelbar vorangegangene Lasso-Verschiebung rückgängig bzw. wiederholen sie. Neue Zeichenaktionen unterbrechen diese Verschiebehistorie.
+
+Die Engine erhält Strich-IDs und speichert mitbewegte Radiermasken an den Segmenten (`cuts`). Wiedergabe und PDF-/Sitzungsexport verwenden denselben maskierten Renderer. Die Pointer-Auswahl liegt separat in `lasso.js`; Auswahlrahmen werden nicht gespeichert oder exportiert.

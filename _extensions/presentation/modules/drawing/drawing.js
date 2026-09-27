@@ -117,7 +117,9 @@ Presentation.factories.drawing = function (context) {
       }, 100);
     }),
   );
+  const lasso = Presentation.factories.drawingLasso(plugin, onChange);
   const stop = () => {
+    lasso.set(false);
     if (drawing() && !deck.isOverview()) captureNotes();
     if (boarding()) plugin.toggleChalkboard();
     if (drawing()) plugin.toggleNotesCanvas();
@@ -126,6 +128,9 @@ Presentation.factories.drawing = function (context) {
   sync();
   return {
     captureNotes,
+    lasso: () => lasso.set(!lasso.active()),
+    selecting: lasso.active,
+    undoMove: (redo) => { lasso.undo(redo); captureNotes(); },
     visibilityState: () => ({ ...drawingsShown }),
     snapshot: () => ({
       drawingData: JSON.parse(plugin.getData()),
@@ -150,6 +155,7 @@ Presentation.factories.drawing = function (context) {
       return drawingsShown[boarding() ? "board" : "notes"];
     },
     visibility() {
+      lasso.set(false);
       const name = boarding() ? "board" : "notes";
       drawingsShown[name] = !drawingsShown[name];
       sync();
@@ -178,15 +184,18 @@ Presentation.factories.drawing = function (context) {
       return plugin.getEraserMode();
     },
     setEraserMode(value) {
+      lasso.set(false);
       plugin.setEraserMode(value);
       plugin.colorIndex(-1);
       sync();
     },
     pen() {
+      lasso.set(false);
       plugin?.colorIndex(penColors[boarding() ? "board" : "notes"]);
       sync();
     },
     color(index) {
+      lasso.set(false);
       if (index >= 0) penColors[boarding() ? "board" : "notes"] = index;
       plugin?.colorIndex(index);
       sync();
@@ -197,12 +206,15 @@ Presentation.factories.drawing = function (context) {
         ?.dataset.presentationCursor?.includes("sponge");
     },
     previousBoard() {
+      lasso.set(false);
       board?.querySelector("#previousboard")?.click();
     },
     nextBoard() {
+      lasso.set(false);
       board?.querySelector("#nextboard")?.click();
     },
     draw() {
+      lasso.set(false);
       if (!plugin) return;
       if (boarding()) plugin.toggleChalkboard();
       notes.style.visibility = "visible";
@@ -210,6 +222,7 @@ Presentation.factories.drawing = function (context) {
       sync();
     },
     board() {
+      lasso.set(false);
       if (!plugin) return;
       if (drawing()) plugin.toggleNotesCanvas();
       plugin.toggleChalkboard();
@@ -220,6 +233,7 @@ Presentation.factories.drawing = function (context) {
       sync();
     },
     clear() {
+      lasso.set(false);
       plugin?.clear();
       if (!boarding()) captureNotes();
     },
