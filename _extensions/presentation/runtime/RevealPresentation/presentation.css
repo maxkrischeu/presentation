@@ -482,6 +482,20 @@ body:has(.reveal.overview)
   color: #ff9696;
 }
 
+/* Interface labels behave as controls, not selectable document text. */
+.slide-menu-wrapper,
+.presentation-dock {
+  -webkit-user-select: none;
+  user-select: none;
+}
+.slide-menu-wrapper input,
+.slide-menu-wrapper textarea,
+.presentation-dock input,
+.presentation-dock textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* modules/dialogs/styles.css */
 .presentation-confirm-dialog {
   width: min(520px, calc(100vw - 48px));
