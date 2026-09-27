@@ -5007,11 +5007,14 @@ Presentation.factories.images = function (context) {
   backdrop.className = "presentation-asset-backdrop";
   backdrop.setAttribute("aria-hidden", "true");
   shell.append(backdrop, panel);
-  backdrop.addEventListener("pointerdown", (event) => {
+  const dismissLibrary = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    closeLibrary();
-  });
+    if (!panel.hidden) closeLibrary();
+  };
+  backdrop.addEventListener("pointerdown", dismissLibrary);
+  // WebKit can emit only click for the first interaction after a native drag.
+  backdrop.addEventListener("click", dismissLibrary);
   const syncPanel = () => {
     const visible = !panel.hidden && !panel.classList.contains("dragging");
     backdrop.classList.toggle("active", visible);
