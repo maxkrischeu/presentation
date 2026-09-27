@@ -10,12 +10,14 @@ Presentation.register({
         {
           id: "pdf",
           label: "Export Slides PDF",
+          menuOrder: 20,
           menu: "utilities",
           run: () => api.open("slides"),
         },
         {
           id: "chalkboardPdf",
           label: "Export Chalkboard PDF",
+          menuOrder: 40,
           menu: "utilities",
           allowIn: ["board"],
           run: () => api.open("chalkboard"),
@@ -23,6 +25,7 @@ Presentation.register({
         {
           id: "exportPresentation",
           label: "Export Presentation",
+          menuOrder: 30,
           menu: "utilities",
           run: () => api.open("presentation"),
         },

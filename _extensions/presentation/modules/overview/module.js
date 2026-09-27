@@ -9,6 +9,7 @@ Presentation.register({
         {
           id: "overview",
           label: "Slide Overview",
+          menuOrder: 60,
           key: "O",
           navigation: "spatial",
           isActive: () => context.deck.isOverview(),

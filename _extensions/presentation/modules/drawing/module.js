@@ -30,6 +30,7 @@ Presentation.register({
         {
           id: "draw",
           label: "Notes Canvas",
+          menuOrder: 10,
           key: "C",
           enter: api.draw,
           exit: api.stop,
@@ -42,6 +43,7 @@ Presentation.register({
           id: "board",
           icon: "<rect x=\"3\" y=\"3\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 21l2-5m6 5-2-5M7 12l6-5\"/>",
           label: "Chalkboard",
+          menuOrder: 20,
           key: "B",
           enter: api.board,
           exit: api.stop,

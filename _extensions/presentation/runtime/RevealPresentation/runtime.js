@@ -613,7 +613,8 @@ Presentation.mountMenu = function (context) {
     const commands = [...Presentation.commands.values()]
       .filter((c) => c.menu === group)
       .sort((a, b) =>
-        t(a.label).localeCompare(t(b.label), Presentation.language),
+        Number(!!a.destructive) - Number(!!b.destructive) ||
+        (a.menuOrder ?? 500) - (b.menuOrder ?? 500),
       );
     commands.forEach((command, index) => {
       const item = document.createElement("li");
@@ -622,6 +623,7 @@ Presentation.mountMenu = function (context) {
       const link = document.createElement("a");
       link.href = "#";
       link.dataset.presentationAction = command.id;
+      if (command.destructive) link.classList.add("presentation-menu-destructive");
       if (command.key) {
         const key = document.createElement("kbd");
         key.textContent = command.key.toLowerCase();
@@ -808,6 +810,7 @@ Presentation.register({
           panel: "help",
           icon: "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 8a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3v.1\"/>",
           label: "Keyboard Help",
+          menuOrder: 110,
           key: "?",
           kind: "panel",
           menu: "modes",
@@ -817,6 +820,7 @@ Presentation.register({
           id: "fullscreen",
           icon: "<path d=\"M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6\"/>",
           label: "Fullscreen",
+          menuOrder: 70,
           key: "F",
           menu: "modes",
           exit: exitFullscreen,
@@ -836,6 +840,7 @@ Presentation.register({
           id: "speaker",
           icon: "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"1\"/><path d=\"M8 21h8m-4-4v4M5 7h6m-6 3h4m5-3h5v6h-5Z\"/>",
           label: "Speaker View",
+          menuOrder: 80,
           key: "R",
           menu: "modes",
           run: () => deck.getPlugin("notes")?.open(),
@@ -843,6 +848,8 @@ Presentation.register({
         {
           id: "resetSession",
           label: "Reset Session",
+          menuOrder: 1000,
+          destructive: true,
           menu: "utilities",
           run: async () => {
             if (resetting) return;
@@ -4231,6 +4238,7 @@ Presentation.register({
         {
           id: "draw",
           label: "Notes Canvas",
+          menuOrder: 10,
           key: "C",
           enter: api.draw,
           exit: api.stop,
@@ -4243,6 +4251,7 @@ Presentation.register({
           id: "board",
           icon: "<rect x=\"3\" y=\"3\" width=\"18\" height=\"13\" rx=\"1\"/><path d=\"M8 21l2-5m6 5-2-5M7 12l6-5\"/>",
           label: "Chalkboard",
+          menuOrder: 20,
           key: "B",
           enter: api.board,
           exit: api.stop,
@@ -4698,12 +4707,14 @@ Presentation.register({
         {
           id: "pdf",
           label: "Export Slides PDF",
+          menuOrder: 20,
           menu: "utilities",
           run: () => api.open("slides"),
         },
         {
           id: "chalkboardPdf",
           label: "Export Chalkboard PDF",
+          menuOrder: 40,
           menu: "utilities",
           allowIn: ["board"],
           run: () => api.open("chalkboard"),
@@ -4711,6 +4722,7 @@ Presentation.register({
         {
           id: "exportPresentation",
           label: "Export Presentation",
+          menuOrder: 30,
           menu: "utilities",
           run: () => api.open("presentation"),
         },
@@ -6352,6 +6364,7 @@ Presentation.register({
           icon: "<path d=\"M12 3v18M3 12h18m-12-6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3\"/>",
           entryPanel: "images",
           label: "Position Images",
+          menuOrder: 50,
           key: "V",
           enter: () =>
             api.libraryOpen() ? api.closeLibrary() : api.position(),
@@ -6383,6 +6396,7 @@ Presentation.register({
           panel: "images",
           icon: "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><circle cx=\"8\" cy=\"9\" r=\"1.5\"/><path d=\"m4 18 6-6 4 4 3-3 4 4\"/>",
           label: "Media Library",
+          menuOrder: 40,
           key: "I",
           kind: "panel",
           menu: "modes",
@@ -6392,6 +6406,7 @@ Presentation.register({
         {
           id: "saveSource",
           label: "Save to Source",
+          menuOrder: 10,
           menu: "utilities",
           run: api.saveToSource,
         },
@@ -6708,6 +6723,7 @@ Presentation.register({
           id: "laser",
           icon: "<path d=\"m3 19 9-9 3 3-9 9Z M16 8l4-4m-5 1V2m4 7h3\"/>",
           label: "Laser Pointer",
+          menuOrder: 30,
           key: "L",
           navigation: true,
           enter: api.start,
@@ -7062,6 +7078,7 @@ Presentation.register({
           id: "magnifier",
           icon: "<circle cx=\"10\" cy=\"10\" r=\"7\"/><path d=\"m15 15 6 6M7 10h6m-3-3v6\"/>",
           label: "Magnifier",
+          menuOrder: 35,
           key: "H",
           navigation: true,
           enter: api.start,
@@ -7203,6 +7220,7 @@ Presentation.register({
         {
           id: "overview",
           label: "Slide Overview",
+          menuOrder: 60,
           key: "O",
           navigation: "spatial",
           isActive: () => context.deck.isOverview(),
@@ -7734,6 +7752,7 @@ Presentation.register({
           id: "python",
           icon: "<path d=\"m5 7 5 5-5 5m8 0h6\"/><rect x=\"2\" y=\"3\" width=\"20\" height=\"18\" rx=\"2\"/>",
           label: "Python Console",
+          menuOrder: 90,
           key: "T",
           enter: api.toggleDrop,
           exit: api.close,
@@ -8657,7 +8676,7 @@ Presentation.register({
     update();
     return {
       modes: [{
-        id: "search", label: "Search", key: "S",
+        id: "search", label: "Search", key: "S", menuOrder: 100,
         icon: '<circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/>',
         enter() { active = true; changed(); requestAnimationFrame(() => input.focus()); },
         exit: stop, isActive: () => active,

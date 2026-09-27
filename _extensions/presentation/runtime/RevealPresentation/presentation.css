@@ -478,6 +478,10 @@ body:has(.reveal.overview)
   overscroll-behavior-y: contain;
 }
 
+.slide-menu-wrapper .slide-tool-item > a.presentation-menu-destructive {
+  color: #ff9696;
+}
+
 /* modules/dialogs/styles.css */
 .presentation-confirm-dialog {
   width: min(520px, calc(100vw - 48px));

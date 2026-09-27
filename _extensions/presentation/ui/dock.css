@@ -194,3 +194,7 @@ body:has(.reveal.overview)
 .slide-menu-wrapper .slide-menu-panel {
   overscroll-behavior-y: contain;
 }
+
+.slide-menu-wrapper .slide-tool-item > a.presentation-menu-destructive {
+  color: #ff9696;
+}

@@ -28,7 +28,8 @@ Presentation.mountMenu = function (context) {
     const commands = [...Presentation.commands.values()]
       .filter((c) => c.menu === group)
       .sort((a, b) =>
-        t(a.label).localeCompare(t(b.label), Presentation.language),
+        Number(!!a.destructive) - Number(!!b.destructive) ||
+        (a.menuOrder ?? 500) - (b.menuOrder ?? 500),
       );
     commands.forEach((command, index) => {
       const item = document.createElement("li");
@@ -37,6 +38,7 @@ Presentation.mountMenu = function (context) {
       const link = document.createElement("a");
       link.href = "#";
       link.dataset.presentationAction = command.id;
+      if (command.destructive) link.classList.add("presentation-menu-destructive");
       if (command.key) {
         const key = document.createElement("kbd");
         key.textContent = command.key.toLowerCase();

@@ -59,6 +59,7 @@ Presentation.register({
           panel: "help",
           icon: "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 8a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3v.1\"/>",
           label: "Keyboard Help",
+          menuOrder: 110,
           key: "?",
           kind: "panel",
           menu: "modes",
@@ -68,6 +69,7 @@ Presentation.register({
           id: "fullscreen",
           icon: "<path d=\"M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6\"/>",
           label: "Fullscreen",
+          menuOrder: 70,
           key: "F",
           menu: "modes",
           exit: exitFullscreen,
@@ -87,6 +89,7 @@ Presentation.register({
           id: "speaker",
           icon: "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"1\"/><path d=\"M8 21h8m-4-4v4M5 7h6m-6 3h4m5-3h5v6h-5Z\"/>",
           label: "Speaker View",
+          menuOrder: 80,
           key: "R",
           menu: "modes",
           run: () => deck.getPlugin("notes")?.open(),
@@ -94,6 +97,8 @@ Presentation.register({
         {
           id: "resetSession",
           label: "Reset Session",
+          menuOrder: 1000,
+          destructive: true,
           menu: "utilities",
           run: async () => {
             if (resetting) return;
