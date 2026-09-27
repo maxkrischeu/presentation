@@ -619,6 +619,10 @@ Presentation.mountMenu = function (context) {
     commands.forEach((command, index) => {
       const item = document.createElement("li");
       item.className = "slide-tool-item";
+      if (command.destructive) {
+        list.classList.add("presentation-menu-with-footer");
+        item.classList.add("presentation-menu-footer");
+      }
       item.dataset.item = index;
       const link = document.createElement("a");
       link.href = "#";

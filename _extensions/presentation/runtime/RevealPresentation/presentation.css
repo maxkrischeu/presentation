@@ -496,6 +496,19 @@ body:has(.reveal.overview)
   user-select: text;
 }
 
+.slide-menu-wrapper .slide-menu-items.presentation-menu-with-footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.slide-menu-wrapper .presentation-menu-with-footer > li {
+  flex-shrink: 0;
+}
+.slide-menu-wrapper .presentation-menu-with-footer > .presentation-menu-footer {
+  margin-top: auto;
+}
+
 /* modules/dialogs/styles.css */
 .presentation-confirm-dialog {
   width: min(520px, calc(100vw - 48px));
