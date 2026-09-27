@@ -1,1 +1,10 @@
-{"id":"media","scripts":["layout.js"],"styles":["styles.css"]}
+{
+  "id": "media",
+  "scripts": [
+    "layout.js",
+    "posters.js"
+  ],
+  "styles": [
+    "styles.css"
+  ]
+}

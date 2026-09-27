@@ -9,3 +9,7 @@ this runtime dependency explicitly. Existing native Quarto media remain supporte
 `position="free"` belongs to the images module: positions and dimensions are
 percentages of its placement area, and source.py writes image/video divs. Inline
 media are not converted into editable placements by saving unrelated images.
+
+Native videos on the current slide receive an automatically decoded poster frame.
+Explicit posters are preserved. Preview decoding does not play or seek the player.
+Remote videos require CORS permission for frame extraction; local videos need no extra tools.
