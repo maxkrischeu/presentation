@@ -12,5 +12,4 @@ Drags, long presses and text selections do not navigate.
 The middle third does not navigate or consume clicks, leaving actions such as
 clearing a quiz selection available.
 
-Two nearby clicks or taps within half a second in the middle third open presentation fullscreen when windowed.
-It does not exit fullscreen. Active tools, panels and local controls are excluded.
+Two nearby clicks or taps within half a second in the middle third toggle presentation fullscreen on or off. Active tools, panels and local controls are excluded.

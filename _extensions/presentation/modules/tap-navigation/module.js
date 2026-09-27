@@ -47,7 +47,7 @@ Presentation.register({
         const doubleTap = previousMiddleClick?.slide === start.slide &&
           event.timeStamp - previousMiddleClick.time <= 500 &&
           Math.hypot(event.clientX - previousMiddleClick.x, event.clientY - previousMiddleClick.y) <= 32;
-        if (doubleTap && !document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (doubleTap) {
           event.preventDefault();
           Presentation.modes.invoke("fullscreen");
         } else {
