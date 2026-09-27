@@ -94,7 +94,7 @@ Presentation.factories.images = function (context) {
   panel.setAttribute("aria-label", Presentation.t("Media Library"));
   panel.dataset.preventSwipe = "true";
   panel.innerHTML =
-    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Media Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Media Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Image source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
+    '<ol class="slide-menu-toolbar"><li class="toolbar-panel-button active-toolbar-button"><i class="fas fa-images" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Media Library</span></li><li class="toolbar-panel-button"><button data-library="close" aria-label="Close Media Library"><i class="fas fa-times" aria-hidden="true"></i><br><span class="slide-menu-toolbar-label">Close</span></button></li></ol><div class="presentation-asset-tabs" role="tablist" aria-label="Media source"><button type="button" role="tab" id="presentation-assets-shared" data-asset-scope="shared" aria-controls="presentation-asset-catalog">Shared</button><button type="button" role="tab" id="presentation-assets-lesson" data-asset-scope="lesson" aria-controls="presentation-asset-catalog">This Lesson</button><button type="button" role="tab" id="presentation-assets-slide" data-asset-scope="slide" aria-controls="presentation-asset-catalog">This Slide</button></div><div class="presentation-asset-catalog" id="presentation-asset-catalog" role="tabpanel"></div>';
   const shell = document.createElement("div");
   shell.className = "slide-menu-wrapper presentation-assets-shell";
   const backdrop = document.createElement("div");
@@ -124,11 +124,11 @@ Presentation.factories.images = function (context) {
   bar.className = "presentation-image-controls";
   bar.hidden = true;
   bar.setAttribute("role", "toolbar");
-  bar.setAttribute("aria-label", Presentation.t("Image editing"));
+  bar.setAttribute("aria-label", Presentation.t("Media editing"));
   for (const [action, label] of [
     ["undo", Presentation.t("Undo")],
     ["redo", Presentation.t("Redo")],
-    ["delete", Presentation.t("Delete Image")],
+    ["delete", Presentation.t("Delete Media")],
     ["source", Presentation.t("Save to Source")],
     ["restore", Presentation.t("Restore Prepared Layout")],
     ["done", Presentation.t("Done")],
@@ -170,7 +170,7 @@ Presentation.factories.images = function (context) {
         : property === "rotation"
           ? "presentation-asset-angle"
           : "presentation-asset-transparency";
-    field.setAttribute("aria-label", Presentation.t("Image " + property));
+    field.setAttribute("aria-label", label);
     if (property === "layer") {
       field.min = "0";
       field.max = "1000000";
@@ -436,13 +436,13 @@ Presentation.factories.images = function (context) {
         if (chosen) {
           const grip = document.createElement("button");
           grip.className = "presentation-asset-resize";
-          grip.setAttribute("aria-label", Presentation.t("Resize image"));
+          grip.setAttribute("aria-label", Presentation.t("Resize media"));
           target.append(grip);
           const handle = document.createElement("button");
           handle.className = "presentation-asset-rotate";
-          handle.setAttribute("aria-label", Presentation.t("Rotate image"));
+          handle.setAttribute("aria-label", Presentation.t("Rotate media"));
           handle.title = Presentation.t(
-            "Rotate image · Snap: 45° · Shift: 15°",
+            "Rotate media · Snap: 45° · Shift: 15°",
           );
           // Anchored to the local image frame: the offset rotates with the image.
           if (media.kind !== 'video') target.append(handle);
@@ -568,10 +568,12 @@ Presentation.factories.images = function (context) {
     if (!container.children.length) {
       const empty = document.createElement("p");
       empty.className = "presentation-asset-empty";
-      empty.textContent =
-        libraryScope === "shared"
-          ? Presentation.t("No shared images prepared.")
-          : Presentation.t("No images prepared for this slide.");
+      const emptyMessages = {
+        shared: "No shared media available.",
+        lesson: "No media available for this lesson.",
+        slide: "No media prepared for this slide.",
+      };
+      empty.textContent = Presentation.t(emptyMessages[libraryScope]);
       container.append(empty);
     }
   }
@@ -701,7 +703,7 @@ Presentation.factories.images = function (context) {
     try {
       img = await loadMedia(catalog.get(asset));
     } catch {
-      announce(Presentation.t("This image could not be loaded."));
+      announce(Presentation.t("This media item could not be loaded."));
       return;
     }
     if (id !== currentId() || (panel.hidden && !armed && !imported)) return;
@@ -751,7 +753,7 @@ Presentation.factories.images = function (context) {
     refresh();
     persist();
     announce(
-      Presentation.t("Image selected. Close the library to move or resize it."),
+      Presentation.t("Media selected. Close the library to move or resize it."),
     );
   }
   function insertCentered(asset) {
@@ -1207,7 +1209,7 @@ Presentation.factories.images = function (context) {
       persist();
       announce(
         skipped
-          ? Presentation.t("Loaded; unavailable images or slides were skipped.")
+          ? Presentation.t("Loaded; unavailable media or slides were skipped.")
           : Presentation.t("Placements loaded."),
       );
     } catch (error) {
@@ -1353,7 +1355,7 @@ Presentation.factories.images = function (context) {
   }
   async function assetRequest(data) {
     await sourceConnection;
-    if (!sourceToken) throw Error(Presentation.t('Use quarto preview to import images.'));
+    if (!sourceToken) throw Error(Presentation.t('Use quarto preview to import media.'));
     const response = await fetch('/__presentation/assets', {method:'POST', headers:{'Content-Type':'application/json','X-Presentation-Token':sourceToken}, body:JSON.stringify({page:location.pathname,...data})});
     const result = await response.json();
     if (!response.ok) throw Error(result.error || 'Image import failed.');
@@ -1389,11 +1391,11 @@ Presentation.factories.images = function (context) {
         } finally { URL.revokeObjectURL(url); }
         const result = await assetRequest({action:'import',name:file.name || 'clipboard',bytes});
         const asset = addDiscovered(result.asset) || [...catalog.values()].find(a=>a.src===result.asset.data)?.id;
-        if (currentId() !== slide) { announce(Presentation.t('Image saved in assets.')); return; }
+        if (currentId() !== slide) { announce(Presentation.t('Media saved in assets.')); return; }
         const rect=layers.get(currentId()).getBoundingClientRect();
         await insert(asset,dropPoint || {clientX:rect.left+rect.width/2,clientY:rect.top+rect.height/2},true);
       }
-      announce(Presentation.t('Image saved in assets. Save to Source keeps its placement in the document.'));
+      announce(Presentation.t('Media saved in assets. Save to Source keeps its placement in the document.'));
     } catch(error) { announce(error.message); }
   }
   const editableTarget = event => event.target.closest?.('input,textarea,[contenteditable="true"]');

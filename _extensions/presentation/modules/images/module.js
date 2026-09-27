@@ -13,7 +13,7 @@ Presentation.register({
           id: "position",
           icon: "<path d=\"M12 3v18M3 12h18m-12-6 3-3 3 3m-6 12 3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3\"/>",
           entryPanel: "images",
-          label: "Position Images",
+          label: "Edit Media",
           menuOrder: 50,
           key: "V",
           enter: () =>
@@ -77,9 +77,9 @@ Presentation.register({
       ],
       toolbar: { element: api.controls, modes: ["position"] },
       help: [
-        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo (image editing)"],
-        ["Delete / Backspace", "Delete selected image"],
-        ["I (image editing)", "Open / close image library"],
+        ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo (media editing)"],
+        ["Delete / Backspace", "Delete selected media"],
+        ["I (media editing)", "Open / close media library"],
       ],
     };
   },
