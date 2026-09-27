@@ -8993,10 +8993,8 @@ Presentation.register({
     const local = 'a, button, input, textarea, select, video, audio, iframe, embed, object, summary, [role="button"], [role="link"], [tabindex], [contenteditable]:not([contenteditable="false"]), [draggable="true"], [data-prevent-swipe], [data-presentation-keyboard="local"], [data-presentation-navigation="local"]';
     let press = null;
     const eligible = target => {
-      const fullscreen = document.fullscreenElement || document.webkitFullscreenElement;
       const slide = deck.getCurrentSlide();
-      return fullscreen?.contains(deck.getRevealElement()) &&
-        Presentation.modes?.current() === "standard" &&
+      return Presentation.modes?.current() === "standard" &&
         !Presentation.modes.panelOpen() && !deck.isOverview() &&
         slide?.contains(target) && !target.closest?.(local);
     };

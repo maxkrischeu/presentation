@@ -1,6 +1,6 @@
 # Tap navigation
 
-In presentation fullscreen, a short tap on the right half of the slide advances
+In normal presentation mode, both windowed and fullscreen, a short tap on the right half of the slide advances
 one fragment or slide; the left half goes back. Primary mouse clicks also work
 so Sidecar's translated finger input can use the same interaction.
 
