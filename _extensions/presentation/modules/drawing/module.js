@@ -5,7 +5,7 @@ Presentation.register({
   setup(context) {
     const api = Presentation.factories.drawing(context);
     const toolbar = Presentation.factories.drawingToolbar(context, api);
-    const penIcon = '<path d="m4 16-1 5 5-1L20 8l-4-4Z M13 7l4 4"/>';
+    const penIcon = Presentation.drawingIcons.pen;
     function onKey(event) {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
         if (!event.repeat) api.undoMove(event.shiftKey);

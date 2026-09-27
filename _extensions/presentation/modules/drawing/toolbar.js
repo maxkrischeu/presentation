@@ -4,7 +4,7 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
     colors:
       '<circle cx="8" cy="8" r="4.5" style="fill:#3973bc;stroke:#fff;stroke-width:1"/><circle cx="16" cy="8" r="4.5" style="fill:#e44b55;stroke:#fff;stroke-width:1"/><circle cx="12" cy="16" r="4.5" style="fill:#f2c438;stroke:#fff;stroke-width:1"/>',
     strokeEraser:
-      '<path d="m3 12 8-9 7 6-8 9H6Z M7 7l7 6 M14 21c2-5 5-5 8-3"/>',
+      Presentation.drawingIcons.eraser + '<path d="M17 3h4m-2-2v4"/>',
     eraseAll:
       '<path d="m3 12 8-9 7 6-8 9H6Z M7 7l7 6 M16 16l6 6 M22 16l-6 6"/>',
     done: '<path d="m4 12 5 5L20 6"/>',
@@ -12,14 +12,14 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
     next: '<path d="m10 5 7 7-7 7"/>',
     overview:
       '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-    draw: '<path d="m4 16-1 5 5-1L20 8l-4-4Z M13 7l4 4"/>',
+    draw: Presentation.drawingIcons.pen,
     more: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
     board:
       '<rect x="3" y="4" width="18" height="13" rx="1"/><path d="M8 21l4-4 4 4"/>',
     visible:
       '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
     hide: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z M3 3l18 18"/>',
-    clear: '<path d="m4 14 9-10 7 7-9 10H7Z M10 8l7 7 M11 21h10"/>',
+    clear: Presentation.drawingIcons.eraser,
     download: '<path d="M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5"/>',
     help: '<circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 5 M12 17h.01"/>',
   };

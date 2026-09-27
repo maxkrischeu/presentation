@@ -49,9 +49,14 @@ Presentation.factories.drawing = function (context) {
       const file = canvas?.style.cursor.match(
         /(?:boardmarker-[a-z]+|chalk-[a-z]+|sponge)\.png/,
       )?.[0];
-      if (file && Presentation.drawingCursors[file]) {
-        canvas.dataset.presentationCursor = file;
-        canvas.style.cursor = `url("${Presentation.drawingCursors[file]}"), crosshair`;
+      if (file) canvas.dataset.presentationCursor = file;
+      const cursorKey = canvas?.dataset.presentationCursor;
+      const cursor = Presentation.drawingCursors[
+        cursorKey === "sponge.png" && plugin.getEraserMode() === "stroke" ? "stroke-sponge.png" : cursorKey
+      ];
+      if (cursor) {
+        const value = `url("${cursor.url}") ${cursor.x} ${cursor.y}, crosshair`;
+        if (canvas.style.cursor !== value) canvas.style.cursor = value;
       }
     }
     onChange();
