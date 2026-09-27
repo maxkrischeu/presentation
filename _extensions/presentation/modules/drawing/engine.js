@@ -2452,25 +2452,16 @@
     this.lassoSnapshot = function () { lassoGroups(getSlideData().events); return lassoSnapshot(); };
     this.lassoSelect = function (polygon) {
       if (polygon.length < 3) return null;
-      function inside(x, y) {
-        var hit = false;
-        for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-          var a = polygon[i], b = polygon[j];
-          if ((a.y > y) !== (b.y > y) && x < (b.x - a.x) * (y - a.y) / (b.y - a.y) + a.x) hit = !hit;
-        }
-        return hit;
-      }
       var ids = [];
       for (var [id, segments] of lassoGroups(getSlideData().events))
-        if (segments.every(e => inside(e.x1, e.y1) && inside(e.x2, e.y2) && inside((e.x1+e.x2)/2, (e.y1+e.y2)/2))) ids.push(id);
+        if (segments.some(e => Presentation.lassoGeometry.touches(e, polygon))) ids.push(id);
       return ids.length ? { ids } : null;
     };
-    this.lassoBounds = function (selection) {
-      var segments = getSlideData().events.filter(e => e.type === "draw" && selection.ids.includes(e.strokeId));
-      if (!segments.length) return null;
-      var bounds = segments.reduce((b, e) => ({left: Math.min(b.left,e.x1,e.x2), top: Math.min(b.top,e.y1,e.y2), right: Math.max(b.right,e.x1,e.x2), bottom: Math.max(b.bottom,e.y1,e.y2)}), {left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity});
-      var a = lassoScreen({x: bounds.left, y: bounds.top}), b = lassoScreen({x: bounds.right, y: bounds.bottom});
-      return { x: a.x - 8, y: a.y - 8, width: b.x-a.x+16, height: b.y-a.y+16 };
+    this.lassoOutline = function (selection) {
+      var ids = new Set(selection.ids);
+      var points = getSlideData().events.filter(e => e.type === "draw" && ids.has(e.strokeId))
+        .flatMap(e => [lassoScreen({x:e.x1,y:e.y1}), lassoScreen({x:e.x2,y:e.y2})]);
+      return Presentation.lassoGeometry.outline(points);
     };
     this.lassoRestore = function (snapshot) {
       snapshot.data.events = JSON.parse(JSON.stringify(snapshot.events));

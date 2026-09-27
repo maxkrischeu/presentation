@@ -4,6 +4,7 @@
     "cursors.js",
     "shapes.js",
     "hold.js",
+    "lasso-geometry.js",
     "engine.js",
     "lasso.js",
     "drawing.js",

@@ -1238,6 +1238,48 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
 
 ;
 
+/* modules/drawing/lasso-geometry.js */
+/* Geometry shared by selection, its visible outline and pointer hit testing. */
+(function (root) {
+  const cross = (a, b, c) => (b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);
+  const onSegment = (p, a, b) => Math.abs(cross(a,b,p)) < 1e-7 &&
+    p.x >= Math.min(a.x,b.x)-1e-7 && p.x <= Math.max(a.x,b.x)+1e-7 &&
+    p.y >= Math.min(a.y,b.y)-1e-7 && p.y <= Math.max(a.y,b.y)+1e-7;
+  function inside(p, polygon) {
+    let hit = false;
+    for (let i=0,j=polygon.length-1;i<polygon.length;j=i++) {
+      const a=polygon[i],b=polygon[j];
+      if(onSegment(p,a,b)) return true;
+      if((a.y>p.y)!==(b.y>p.y) && p.x<(b.x-a.x)*(p.y-a.y)/(b.y-a.y)+a.x)hit=!hit;
+    }
+    return hit;
+  }
+  function intersects(a,b,c,d) {
+    return (cross(a,b,c)*cross(a,b,d)<0 && cross(c,d,a)*cross(c,d,b)<0) ||
+      onSegment(a,c,d)||onSegment(b,c,d)||onSegment(c,a,b)||onSegment(d,a,b);
+  }
+  function touches(e, polygon) {
+    const a={x:e.x1,y:e.y1},b={x:e.x2,y:e.y2};
+    return inside(a,polygon)||inside(b,polygon)||polygon.some((c,i)=>intersects(a,b,c,polygon[(i+1)%polygon.length]));
+  }
+  function hull(points) {
+    const sorted=[...points].sort((a,b)=>a.x-b.x||a.y-b.y);
+    if(sorted.length<2)return sorted;
+    const half=list=>{const out=[];for(const p of list){while(out.length>1&&cross(out[out.length-2],out[out.length-1],p)<=0)out.pop();out.push(p);}return out;};
+    return half(sorted).slice(0,-1).concat(half(sorted.reverse()).slice(0,-1));
+  }
+  function outline(points, padding=8) {
+    return hull(hull(points).flatMap(p=>Array.from({length:12},(_,i)=>({
+      x:p.x+padding*Math.cos(i*Math.PI/6),y:p.y+padding*Math.sin(i*Math.PI/6)
+    }))));
+  }
+  const api={inside,touches,outline};
+  if(typeof module!=="undefined"&&module.exports)module.exports=api;
+  else root.Presentation.lassoGeometry=api;
+})(globalThis);
+
+;
+
 /* modules/drawing/engine.js */
 /* Presentation: vendored Chalkboard 2.3.3 with stroke IDs and stroke eraser. */
 (function () {
@@ -3693,25 +3735,16 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     this.lassoSnapshot = function () { lassoGroups(getSlideData().events); return lassoSnapshot(); };
     this.lassoSelect = function (polygon) {
       if (polygon.length < 3) return null;
-      function inside(x, y) {
-        var hit = false;
-        for (var i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-          var a = polygon[i], b = polygon[j];
-          if ((a.y > y) !== (b.y > y) && x < (b.x - a.x) * (y - a.y) / (b.y - a.y) + a.x) hit = !hit;
-        }
-        return hit;
-      }
       var ids = [];
       for (var [id, segments] of lassoGroups(getSlideData().events))
-        if (segments.every(e => inside(e.x1, e.y1) && inside(e.x2, e.y2) && inside((e.x1+e.x2)/2, (e.y1+e.y2)/2))) ids.push(id);
+        if (segments.some(e => Presentation.lassoGeometry.touches(e, polygon))) ids.push(id);
       return ids.length ? { ids } : null;
     };
-    this.lassoBounds = function (selection) {
-      var segments = getSlideData().events.filter(e => e.type === "draw" && selection.ids.includes(e.strokeId));
-      if (!segments.length) return null;
-      var bounds = segments.reduce((b, e) => ({left: Math.min(b.left,e.x1,e.x2), top: Math.min(b.top,e.y1,e.y2), right: Math.max(b.right,e.x1,e.x2), bottom: Math.max(b.bottom,e.y1,e.y2)}), {left:Infinity,top:Infinity,right:-Infinity,bottom:-Infinity});
-      var a = lassoScreen({x: bounds.left, y: bounds.top}), b = lassoScreen({x: bounds.right, y: bounds.bottom});
-      return { x: a.x - 8, y: a.y - 8, width: b.x-a.x+16, height: b.y-a.y+16 };
+    this.lassoOutline = function (selection) {
+      var ids = new Set(selection.ids);
+      var points = getSlideData().events.filter(e => e.type === "draw" && ids.has(e.strokeId))
+        .flatMap(e => [lassoScreen({x:e.x1,y:e.y1}), lassoScreen({x:e.x2,y:e.y2})]);
+      return Presentation.lassoGeometry.outline(points);
     };
     this.lassoRestore = function (snapshot) {
       snapshot.data.events = JSON.parse(JSON.stringify(snapshot.events));
@@ -3895,13 +3928,24 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
   overlay.classList.add("presentation-drawing-lasso");
   overlay.setAttribute("aria-hidden", "true");
   document.body.append(overlay);
-  overlay.innerHTML = '<path/><rect/>';
-  const path = overlay.querySelector("path"), box = overlay.querySelector("rect");
+  overlay.innerHTML = '<path/><path class="presentation-lasso-selection"/>';
+  const path = overlay.querySelector("path"), box = overlay.querySelector(".presentation-lasso-selection");
   const surfaces = [...document.querySelectorAll("#notescanvas canvas, #chalkboard canvas")];
+  let contour = [], lastPointer = null;
+  const hit = (x, y) => contour.length > 2 && Presentation.lassoGeometry.inside({x,y}, contour);
+  function cursor() {
+    const grabbing = !!gesture?.moving;
+    const grab = active && !gesture && lastPointer && hit(lastPointer.x,lastPointer.y);
+    surfaces.forEach(canvas => {
+      canvas.classList.toggle("presentation-lasso-grab", !!grab);
+      canvas.classList.toggle("presentation-lasso-grabbing", grabbing);
+    });
+  }
   function paint() {
-    const area = selection && plugin.lassoBounds(selection);
-    box.style.display = area ? "" : "none";
-    if (area) for (const key of ["x", "y", "width", "height"]) box.setAttribute(key, area[key]);
+    contour = selection ? plugin.lassoOutline(selection) : [];
+    box.style.display = contour.length ? "" : "none";
+    box.setAttribute("d", contour.map((p,i)=>`${i ? "L" : "M"}${p.x},${p.y}`).join(" ") + (contour.length ? " Z" : ""));
+    cursor();
   }
   function cancel() {
     if (gesture?.moving) plugin.lassoRestore(gesture.before);
@@ -3928,15 +3972,18 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
       if (!active || !event.isPrimary || event.button !== 0 || gesture) return;
       event.preventDefault(); event.stopImmediatePropagation();
       const point = plugin.lassoPoint(event.clientX, event.clientY);
-      const area = selection && plugin.lassoBounds(selection);
-      const moving = area && event.clientX >= area.x && event.clientX <= area.x + area.width && event.clientY >= area.y && event.clientY <= area.y + area.height;
+      lastPointer = {x:event.clientX,y:event.clientY};
+      const moving = selection && hit(event.clientX,event.clientY);
       if (!moving) selection = null;
       gesture = { pointer: event.pointerId, start: point, points: [point], moving, before: plugin.lassoSnapshot(), dx: 0, dy: 0 };
       canvas.setPointerCapture(event.pointerId);
       paint();
     }, true);
     canvas.addEventListener("pointermove", event => {
-      if (!active || !gesture || gesture.pointer !== event.pointerId) return;
+      if (!active) return;
+      lastPointer = {x:event.clientX,y:event.clientY};
+      cursor();
+      if (!gesture || gesture.pointer !== event.pointerId) return;
       event.preventDefault(); event.stopImmediatePropagation();
       const point = plugin.lassoPoint(event.clientX, event.clientY);
       if (gesture.moving) {
@@ -3959,6 +4006,7 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
       path.setAttribute("d", "");
       paint(); changed();
     }, true);
+    canvas.addEventListener("pointerleave", () => { lastPointer = null; cursor(); });
     for (const name of ["pointercancel", "lostpointercapture"]) canvas.addEventListener(name, () => { if (gesture) cancel(); });
   }
   window.addEventListener("blur", cancel);

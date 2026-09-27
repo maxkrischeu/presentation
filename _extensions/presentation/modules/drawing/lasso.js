@@ -5,13 +5,24 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
   overlay.classList.add("presentation-drawing-lasso");
   overlay.setAttribute("aria-hidden", "true");
   document.body.append(overlay);
-  overlay.innerHTML = '<path/><rect/>';
-  const path = overlay.querySelector("path"), box = overlay.querySelector("rect");
+  overlay.innerHTML = '<path/><path class="presentation-lasso-selection"/>';
+  const path = overlay.querySelector("path"), box = overlay.querySelector(".presentation-lasso-selection");
   const surfaces = [...document.querySelectorAll("#notescanvas canvas, #chalkboard canvas")];
+  let contour = [], lastPointer = null;
+  const hit = (x, y) => contour.length > 2 && Presentation.lassoGeometry.inside({x,y}, contour);
+  function cursor() {
+    const grabbing = !!gesture?.moving;
+    const grab = active && !gesture && lastPointer && hit(lastPointer.x,lastPointer.y);
+    surfaces.forEach(canvas => {
+      canvas.classList.toggle("presentation-lasso-grab", !!grab);
+      canvas.classList.toggle("presentation-lasso-grabbing", grabbing);
+    });
+  }
   function paint() {
-    const area = selection && plugin.lassoBounds(selection);
-    box.style.display = area ? "" : "none";
-    if (area) for (const key of ["x", "y", "width", "height"]) box.setAttribute(key, area[key]);
+    contour = selection ? plugin.lassoOutline(selection) : [];
+    box.style.display = contour.length ? "" : "none";
+    box.setAttribute("d", contour.map((p,i)=>`${i ? "L" : "M"}${p.x},${p.y}`).join(" ") + (contour.length ? " Z" : ""));
+    cursor();
   }
   function cancel() {
     if (gesture?.moving) plugin.lassoRestore(gesture.before);
@@ -38,15 +49,18 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
       if (!active || !event.isPrimary || event.button !== 0 || gesture) return;
       event.preventDefault(); event.stopImmediatePropagation();
       const point = plugin.lassoPoint(event.clientX, event.clientY);
-      const area = selection && plugin.lassoBounds(selection);
-      const moving = area && event.clientX >= area.x && event.clientX <= area.x + area.width && event.clientY >= area.y && event.clientY <= area.y + area.height;
+      lastPointer = {x:event.clientX,y:event.clientY};
+      const moving = selection && hit(event.clientX,event.clientY);
       if (!moving) selection = null;
       gesture = { pointer: event.pointerId, start: point, points: [point], moving, before: plugin.lassoSnapshot(), dx: 0, dy: 0 };
       canvas.setPointerCapture(event.pointerId);
       paint();
     }, true);
     canvas.addEventListener("pointermove", event => {
-      if (!active || !gesture || gesture.pointer !== event.pointerId) return;
+      if (!active) return;
+      lastPointer = {x:event.clientX,y:event.clientY};
+      cursor();
+      if (!gesture || gesture.pointer !== event.pointerId) return;
       event.preventDefault(); event.stopImmediatePropagation();
       const point = plugin.lassoPoint(event.clientX, event.clientY);
       if (gesture.moving) {
@@ -69,6 +83,7 @@ Presentation.factories.drawingLasso = function (plugin, changed) {
       path.setAttribute("d", "");
       paint(); changed();
     }, true);
+    canvas.addEventListener("pointerleave", () => { lastPointer = null; cursor(); });
     for (const name of ["pointercancel", "lostpointercapture"]) canvas.addEventListener(name, () => { if (gesture) cancel(); });
   }
   window.addEventListener("blur", cancel);

@@ -91,11 +91,13 @@
   overflow: visible;
   display: none;
 }
-.presentation-drawing-lasso path,
-.presentation-drawing-lasso rect {
+.presentation-drawing-lasso path {
   fill: #3973bc12;
   stroke: #3973bc;
   stroke-width: 1.5;
   stroke-dasharray: 6 4;
 }
 .presentation-lasso-active { cursor: crosshair !important; touch-action: none; }
+
+.presentation-lasso-active.presentation-lasso-grab { cursor: grab !important; }
+.presentation-lasso-active.presentation-lasso-grabbing { cursor: grabbing !important; }
