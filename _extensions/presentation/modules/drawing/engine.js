@@ -2478,13 +2478,11 @@
       if(JSON.stringify(current.events)!==JSON.stringify(expected.events))return;
       source.pop();target.push(entry);restoreEdit(redo?entry.after:entry.before);
     };
-    this.drawingGestureSnapshot = editSnapshot;
-    this.cancelDrawingGesture = function (snapshot) {
-      // Discard the first finger's provisional ink without adding an undo step.
-      hold?.stop(); drawing=false;erasing=false;
-      smoothPoint=smoothEnd=smoothRaw=heldOriginal=null;
-      pendingEdit=null;
-      restoreEdit(snapshot);
+    this.drawingSnapshot = editSnapshot;
+    this.canUndoDrawing = function (redo) {
+      var current=editSnapshot(), history=editHistory(current);
+      var source=redo?history.future:history.past, entry=source[source.length-1];
+      return !!entry && JSON.stringify(current.events)===JSON.stringify((redo?entry.before:entry.after).events);
     };
 
     function lassoSnapshot() {

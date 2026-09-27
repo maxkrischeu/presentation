@@ -1,5 +1,7 @@
 Presentation.factories.drawingToolbar = function (context, adapter) {
   const paths = {
+    undo: '<path d="M9 5 4 10l5 5 M4 10h10a6 6 0 0 1 0 12"/>',
+    redo: '<path d="m15 5 5 5-5 5 M20 10H10a6 6 0 0 0 0 12"/>',
     lasso: '<ellipse cx="12" cy="9" rx="9" ry="6" stroke-dasharray="3 2"/><path d="M7 14c-4 6 5 9 5 4 0-2-3-3-5-2"/>',
     colors:
       '<circle cx="8" cy="8" r="4.5" style="fill:#3973bc;stroke:#fff;stroke-width:1"/><circle cx="16" cy="8" r="4.5" style="fill:#e44b55;stroke:#fff;stroke-width:1"/><circle cx="12" cy="16" r="4.5" style="fill:#f2c438;stroke:#fff;stroke-width:1"/>',
@@ -31,6 +33,8 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
   const tool = (action, label, glyph) =>
     `<button type="button" data-drawing="${action}" title="${label}" aria-label="${label}">${icon(glyph)}</button>`;
   drawingTools.innerHTML =
+    tool("undo", Presentation.t("Undo Drawing"), "undo") +
+    tool("redo", Presentation.t("Redo Drawing"), "redo") +
     tool("visibility", Presentation.t("Show / Hide Drawings"), "hide") +
     tool("colors", Presentation.t("Pen / Colors"), "draw") +
     tool("lasso", Presentation.t("Lasso Selection"), "lasso") +
@@ -97,6 +101,8 @@ Presentation.factories.drawingToolbar = function (context, adapter) {
           palette.append(swatch);
         });
     }
+    drawingTools.querySelector("[data-drawing=undo]").disabled = !adapter.canUndo();
+    drawingTools.querySelector("[data-drawing=redo]").disabled = !adapter.canUndo(true);
     const visibility = drawingTools.querySelector("[data-drawing=visibility]");
     const shown = adapter.drawingsVisible();
     visibility.innerHTML = icon(shown ? "visible" : "hide");

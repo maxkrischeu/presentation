@@ -66,7 +66,6 @@ Presentation.register({
       ],
       help: [
         ["P / E", "Pen / Eraser (drawing mode)"],
-        ["2 / 3 fingers", "Tap to undo / redo drawing"],
         ["Ctrl/Cmd + Z / Shift + Z", "Undo / redo drawing"],
         ["← / → (chalkboard)", "Previous / next board"],
       ],

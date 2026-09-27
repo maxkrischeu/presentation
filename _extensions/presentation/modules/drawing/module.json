@@ -7,7 +7,6 @@
     "lasso-geometry.js",
     "engine.js",
     "lasso.js",
-    "gestures.js",
     "drawing.js",
     "toolbar.js",
     "module.js"

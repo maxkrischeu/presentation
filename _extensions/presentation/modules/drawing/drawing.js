@@ -119,19 +119,13 @@ Presentation.factories.drawing = function (context) {
       clearTimeout(captureTimer);
       captureTimer = setTimeout(() => {
         if (drawing() && !deck.isOverview()) captureNotes();
+        onChange();
       }, 100);
     }),
   );
   const lasso = Presentation.factories.drawingLasso(plugin, onChange);
   const undo = (redo) => { lasso.clear(); plugin.drawingUndo(redo); captureNotes(); onChange(); };
-  const gestures = Presentation.factories.drawingGestures({
-    active: () => drawing() || boarding(),
-    begin: () => plugin.drawingGestureSnapshot(),
-    cancel: snapshot => { lasso.clear(); plugin.cancelDrawingGesture(snapshot); },
-    undo,
-  });
   const stop = () => {
-    gestures.reset();
     lasso.set(false);
     if (drawing() && !deck.isOverview()) captureNotes();
     if (boarding()) plugin.toggleChalkboard();
@@ -144,6 +138,8 @@ Presentation.factories.drawing = function (context) {
     lasso: () => lasso.set(!lasso.active()),
     selecting: lasso.active,
     undo,
+    redo: () => undo(true),
+    canUndo: (redo = false) => plugin.canUndoDrawing(redo),
     visibilityState: () => ({ ...drawingsShown }),
     snapshot: () => ({
       drawingData: JSON.parse(plugin.getData()),
