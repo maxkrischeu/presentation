@@ -571,7 +571,7 @@ Presentation.factories.images = function (context) {
       const emptyMessages = {
         shared: "No shared media available.",
         lesson: "No media available for this lesson.",
-        slide: "No media prepared for this slide.",
+        slide: "No media available for this slide.",
       };
       empty.textContent = Presentation.t(emptyMessages[libraryScope]);
       container.append(empty);
