@@ -9023,8 +9023,10 @@ Presentation.register({
       const rect = start.slide.getBoundingClientRect();
       if (event.clientX < rect.left || event.clientX > rect.right ||
           event.clientY < rect.top || event.clientY > rect.bottom) return;
+      const position = (event.clientX - rect.left) / rect.width;
+      if (position >= 1 / 3 && position <= 2 / 3) return;
       event.preventDefault();
-      if (event.clientX < rect.left + rect.width / 2) deck.prev();
+      if (position < 1 / 3) deck.prev();
       else deck.next();
     });
     return {};
