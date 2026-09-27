@@ -8992,6 +8992,7 @@ Presentation.register({
     // Also accept primary mouse clicks: Sidecar may translate finger taps to them.
     const local = 'a, button, input, textarea, select, video, audio, iframe, embed, object, summary, [role="button"], [role="link"], [tabindex], [contenteditable]:not([contenteditable="false"]), [draggable="true"], [data-prevent-swipe], [data-presentation-keyboard="local"], [data-presentation-navigation="local"]';
     let press = null;
+    let middleClick = null, middleDoubleClick = false;
     const eligible = target => {
       const slide = deck.getCurrentSlide();
       return Presentation.modes?.current() === "standard" &&
@@ -9014,6 +9015,9 @@ Presentation.register({
     document.addEventListener("click", event => {
       const start = press;
       press = null;
+      const previousMiddleClick = middleClick;
+      middleClick = null;
+      middleDoubleClick = false;
       if (!start || event.defaultPrevented || event.button !== 0 ||
           event.ctrlKey || event.metaKey || event.altKey || event.shiftKey ||
           performance.now() - start.time > 600 ||
@@ -9024,10 +9028,24 @@ Presentation.register({
       if (event.clientX < rect.left || event.clientX > rect.right ||
           event.clientY < rect.top || event.clientY > rect.bottom) return;
       const position = (event.clientX - rect.left) / rect.width;
-      if (position >= 1 / 3 && position <= 2 / 3) return;
+      if (position >= 1 / 3 && position <= 2 / 3) {
+        middleClick = {slide: start.slide, time: event.timeStamp};
+        middleDoubleClick = event.detail === 2 && previousMiddleClick?.slide === start.slide &&
+          event.timeStamp - previousMiddleClick.time < 1000;
+        return;
+      }
       event.preventDefault();
       if (position < 1 / 3) deck.prev();
       else deck.next();
+    });
+    document.addEventListener("dblclick", event => {
+      const open = middleDoubleClick;
+      middleDoubleClick = false;
+      middleClick = null;
+      if (!open || event.defaultPrevented || !eligible(event.target) ||
+          document.fullscreenElement || document.webkitFullscreenElement) return;
+      event.preventDefault();
+      Presentation.modes.invoke("fullscreen");
     });
     return {};
   },
