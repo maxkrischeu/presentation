@@ -403,7 +403,9 @@ export async function saveLayout(
     text = text.slice(0, insertion) + newline + block + newline +
       text.slice(insertion);
   }
-  await Deno.writeFile(path + ".layout-backup", raw);
+  const backupDir = join(dirname(path), ".quarto", "presentation", "layout-backups");
+  await Deno.mkdir(backupDir, { recursive: true });
+  await Deno.writeFile(join(backupDir, basename(path) + ".layout-backup"), raw);
   const tmp = join(dirname(path), "." + basename(path) + ".layout-tmp");
   try {
     await Deno.writeTextFile(tmp, text);
