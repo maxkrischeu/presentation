@@ -4983,6 +4983,7 @@ Presentation.factories.exports = function (context) {
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 60000);
       status.textContent = Presentation.t("Export ready.");
+      dialog.close();
     } catch (error) {
       status.textContent = Presentation.t(error.message);
     } finally {
