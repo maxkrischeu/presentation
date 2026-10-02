@@ -235,7 +235,9 @@ export async function saveLayout(
   slide: string,
   items: any,
   count: number,
+  root: string = dirname(path),
 ) {
+  if (!inside(root, path)) throw Error("Source is outside this project.");
   const raw = await Deno.readFile(path);
   if (await revision(raw) !== expected) {
     throw Error(
@@ -403,21 +405,23 @@ export async function saveLayout(
     text = text.slice(0, insertion) + newline + block + newline +
       text.slice(insertion);
   }
-  const backupDir = join(dirname(path), ".quarto", "presentation", "layout-backups");
-  await Deno.mkdir(backupDir, { recursive: true });
-  await Deno.writeFile(join(backupDir, basename(path) + ".layout-backup"), raw);
-  const tmp = join(dirname(path), "." + basename(path) + ".layout-tmp");
-  try {
-    await Deno.writeTextFile(tmp, text);
-    if (await revision(await Deno.readFile(path)) !== expected) {
-      throw Error("Source changed while saving. Nothing was overwritten.");
-    }
-    await Deno.rename(tmp, path);
-  } finally {
+  if (text !== new TextDecoder("utf-8", { fatal: true }).decode(raw)) {
+    const backup = join(root, ".quarto", "presentation", "layout-backups", relative(root, path) + ".layout-backup");
+    await Deno.mkdir(dirname(backup), { recursive: true });
+    await Deno.writeFile(backup, raw);
+    const tmp = join(dirname(path), "." + basename(path) + ".layout-tmp");
     try {
-      await Deno.remove(tmp);
-    } catch (e) {
-      if (!(e instanceof Deno.errors.NotFound)) throw e;
+      await Deno.writeTextFile(tmp, text);
+      if (await revision(await Deno.readFile(path)) !== expected) {
+        throw Error("Source changed while saving. Nothing was overwritten.");
+      }
+      await Deno.rename(tmp, path);
+    } finally {
+      try {
+        await Deno.remove(tmp);
+      } catch (e) {
+        if (!(e instanceof Deno.errors.NotFound)) throw e;
+      }
     }
   }
   return {
@@ -464,5 +468,6 @@ export async function handle(
     data.slide,
     data.images,
     meta.headings,
+    root,
   );
 }
