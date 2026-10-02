@@ -41,10 +41,14 @@ Presentation.factories.exports = function (context) {
     true,
   );
   const capture = () => Presentation.session.capture();
+  const previewRequired = () => Presentation.t(
+    "Export requires quarto preview. Start the preview and open its localhost address instead of opening the HTML file directly.",
+  );
   const open = (type) => {
     kind = type;
     status.textContent = "";
-    button.disabled = false;
+    button.disabled = location.protocol === "file:";
+    if (button.disabled) status.textContent = previewRequired();
     dialog.querySelector("h2").textContent = {
       slides: Presentation.t("Export Slides PDF"),
       chalkboard: Presentation.t("Export Chalkboard PDF"),
@@ -76,14 +80,18 @@ Presentation.factories.exports = function (context) {
     button.disabled = true;
     status.textContent = Presentation.t("Preparing export… On first use, export components are downloaded.");
     try {
+      if (location.protocol === "file:") throw Error(previewRequired());
       const snapshot = await capture();
       const custom = kind === "slides" && field("scope").value === "custom";
-      const auth = await fetch("/__presentation/source");
+      let auth;
+      try {
+        auth = await fetch("/__presentation/source");
+      } catch {
+        throw Error(previewRequired());
+      }
       if (!auth.ok)
         throw Error(
-          Presentation.t(
-            "Open this project with quarto preview to export the current session.",
-          ),
+          previewRequired(),
         );
       const { token } = await auth.json();
       const response = await fetch("/__presentation/export", {

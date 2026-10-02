@@ -22,6 +22,7 @@
     "Prepared": "Vorbereitet",
     "Also include hidden drawings": "Auch ausgeblendete Zeichnungen",
     "Include chalkboard pages": "Tafelseiten einschließen",
-    "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen."
+    "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.",
+    "Export requires quarto preview. Start the preview and open its localhost address instead of opening the HTML file directly.": "Der Export benötigt quarto preview. Starte die Vorschau und öffne die angezeigte localhost-Adresse, statt die HTML-Datei direkt zu öffnen."
   }
 }
