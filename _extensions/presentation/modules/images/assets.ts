@@ -21,7 +21,7 @@ export async function handle(
       );
     for (const entry of entries) {
       const original = await Deno.realPath(resolve(dirname(source), entry.src)),
-        destination = resolve(dirname(page), entry.src);
+        destination = resolve(dirname(page), metadata.assetBase || ".", entry.src);
       if (!inside(output, destination) || original === destination) continue;
       await Deno.mkdir(dirname(destination), { recursive: true });
       const actualParent = await Deno.realPath(dirname(destination));

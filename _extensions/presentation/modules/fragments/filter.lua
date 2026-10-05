@@ -50,7 +50,7 @@ function Pandoc(doc)
         for i,item in ipairs(block.content) do block.content[i]=process(item,current) end
         result:insert(block)
       elseif block.t=='Div' then
-        local atomic=has(block,'presentation-embed') or has(block,'placed-image') or has(block,'image') or has(block,'video')
+        local atomic=has(block,'quote') or has(block,'presentation-embed') or has(block,'placed-image') or has(block,'image') or has(block,'video')
         if atomic then result:insert(current=='auto' and animate(block) or block)
         else
           block.content=process(block.content,current)

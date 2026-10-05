@@ -18,6 +18,7 @@ const extensions = new Set([
   ".mp4",
   ".webm",
   ".m4v",
+  ".xlsx",
 ]);
 export async function scan(
   root: string,
@@ -73,7 +74,7 @@ export async function scan(
         id: "file:" + src,
         src,
         label: basename(path, extname(path)).replace(/[-_]+/g, " "),
-        kind: /\.(mp4|webm|m4v)$/i.test(path) ? "video" : "image",
+        kind: /\.xlsx$/i.test(path) ? "spreadsheet" : /\.(mp4|webm|m4v)$/i.test(path) ? "video" : "image",
       });
     }
   }

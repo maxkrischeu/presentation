@@ -56,3 +56,8 @@ Bei Quarto-Markdown übernimmt das Modul Aktivierung und Größenberechnung.
 `viewer/` enthält die PDF.js-Bibliothek sowie unsere drei Viewer-Dateien;
 `filter.lua` liefert diese als Quarto-HTML-Abhängigkeit aus. Beim Aktualisieren
 der Bibliothek Version, Lizenz und Ressourcenliste gemeinsam aktualisieren.
+
+## Excel-Dateien
+
+`.document` unterstützt auch `.xlsx`. Blattwahl, Zellbereiche und Einschränkungen
+sind im [Tabellenbetrachter](../spreadsheets/README.md) beschrieben.

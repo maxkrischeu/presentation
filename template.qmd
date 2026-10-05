@@ -314,3 +314,9 @@ Teste das Zurücksetzen erst, wenn du alles Nötige gespeichert hast.
 4. Entferne die Beispielfolien, die du nicht brauchst.
 
 Alle Beispiele bleiben als kopierbare Bausteine in dieser Datei nachvollziehbar.
+
+## {.quote-slide fragments="off"}
+
+::: {.quote author="Max Mustermann"}
+Eine **gute Frage** ist der Anfang einer Entdeckung.
+:::

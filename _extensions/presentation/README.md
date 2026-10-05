@@ -1,5 +1,9 @@
 # Presentation – V2
 
+**PowerPoint:** `quarto render praesentation.qmd --to presentation-pptx`
+erzeugt im Presentation-Projekt eine zusätzliche bearbeitbare PPTX.
+[Umfang, Gestaltung und Grenzen](modules/powerpoint/README.md).
+
 Eine Quarto-Format- und Projekterweiterung für interaktive Reveal.js-Präsentationen. Alle benötigten Erweiterungsdateien befinden sich in diesem Ordner. Eigene Inhalte, Bilder und Projektkonfiguration bleiben außerhalb.
 
 ## Verwendung
@@ -57,6 +61,9 @@ Quartos Headless-Browser verwendet. Fehlt er, installiert Quarto ihn automatisch
 dafür wird einmalig Internet benötigt. Weitere Exporte verwenden ihn erneut.
 Tafel-PDFs benötigen keinen Browser. Normales Rendern und Preview laden keinen
 PDF-Browser herunter. Auf Linux können Systembibliotheken für Chromium nötig sein.
+
+Quarto erzeugt die HTML neben der QMD und die Ressourcen im zugehörigen
+`<name>_files`-Ordner.
 
 Die internen Hilfsdateien entstehen gebündelt unter `.quarto/presentation/`.
 Sie werden automatisch erzeugt und müssen nicht mitkopiert werden.
@@ -386,11 +393,11 @@ Videos dem Seitenverhältnis an; Dokumente und HTML nutzen den verbleibenden Pla
 
 `title` benennt Dokumente, HTML und Videos; bei Dokumenten/HTML gilt sonst der
 Dateiname. Bilder erhalten über `alt` ihre Bildbeschreibung. `.document` unterstützt
-aktuell PDFs. Für andere Dateien normale Downloadlinks verwenden. `.video`
+PDFs und XLSX-Arbeitsmappen. Für andere Dateien normale Downloadlinks verwenden. `.video`
 unterstützt lokale/direct HTTP(S)-Videodateien sowie YouTube-/Vimeo-Links.
 Online-Inhalte benötigen eine Verbindung und die Freigabe des Anbieters.
 
-Freie Bilder und Videodateien verwenden denselben Block mit `position="free"`:
+Freie Bilder, Videodateien und XLSX-Arbeitsmappen verwenden denselben Block mit `position="free"`:
 
 ```markdown
 ::: {.image src="assets/raster.svg" position="free" x="35%" y="40%" width="30%"}
@@ -400,7 +407,14 @@ Freie Bilder und Videodateien verwenden denselben Block mit `position="free"`:
 Hier beziehen sich `x`, `y`, `width` und `height` in Prozent auf den
 Positionierungsbereich der Folie. Der Editor schreibt diese Werte beim Speichern;
 `layer`, `rotation` und `transparency` bleiben wie bisher verfügbar. Freie
-YouTube-/Vimeo-Player und frei verschiebbare Dokumentfenster sind nicht enthalten.
+YouTube-/Vimeo-Player und frei verschiebbare PDF-Fenster sind nicht enthalten.
+
+XLSX-Dateien lassen sich mit `sheet="Tabelle1"` und `range="A1:H25"` auf ein
+Startblatt und einen Bereich begrenzen (ohne `position="free"`). Der
+[Tabellenbetrachter](modules/spreadsheets/README.md) bietet Blattwechsel, Zoom,
+deutsche Formelanzeige und eine vergrößerte Ansicht. Ohne Bereichsangabe wird
+`A1:Z50` angezeigt. Werte sind schreibgeschützt; einfache Diagramme und Textfelder
+werden unterstützt. Grenzen sind in der Dokumentation des Betrachters beschrieben.
 Normale Markdown-Bilder, Quartos Video-Shortcode, `.pdf-preview` und vorhandene
 `.placed-image`-Blöcke funktionieren weiterhin.
 

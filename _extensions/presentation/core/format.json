@@ -15,7 +15,9 @@
           }
         }
       },
-      "format": "presentation-revealjs"
+      "format": "presentation-revealjs",
+      "document-hooks": true,
+      "document-hooks-bootstrap": "server/bootstrap.ts"
     },
     "formats": {
       "revealjs": {

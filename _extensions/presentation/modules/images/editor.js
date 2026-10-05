@@ -404,7 +404,9 @@ Presentation.factories.images = function (context) {
           zIndex: item.layer,
         });
         const media = catalog.get(item.asset);
-        const img = document.createElement(media.kind === 'video' ? 'video' : 'img');
+        const img = media.kind === 'spreadsheet'
+          ? context.get('spreadsheets').createPreview({url:media.src,title:media.label})
+          : document.createElement(media.kind === 'video' ? 'video' : 'img');
         if (media.kind === 'video') {
           img.controls = !active;
           img.preload = 'auto';
@@ -445,7 +447,7 @@ Presentation.factories.images = function (context) {
             "Rotate media · Snap: 45° · Shift: 15°",
           );
           // Anchored to the local image frame: the offset rotates with the image.
-          if (media.kind !== 'video') target.append(handle);
+          if (media.kind === 'image') target.append(handle);
         }
       });
     }
@@ -461,7 +463,7 @@ Presentation.factories.images = function (context) {
     }
     const selectedItem = editing ? state[currentId()]?.[selected] : null;
     properties.hidden = !selectedItem;
-    const videoSelected = selectedItem && catalog.get(selectedItem.asset)?.kind === 'video';
+    const videoSelected = selectedItem && catalog.get(selectedItem.asset)?.kind !== 'image';
     for (const name of ['rotation', 'transparency']) fields[name].closest('label').hidden = !!videoSelected;
     for (const [property, field] of Object.entries(fields)) {
       field.disabled = !selectedItem;
@@ -529,8 +531,9 @@ Presentation.factories.images = function (context) {
         button.dataset.asset = id;
         button.draggable = true;
         button.title = asset.label;
-        const img = document.createElement(asset.kind === 'video' ? 'span' : 'img');
+        const img = document.createElement(asset.kind !== 'image' ? 'span' : 'img');
         if (asset.kind === 'video') { img.className = 'presentation-media-video-preview'; img.textContent = '▶'; }
+        else if(asset.kind === 'spreadsheet') {img.className='presentation-media-sheet-preview';img.textContent='XLSX';}
         else { img.loading = 'lazy'; img.src = asset.src; }
         img.alt = "";
         img.draggable = false;
@@ -707,7 +710,7 @@ Presentation.factories.images = function (context) {
       return;
     }
     if (id !== currentId() || (panel.hidden && !armed && !imported)) return;
-    let w = 0.25,
+    let w = catalog.get(asset).kind === 'spreadsheet' ? 0.75 : 0.25,
       h =
         (((w * p.rect.width) / p.rect.height) * img.naturalHeight) /
         img.naturalWidth;
@@ -846,6 +849,10 @@ Presentation.factories.images = function (context) {
       width: `${preview.width}px`, height: `${preview.height}px`, pointerEvents: "none"});
     try { if (source) preview.getContext("2d").drawImage(source, 0, 0, preview.width, preview.height); }
     catch { /* An unloaded preview remains transparent; never drag the label. */ }
+    if (!source && button.querySelector('.presentation-media-sheet-preview')) {
+      const ctx=preview.getContext('2d');ctx.fillStyle='#e5f3eb';ctx.fillRect(0,0,preview.width,preview.height);
+      ctx.fillStyle='#20734c';ctx.font='bold 22px Arial';ctx.textAlign='center';ctx.fillText('XLSX',preview.width/2,preview.height/2+8);
+    }
     document.body.append(preview);
     return preview;
   }
@@ -1264,7 +1271,8 @@ Presentation.factories.images = function (context) {
   }
   async function loadMedia(asset) {
     if (asset.loaded) return asset.preload;
-    if (asset.kind === 'video') await videoPreview(asset);
+    if (asset.kind === 'spreadsheet') asset.preload={naturalWidth:960,naturalHeight:540};
+    else if (asset.kind === 'video') await videoPreview(asset);
     else { asset.preload.src = asset.src; await asset.preload.decode(); }
     asset.loaded = true;
     return asset.preload;
@@ -1349,7 +1357,7 @@ Presentation.factories.images = function (context) {
     // Explicitly configured images take precedence over automatic discovery.
     if ([...catalog.values()].some(asset => asset.src === entry.data && !asset.id.includes(':file:'))) return null;
     const preload = new Image();
-    catalog.set(id, {id, scope: entry.scope, src: entry.data || new URL(entry.src, location.href).href, source: entry.src, label: entry.label, kind: entry.kind || 'image', preload});
+    catalog.set(id, {id, scope: entry.scope, src: entry.data || new URL(entry.src, new URL(source.assetBase || ".", location.href)).href, source: entry.src, label: entry.label, kind: entry.kind || 'image', preload});
     (entry.scope === 'lesson' ? lessonAssets : globals).push(id);
     return id;
   }

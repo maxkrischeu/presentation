@@ -1,0 +1,32 @@
+{
+  "en": {
+    "Range": "Range",
+    "Show": "Show",
+    "Fit": "Fit width",
+    "Loading": "Loading spreadsheet …",
+    "Error": "Could not open the spreadsheet. Download the original and open it in Excel.",
+    "RangeError": "Enter a valid range, e.g. A1:H30.",
+    "Limit": "Showing at most 400 rows and 50 columns. Enter another range to view more.",
+    "Missing": "Some formulas have no saved result. Open and save the workbook in Excel first.",
+    "SheetError": "The requested worksheet does not exist.",
+    "No visible sheets": "No visible worksheets.",
+    "Zoom in": "Zoom in",
+    "Zoom out": "Zoom out",
+    "Worksheets": "Worksheets"
+  },
+  "de": {
+    "Range": "Bereich",
+    "Show": "Anzeigen",
+    "Fit": "Breite anpassen",
+    "Loading": "Tabelle wird geladen …",
+    "Error": "Die Tabelle konnte nicht geöffnet werden. Bitte die Originaldatei herunterladen und in Excel öffnen.",
+    "RangeError": "Einen gültigen Bereich eingeben, z. B. A1:H30.",
+    "Limit": "Höchstens 400 Zeilen und 50 Spalten werden angezeigt. Für weitere Zellen einen anderen Bereich eingeben.",
+    "Missing": "Einige Formeln haben kein gespeichertes Ergebnis. Die Datei zuerst in Excel öffnen und speichern.",
+    "SheetError": "Das angegebene Tabellenblatt existiert nicht.",
+    "No visible sheets": "Keine sichtbaren Tabellenblätter.",
+    "Zoom in": "Vergrößern",
+    "Zoom out": "Verkleinern",
+    "Worksheets": "Tabellenblätter"
+  }
+}

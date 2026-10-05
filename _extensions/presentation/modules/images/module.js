@@ -1,6 +1,6 @@
 Presentation.register({
   id: "images",
-  requires: ["frame"],
+  requires: ["frame", "spreadsheets"],
   async setup(context) {
     const api = Presentation.factories.images(context);
     await api.ready;

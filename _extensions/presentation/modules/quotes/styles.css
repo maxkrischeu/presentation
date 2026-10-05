@@ -1,0 +1,32 @@
+.reveal .slides .quote > blockquote {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  font-size: 1.3em;
+  font-style: italic;
+  color: var(--presentation-navy);
+}
+.reveal .quote blockquote p {
+  margin: 0;
+  line-height: 1.45;
+}
+.reveal .quote blockquote p + p {
+  margin-top: 0.65em;
+}
+.reveal .quote .quote-author {
+  font-size: 0.65em;
+  color: var(--presentation-muted);
+}
+/* Whole-slide centering is opt-in and independent of the quote environment. */
+.reveal .slides section.quote-slide .quote {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 80%;
+}

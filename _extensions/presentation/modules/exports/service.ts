@@ -203,7 +203,7 @@ async function packageSession(
   for (const file of [...files].sort()) {
     const name = relative(output, file).replaceAll("\\", "/");
     if (
-      name.split("/").some((p) => p.startsWith(".") || p === "node_modules") ||
+      name.split("/").some(part => part.startsWith(".") || part === "node_modules") ||
       /\.(qmd|py|ts|yml|yaml|toml)$/.test(name)
     ) continue;
     archive.set(

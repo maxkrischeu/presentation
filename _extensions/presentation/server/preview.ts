@@ -189,9 +189,7 @@ async function handle(request: Request): Promise<Response> {
   try {
     const decoded = decodeURIComponent(url.pathname);
     if (
-      decoded.split(/[\\/]/).some((p) =>
-        p.startsWith(".") || p === "node_modules"
-      ) ||
+      decoded.split("/").some(part => part.startsWith(".") || part === "node_modules") ||
       [".qmd", ".py", ".ts", ".yml", ".yaml", ".toml"].includes(
         extname(decoded),
       )

@@ -27,6 +27,7 @@ export async function preparePage({snapshot,options}) {
      sheet.append(image);(tails.get(source)||source).after(sheet);tails.set(source,sheet);
     }
    }
+   for(const module of Presentation.modules().values()) if(module.preparePrint) await module.preparePrint();
    await document.fonts.ready;await Promise.all(Array.from(document.images,image=>image.decode().catch(()=>{})));
 
 }

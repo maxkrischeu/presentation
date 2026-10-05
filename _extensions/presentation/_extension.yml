@@ -13,6 +13,8 @@ contributes:
           cmd: "quarto run .quarto/presentation/preview.ts --port {port} --live-reload"
           ready: "Presentation preview ready:"
     format: "presentation-revealjs"
+    document-hooks: true
+    document-hooks-bootstrap: "server/bootstrap.ts"
   formats:
     revealjs:
       lang: "en"
@@ -44,6 +46,8 @@ contributes:
         - "modules/images/filter.lua"
         - "modules/laser/filter.lua"
         - "modules/quiz/filter.lua"
+        - "modules/quotes/filter.lua"
+        - "modules/spreadsheets/filter.lua"
         - "modules/tasks/filter.lua"
       revealjs-plugins:
         - "runtime/RevealDrop"
@@ -64,3 +68,12 @@ contributes:
         button: false
         shortcut: "t"
       embed-resources: false
+    pptx:
+      reference-doc: "modules/powerpoint/reference.pptx"
+      slide-level: 2
+      incremental: false
+      filters:
+        - at: "pre-quarto"
+          path: "modules/powerpoint/content.lua"
+        - at: "post-quarto"
+          path: "modules/powerpoint/config.lua"

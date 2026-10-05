@@ -2,13 +2,7 @@
 // avoids Quarto's unquoted absolute extension hook paths (spaces/namespaces).
 import { dirname, fromFileUrl, join, toFileUrl } from "stdlib/path";
 import { digest, exists, resolve } from "./paths.ts";
-export async function register(
-  root: string,
-  source: string,
-  pandocInput: string,
-) {
-  root = resolve(root);
-  source = resolve(source);
+export async function prepareHooks(root:string) {
   const hooks =
     toFileUrl(join(dirname(fromFileUrl(import.meta.url)), "post_render.ts"))
       .href;
@@ -21,6 +15,15 @@ export async function register(
   if (!await exists(target) || await Deno.readTextFile(target) !== launcher) {
     await Deno.writeTextFile(target, launcher);
   }
+}
+export async function register(
+  root: string,
+  source: string,
+  pandocInput: string,
+) {
+  root = await Deno.realPath(resolve(root));
+  source = await Deno.realPath(resolve(source));
+  await prepareHooks(root);
   const marker = join(root, ".quarto/presentation/inputs.json");
   let inputs: Record<
     string,

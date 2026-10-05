@@ -145,7 +145,7 @@ function layoutBlocks(text: string): [string, number, number, string][] {
         } catch {}
         if (
           attrs.includes(".placed-image") ||
-          ((attrs.includes(".image") || attrs.includes(".video")) &&
+          ((attrs.includes(".image") || attrs.includes(".video") || attrs.includes(".document")) &&
             attrs.includes("position=free"))
         ) placed = offset;
       }
@@ -333,7 +333,7 @@ export async function saveLayout(
       suffix = src ? "%" : "";
     const kind = src && /\.(mp4|webm|m4v)(?:[?#]|$)/i.test(src)
       ? "video"
-      : "image";
+      : src && /\.xlsx(?:[?#]|$)/i.test(src) ? "document" : "image";
     const entry = src
       ? [attribute("src", src), attribute("position", "free")]
       : [attribute("asset", ref)];

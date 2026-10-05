@@ -214,8 +214,9 @@ end
 local media = dofile(pandoc.path.join({pandoc.path.directory(PANDOC_SCRIPT_FILE), '../media/options.lua'}))
 function Div(el)
   if not el.classes:includes('document') then return end
+  if (el.attributes.src or ''):lower():gsub('[?#].*$',''):match('%.xlsx$') then return end
   local attrs=media.read(el)
   local src=el.attributes.src
-  if not src:lower():gsub('[?#].*$',''):match('%.pdf$') then error('.document currently supports PDF files only.') end
+  if not src:lower():gsub('[?#].*$',''):match('%.pdf$') then error('.document supports PDF and XLSX files.') end
   return pandoc.Plain({pandoc.Link(el.attributes.title or '',src,'',pandoc.Attr(el.identifier,{'pdf-preview'},attrs))})
 end

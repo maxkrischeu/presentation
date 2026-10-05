@@ -12,7 +12,7 @@ local function image(src, id, label)
   if not src:match('^https?://') then resources[src] = true end
   -- Inert catalog entries retain paths; bytes are fetched only by the player
   -- or a visible library preview, not embedded in every presentation.
-  return '<img data-media-source="'..esc(src)..'" data-asset-id="'..esc(id)..'" data-media-kind="'..(video and 'video' or 'image')..'" alt="'..esc(label)..'" src="'..esc(src)..'">'
+  return '<img data-media-source="'..esc(src)..'" data-asset-id="'..esc(id)..'" data-media-kind="'..(video and 'video' or pathname:match('%.xlsx$') and 'spreadsheet' or 'image')..'" alt="'..esc(label)..'" src="'..esc(src)..'">'
 
 end
 local global = ''
@@ -66,11 +66,12 @@ function CodeBlock(block)
   return {}
 end
 local function PlacedImage(div)
-  local kind = div.classes:includes('image') and 'image' or div.classes:includes('video') and 'video' or nil
+  local kind = div.classes:includes('image') and 'image' or div.classes:includes('video') and 'video' or (div.classes:includes('document') and (div.attributes.src or ''):lower():match('%.xlsx$') and div.attributes.position=='free') and 'spreadsheet' or nil
   if kind then
     if div.attributes.position and div.attributes.position ~= 'free' then error('Media position must be free or omitted.') end
     if div.attributes.position == 'free' then
       local a=div.attributes
+      if kind=='spreadsheet' and (a.sheet or a.range) then error('For an initial spreadsheet sheet/range, use .document without position=free.') end
       media.read(div)
       if not a.src or a.src=='' then error('Free media requires src.') end
       if kind=='video' and not a.src:lower():gsub('[?#].*$',''):match('%.mp4$') and not a.src:lower():gsub('[?#].*$',''):match('%.webm$') and not a.src:lower():gsub('[?#].*$',''):match('%.m4v$') then error('Free video requires a direct MP4, WebM or M4V file.') end

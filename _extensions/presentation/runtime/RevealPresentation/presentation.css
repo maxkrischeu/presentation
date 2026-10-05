@@ -2365,6 +2365,40 @@ html .reveal .drop.active {
   grid-template-columns: minmax(0, 1fr);
 }
 
+/* modules/quotes/styles.css */
+.reveal .slides .quote > blockquote {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  font-size: 1.3em;
+  font-style: italic;
+  color: var(--presentation-navy);
+}
+.reveal .quote blockquote p {
+  margin: 0;
+  line-height: 1.45;
+}
+.reveal .quote blockquote p + p {
+  margin-top: 0.65em;
+}
+.reveal .quote .quote-author {
+  font-size: 0.65em;
+  color: var(--presentation-muted);
+}
+/* Whole-slide centering is opt-in and independent of the quote environment. */
+.reveal .slides section.quote-slide .quote {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  width: 80%;
+}
+
 /* modules/search/styles.css */
 .presentation-search-controls {
   display: flex;
@@ -2390,6 +2424,25 @@ html .reveal .drop.active {
 .presentation-search-controls button { flex-shrink: 0; }
 .reveal mark.presentation-search-match { background: #ffe88a; color: #172033; }
 .reveal mark.presentation-search-match.current { background: #ffbe55; outline: 2px solid #b76700; }
+
+/* modules/spreadsheets/styles.css */
+.presentation-spreadsheet-preview{display:flex;flex-direction:column;height:100%;min-height:120px;min-width:0;background:white;border:1px solid #ccd5e3;border-radius:8px;overflow:hidden;color:#202938}
+.presentation-spreadsheet-preview iframe{display:block;width:100%;flex:1;min-height:0;border:0;margin:0;max-width:none;max-height:none}
+.presentation-spreadsheet-actions{display:flex;gap:14px;align-items:center;padding:8px 12px;background:#f5f7fa;font:14px Arial,sans-serif}
+.presentation-spreadsheet-actions strong{margin-right:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.presentation-spreadsheet-actions button,.presentation-spreadsheet-overlay>button{font:inherit;padding:6px 10px;border:1px solid #c8d2e3;border-radius:6px;background:white;color:#283780;cursor:pointer}
+.presentation-spreadsheet-overlay{position:fixed;inset:2vh 2vw;z-index:100000;background:#f5f7fa;box-shadow:0 0 0 100vmax #0008;display:flex;flex-direction:column;padding:12px;gap:10px;border-radius:12px}
+.presentation-spreadsheet-overlay>button{align-self:flex-end;font-size:16px}
+.presentation-spreadsheet-overlay>.presentation-spreadsheet-preview{flex:1;min-height:0}
+.reveal .presentation-placed-image>.presentation-spreadsheet-preview{pointer-events:auto;box-sizing:border-box;width:100%;height:100%}
+.reveal .presentation-asset-layer.editing .presentation-spreadsheet-preview{pointer-events:none}
+.reveal.overview .presentation-spreadsheet-preview iframe{pointer-events:none}
+.presentation-media-sheet-preview{display:grid;place-items:center;min-height:100px;font:bold 32px Arial;color:#20734c}
+@media print{.presentation-spreadsheet-actions button{display:none}.presentation-spreadsheet-preview{break-inside:avoid}}
+
+.presentation-spreadsheet-overlay{font-family:Arial,sans-serif}
+.presentation-spreadsheet-actions a{color:#3973bc;text-decoration:none;white-space:nowrap}
+.presentation-spreadsheet-actions button,.presentation-spreadsheet-overlay>button{user-select:none;-webkit-user-select:none}
 
 /* modules/tasks/styles.css */
 .reveal .presentation-task {

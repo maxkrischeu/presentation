@@ -1,0 +1,14 @@
+{
+  "id": "powerpoint",
+  "formats": {
+    "pptx": {
+      "reference-doc": "modules/powerpoint/reference.pptx",
+      "slide-level": 2,
+      "incremental": false,
+      "filters": [
+        {"at": "pre-quarto", "path": "modules/powerpoint/content.lua"},
+        {"at": "post-quarto", "path": "modules/powerpoint/config.lua"}
+      ]
+    }
+  }
+}

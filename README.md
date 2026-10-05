@@ -54,3 +54,18 @@ benötigen Internet. Weitere Optionen stehen in der
 
 Medienbibliothek, Speichern ins Quarto-Dokument und PDF-/ZIP-Export erreichst du
 über das Dock und Menü der laufenden Vorschau.
+
+Eine bearbeitbare PowerPoint erzeugen:
+
+```sh
+quarto render template.qmd --to presentation-pptx
+```
+
+Texte, Tabellen, Formeln und Bilder bleiben einzelne Objekte. Quizfragen werden
+statisch ausgegeben. [Umfang und Grenzen](_extensions/presentation/modules/powerpoint/README.md).
+
+## Dateien
+
+Quarto erzeugt die HTML neben der QMD und die zugehörigen Ressourcen im
+`<name>_files`-Ordner. Unsere internen Hilfsdateien liegen unter `.quarto`.
+Zum Weitergeben außerhalb des Projekts den Präsentationsexport verwenden.
