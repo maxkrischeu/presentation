@@ -58,7 +58,7 @@ Presentation.register({
         if (!panel.edge) continue;
         let surfaces = handles.get(panel.id);
         if (!surfaces) {
-          surfaces = [0, 1].map(() => {
+          surfaces = [0].map(() => {
             const handle = document.createElement("div");
             handle.className = "presentation-edge-grip";
             handle.dataset.edgePanel = panel.id;
@@ -90,25 +90,21 @@ Presentation.register({
         const side = panel.edge.side;
         const stage = panel.edge.viewport();
         const bounds = element?.getBoundingClientRect();
-        const browserEdge = side === "left" ? 0 : innerWidth;
         const slideEdge = side === "left" ? stage.left : stage.right;
-        // Closed: accept both the browser edge and the slide edge in letterbox
-        // layouts. Open: move the grip to the panel's inner edge for closing.
+        // Keep one grip at the slide edge, including letterboxed layouts.
+        // Open: move it to the panel's inner edge for closing.
         const moving = open || (bounds && (side === "left"
           ? bounds.right > stage.left + 1 : bounds.left < stage.right - 1));
         const edges = moving ? [side === "left" ? bounds.right : bounds.left] :
-          Math.abs(browserEdge - slideEdge) > 40 ? [browserEdge, slideEdge] : [browserEdge];
-        // Keep the captured surface alive when starting at the slide edge.
-        const ordered = gesture?.panel === panel
-          ? [gesture.handle, ...surfaces.filter(handle => handle !== gesture.handle)] : surfaces;
-        ordered.forEach((handle, index) => {
+          [slideEdge];
+        surfaces.forEach((handle, index) => {
           handle.hidden = !visible || index >= edges.length;
           if (handle.hidden) return;
           const boundary = edges[index];
           const left = Math.max(0, Math.min(innerWidth - 36,
             moving ? boundary - 18 : side === "left" ? boundary : boundary - 36));
           Object.assign(handle.style, {
-            left: `${left}px`, top: "0px", height: `${innerHeight}px`,
+            left: `${left}px`, top: `${stage.top}px`, height: `${stage.height}px`,
           });
           handle.dataset.edgeSide = side;
           handle.classList.toggle("is-open", open);
