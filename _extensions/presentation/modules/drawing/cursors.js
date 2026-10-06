@@ -14,8 +14,8 @@ Presentation.drawingIcons = {
     for (const prefix of ['boardmarker','chalk']) cursors[`${prefix}-${name}.png`] = {url:svg(32,body),x:3,y:3};
   }
   const eraser = svg(44, `<circle cx="22" cy="22" r="20" fill="#ffffff" fill-opacity=".12" stroke="white" stroke-width="3"/><circle cx="22" cy="22" r="20" fill="none" stroke="#596579" stroke-width="1.3"/><g transform="translate(10 10)" fill="#ffffff" stroke="#596579" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${Presentation.drawingIcons.eraser}</g>`);
-  // The pixel engine erases a circle offset by its radius from the input point.
-  cursors['sponge.png'] = {url:eraser,x:2,y:2};
+  // Both tools use the cursor centre as the input point.
+  cursors['sponge.png'] = {url:eraser,x:22,y:22};
   cursors['stroke-sponge.png'] = {url:eraser,x:22,y:22};
   Presentation.drawingCursors = cursors;
 })();

@@ -215,7 +215,12 @@ html.print-pdf .reveal .slides section.presentation-slide {
   position: fixed;
   z-index: 20;
   pointer-events: none;
-  box-shadow: 0 0 0 100vmax #000;
+
+}
+.presentation-letterbox-bar {
+  position: fixed;
+  background: #000;
+  pointer-events: none;
 }
 .presentation-letterbox[hidden] {
   display: none;

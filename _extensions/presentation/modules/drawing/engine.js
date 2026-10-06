@@ -1609,11 +1609,15 @@
       var xOffset = drawingCanvas[mode].xOffset;
       var yOffset = drawingCanvas[mode].yOffset;
 
+      // Legacy erase events store the circle's top-left corner. Convert only
+      // new input so saved sessions, lasso masks and exports retain their geometry.
+      var eraseX = x - eraser.radius / scale;
+      var eraseY = y - eraser.radius / scale;
       recordEvent({
         type: "erase",
         radius: eraser.radius / scale,
-        x,
-        y,
+        x: eraseX,
+        y: eraseY,
       });
 
       if (
@@ -1622,7 +1626,7 @@
         x * scale + xOffset < drawingCanvas[mode].width &&
         y * scale + yOffset < drawingCanvas[mode].height
       ) {
-        eraseWithSponge(ctx, x * scale + xOffset, y * scale + yOffset);
+        eraseWithSponge(ctx, eraseX * scale + xOffset, eraseY * scale + yOffset);
       }
     }
 
@@ -1928,8 +1932,8 @@
                 timestamp: Date.now() - slideStart,
                 mode,
                 board,
-                x: (mouseX - xOffset) / scale,
-                y: (mouseY - yOffset) / scale,
+                x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+                y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
               };
               document.dispatchEvent(message);
             }
@@ -1977,8 +1981,8 @@
               timestamp: Date.now() - slideStart,
               mode,
               board,
-              x: (mouseX - xOffset) / scale,
-              y: (mouseY - yOffset) / scale,
+              x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+              y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
             };
             document.dispatchEvent(message);
           } else {
@@ -2045,8 +2049,8 @@
               timestamp: Date.now() - slideStart,
               mode,
               board,
-              x: (mouseX - xOffset) / scale,
-              y: (mouseY - yOffset) / scale,
+              x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+              y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
             };
             document.dispatchEvent(message);
           }

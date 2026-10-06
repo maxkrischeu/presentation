@@ -202,6 +202,7 @@ Presentation.register({
     window.addEventListener("blur", () => finish(true));
     const resize = () => { finish(true); place(); };
     window.addEventListener("resize", resize);
+    window.addEventListener("presentationviewportchange", track);
     document.addEventListener("fullscreenchange", resize);
     document.addEventListener("webkitfullscreenchange", resize);
     window.visualViewport?.addEventListener("resize", resize);

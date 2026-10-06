@@ -448,7 +448,15 @@ Presentation.factories.viewport = function (context) {
   mask.className = "presentation-letterbox";
   mask.setAttribute("aria-hidden", "true");
   mask.hidden = true;
+  // Separate bars avoid a huge box-shadow layer during Safari fullscreen compositing.
+  const bars = Array.from({length: 4}, () => {
+    const bar = document.createElement("div");
+    bar.className = "presentation-letterbox-bar";
+    mask.append(bar);
+    return bar;
+  });
   document.body.append(mask);
+  let lastGeometry = "";
   const place = () => {
     mask.hidden = document.documentElement.classList.contains("print-pdf");
     if (mask.hidden) return;
@@ -456,6 +464,11 @@ Presentation.factories.viewport = function (context) {
     // the canvas clipped to a thumbnail after returning to a slide.
     const viewport = deck.getRevealElement().getBoundingClientRect();
     const ratio = deck.getConfig().width / deck.getConfig().height;
+    if (![viewport.width, viewport.height, ratio].every(Number.isFinite) ||
+        viewport.width <= 0 || viewport.height <= 0 || ratio <= 0) {
+      mask.hidden = true;
+      return;
+    }
     const width = Math.min(viewport.width, viewport.height * ratio);
     const height = width / ratio;
     const left = viewport.left + (viewport.width - width) / 2;
@@ -496,13 +509,56 @@ Presentation.factories.viewport = function (context) {
       width: `${rect.width}px`,
       height: `${rect.height}px`,
     });
+    const edges = [
+      [0, 0, innerWidth, Math.max(0, top)],
+      [0, rect.bottom, innerWidth, bottom],
+      [0, top, Math.max(0, left), height],
+      [rect.right, top, right, height],
+    ];
+    bars.forEach((bar, i) => {
+      const [x, y, w, h] = edges[i];
+      Object.assign(bar.style, {left: `${x}px`, top: `${y}px`, width: `${w}px`, height: `${h}px`});
+    });
+    const geometry = [left, top, width, height, innerWidth, innerHeight].join(",");
+    if (geometry !== lastGeometry) {
+      lastGeometry = geometry;
+      window.dispatchEvent(new Event("presentationviewportchange"));
+    }
   };
+  // Coalesce events and let Reveal finish its layout before placing fixed UI.
+  let frame = 0;
+  const schedule = () => {
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      deck.layout();
+      place();
+    });
+  };
+  let settleTimers = [];
+  const settle = () => {
+    settleTimers.forEach(clearTimeout);
+    schedule();
+    // Native fullscreen transitions can complete after their initial DOM event.
+    settleTimers = [100, 300, 700].map(delay => setTimeout(schedule, delay));
+  };
+  const observer = new ResizeObserver(schedule);
+  observer.observe(deck.getRevealElement());
   deck.on("resize", place);
   deck.on("overviewshown", place);
   deck.on("overviewhidden", () => requestAnimationFrame(place));
-  window.addEventListener("resize", () => requestAnimationFrame(place));
+  window.addEventListener("resize", schedule);
+  window.addEventListener("scroll", schedule, {passive: true});
+  window.visualViewport?.addEventListener("resize", schedule);
+  window.visualViewport?.addEventListener("scroll", schedule);
+  for (const name of ["fullscreenchange", "webkitfullscreenchange"])
+    document.addEventListener(name, settle);
+  window.addEventListener("pageshow", settle);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) settle();
+  });
   place();
-  requestAnimationFrame(place);
+  schedule();
 };
 
 ;
@@ -745,6 +801,7 @@ Presentation.mountDock = function (context) {
       place();
     });
   window.addEventListener("resize", place);
+  window.addEventListener("presentationviewportchange", place);
   document.body.append(root);
   update();
   place();
@@ -1074,8 +1131,8 @@ Presentation.drawingIcons = {
     for (const prefix of ['boardmarker','chalk']) cursors[`${prefix}-${name}.png`] = {url:svg(32,body),x:3,y:3};
   }
   const eraser = svg(44, `<circle cx="22" cy="22" r="20" fill="#ffffff" fill-opacity=".12" stroke="white" stroke-width="3"/><circle cx="22" cy="22" r="20" fill="none" stroke="#596579" stroke-width="1.3"/><g transform="translate(10 10)" fill="#ffffff" stroke="#596579" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${Presentation.drawingIcons.eraser}</g>`);
-  // The pixel engine erases a circle offset by its radius from the input point.
-  cursors['sponge.png'] = {url:eraser,x:2,y:2};
+  // Both tools use the cursor centre as the input point.
+  cursors['sponge.png'] = {url:eraser,x:22,y:22};
   cursors['stroke-sponge.png'] = {url:eraser,x:22,y:22};
   Presentation.drawingCursors = cursors;
 })();
@@ -2879,11 +2936,15 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
       var xOffset = drawingCanvas[mode].xOffset;
       var yOffset = drawingCanvas[mode].yOffset;
 
+      // Legacy erase events store the circle's top-left corner. Convert only
+      // new input so saved sessions, lasso masks and exports retain their geometry.
+      var eraseX = x - eraser.radius / scale;
+      var eraseY = y - eraser.radius / scale;
       recordEvent({
         type: "erase",
         radius: eraser.radius / scale,
-        x,
-        y,
+        x: eraseX,
+        y: eraseY,
       });
 
       if (
@@ -2892,7 +2953,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
         x * scale + xOffset < drawingCanvas[mode].width &&
         y * scale + yOffset < drawingCanvas[mode].height
       ) {
-        eraseWithSponge(ctx, x * scale + xOffset, y * scale + yOffset);
+        eraseWithSponge(ctx, eraseX * scale + xOffset, eraseY * scale + yOffset);
       }
     }
 
@@ -3198,8 +3259,8 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
                 timestamp: Date.now() - slideStart,
                 mode,
                 board,
-                x: (mouseX - xOffset) / scale,
-                y: (mouseY - yOffset) / scale,
+                x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+                y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
               };
               document.dispatchEvent(message);
             }
@@ -3247,8 +3308,8 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
               timestamp: Date.now() - slideStart,
               mode,
               board,
-              x: (mouseX - xOffset) / scale,
-              y: (mouseY - yOffset) / scale,
+              x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+              y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
             };
             document.dispatchEvent(message);
           } else {
@@ -3315,8 +3376,8 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
               timestamp: Date.now() - slideStart,
               mode,
               board,
-              x: (mouseX - xOffset) / scale,
-              y: (mouseY - yOffset) / scale,
+              x: (mouseX - xOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
+              y: (mouseY - yOffset - (eraserMode === "pixel" ? eraser.radius : 0)) / scale,
             };
             document.dispatchEvent(message);
           }
@@ -4822,6 +4883,7 @@ Presentation.register({
     window.addEventListener("blur", () => finish(true));
     const resize = () => { finish(true); place(); };
     window.addEventListener("resize", resize);
+    window.addEventListener("presentationviewportchange", track);
     document.addEventListener("fullscreenchange", resize);
     document.addEventListener("webkitfullscreenchange", resize);
     window.visualViewport?.addEventListener("resize", resize);

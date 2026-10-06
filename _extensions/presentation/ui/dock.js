@@ -93,6 +93,7 @@ Presentation.mountDock = function (context) {
       place();
     });
   window.addEventListener("resize", place);
+  window.addEventListener("presentationviewportchange", place);
   document.body.append(root);
   update();
   place();
