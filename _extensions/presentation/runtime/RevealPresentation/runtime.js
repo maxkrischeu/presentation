@@ -1616,7 +1616,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
     var lastX = null;
     var lastY = null;
 
-    var eraserMode = "pixel";
+    var eraserMode = "stroke";
     var strokeId = null;
     var strokeSequence = 0;
     var strokeSession =
