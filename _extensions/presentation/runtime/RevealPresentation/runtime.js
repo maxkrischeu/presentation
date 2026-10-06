@@ -3109,13 +3109,14 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
      ** User interface
      ******************************************************************/
 
+    let activePenCanvas = null;
     function setupCanvasEvents(canvas) {
-      // TODO: check all touchevents
+      // Ignore incidental finger contacts during an active Pencil stroke.
       canvas.addEventListener(
         "touchstart",
         function (evt) {
           evt.preventDefault();
-          //console.log("Touch start");
+          if (penId !== null) return;
           if (!readOnly && evt.target.getAttribute("data-chalkboard") == mode) {
             var scale = drawingCanvas[mode].scale;
             var xOffset = drawingCanvas[mode].xOffset;
@@ -3148,7 +3149,7 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
         "touchmove",
         function (evt) {
           evt.preventDefault();
-          //console.log("Touch move");
+          if (penId !== null) return;
           if (drawing || erasing) {
             var scale = drawingCanvas[mode].scale;
             var xOffset = drawingCanvas[mode].xOffset;
@@ -3211,13 +3212,14 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
         "touchend",
         function (evt) {
           evt.preventDefault();
+          if (penId !== null) return;
           stopDrawing();
           stopErasing();
         },
         false,
       );
 
-      canvas.addEventListener("mousedown", function (evt) {
+      function inputDown(evt) {
         evt.preventDefault();
         if (!readOnly && evt.target.getAttribute("data-chalkboard") == mode) {
           //console.log( "mousedown: " + evt.button );
@@ -3256,9 +3258,9 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
             );
           }
         }
-      });
+      }
 
-      canvas.addEventListener("mousemove", function (evt) {
+      function inputMove(evt) {
         evt.preventDefault();
         //console.log("Mouse move");
 
@@ -3319,9 +3321,9 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
             document.dispatchEvent(message);
           }
         }
-      });
+      }
 
-      canvas.addEventListener("mouseup", function (evt) {
+      function inputUp(evt) {
         evt.preventDefault();
         if (color[mode] >= 0) {
           changeCursor(drawingCanvas[mode].canvas, pens[mode][color[mode]]);
@@ -3330,12 +3332,57 @@ Presentation.createDrawingHold = function ({onShape, onResume}) {
           stopDrawing();
           stopErasing();
         }
+      }
+
+      // Sidecar may deliver Pencil input as native pen pointers without a
+      // compatibility mouse stream. Keep mouse/touch fallback unchanged.
+      let penId = null;
+      function finishPen(cancel) {
+        if (penId === null) return;
+        const id = penId;
+        penId = null;
+        activePenCanvas = null;
+        stopDrawing(cancel);
+        stopErasing();
+        if (canvas.hasPointerCapture(id)) canvas.releasePointerCapture(id);
+        if (color[mode] >= 0) changeCursor(canvas, pens[mode][color[mode]]);
+      }
+      canvas.addEventListener("pointerdown", evt => {
+        if (evt.pointerType !== "pen" || !evt.isPrimary || readOnly ||
+            evt.target.getAttribute("data-chalkboard") != mode) return;
+        finishPen(true);
+        // Finalize any interrupted compatibility stroke before starting anew.
+        stopDrawing(true); stopErasing();
+        penId = evt.pointerId;
+        activePenCanvas = canvas;
+        inputDown(evt);
+        try { canvas.setPointerCapture(penId); } catch (_) { /* Detached/cancelled pointer. */ }
       });
+      canvas.addEventListener("pointermove", evt => {
+        if (evt.pointerId !== penId) return;
+        if (!evt.buttons) { finishPen(false); return; }
+        inputMove(evt);
+      });
+      canvas.addEventListener("pointerup", evt => {
+        if (evt.pointerId !== penId) return;
+        evt.preventDefault(); finishPen(false);
+      });
+      for (const name of ["pointercancel", "lostpointercapture"])
+        canvas.addEventListener(name, evt => {
+          if (evt.pointerId === penId) finishPen(true);
+        });
+      window.addEventListener("blur", () => finishPen(true));
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) finishPen(true);
+      });
+      canvas.addEventListener("mousedown", evt => { if (penId === null) inputDown(evt); });
+      canvas.addEventListener("mousemove", evt => { if (penId === null) inputMove(evt); });
+      canvas.addEventListener("mouseup", evt => { if (penId === null) inputUp(evt); });
     }
 
     window.addEventListener("mouseup", () => { stopDrawing(); stopErasing(); });
-    window.addEventListener("touchend", () => { stopDrawing(); stopErasing(); });
-    window.addEventListener("touchcancel", () => { stopDrawing(true); stopErasing(); });
+    window.addEventListener("touchend", () => { if (!activePenCanvas) { stopDrawing(); stopErasing(); } });
+    window.addEventListener("touchcancel", () => { if (!activePenCanvas) { stopDrawing(true); stopErasing(); } });
     window.addEventListener("blur", () => { stopDrawing(true); stopErasing(); });
 
     // Drawing coordinates remain CSS pixels; only the backing bitmap grows.

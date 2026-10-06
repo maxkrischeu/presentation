@@ -7,3 +7,5 @@ Lasso editing uses the same stroke IDs, preserves pixel erasures as translated p
 Drawing, erasing, clearing and lasso movement share bounded per-slide/per-board histories. Dock buttons and keyboard shortcuts invoke undo/redo.
 
 Drawing surfaces are keyed by slide, independent of fragments. Loading older fragment-scoped sessions consolidates their event streams.
+
+Native pen pointers share the mouse drawing primitives, with pointer capture and cleanup on cancellation, capture loss, focus loss and hidden documents. Legacy mouse/touch input remains available; incidental finger releases do not interrupt an active pen stroke.
