@@ -13,6 +13,8 @@ Gelb, Rot, Blau in der finalen Antwortreihenfolge. Standard: `false`.
 `cards.css` reserviert rechts im Antwortfeld Platz für Karte und Auswahlzeichen.
 Lückentexte und Fragen mit mehr als vier Antworten bleiben ohne Karten.
 
-`layout="image"` zeigt zunächst Fragetext, dann Bildanker/Inline-Bilder und
-danach Antworten; ohne zusätzlichen Text beginnt es mit dem Bild.
+Auswahlfragen blenden Inhaltsblöcke in ihrer QMD-Reihenfolge ein, einschließlich
+freier Bildanker und Inline-Bilder. Das gilt mit und ohne `layout="image"`.
+Antwortlisten erhalten einen Schritt pro Antwort; Container ohne Antwortlisten
+bleiben gemeinsame Schritte. Die Bedienelemente erscheinen mit der letzten Antwort.
 Textantworten erhalten getrennte Nummern- und Textspalten für bündige Folgezeilen.

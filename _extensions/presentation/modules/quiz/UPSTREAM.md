@@ -2,7 +2,7 @@ Source: https://github.com/parmsam/quarto-quiz
 Revision: 3f24a8a7022bc8ef149c279a5a88f188b2f39af7
 
 Local adaptations: keyboard registration delegated to Presentation; allowNumberKeys respects false.
-Quiz slides automatically reveal the question, then each answer as native Reveal fragments; Check/Again/Reset and feedback share the last answer step.
+Choice quiz slides reveal authored content blocks and individual answers in QMD order as native Reveal fragments; Check/Again/Reset and feedback share the last answer step.
 
 Multiple-answer checks evaluate and mark only selected answers, without revealing unselected answers. Changing selection clears stale feedback.
 
@@ -19,6 +19,7 @@ answers. Markers reserve their own space inside the answer and do not depend
 on selection, correctness, retry or score. Cloze and larger answer sets omit them.
 
 Text answers use separate number and text columns for hanging indentation,
-including multi-paragraph answers. Question-image layouts reveal prompt text,
-then question images (including free-image source anchors), then answer rows.
+including multi-paragraph answers. Choice questions reveal blocks in authored
+QMD order, including free-image source anchors, interleaved prose and answer
+lists. Containers without answer lists stay atomic; lists reveal answer by answer.
 Controls still share the final answer's step. Inert resource entries remain excluded.

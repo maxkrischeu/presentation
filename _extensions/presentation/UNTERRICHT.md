@@ -250,10 +250,13 @@ benennen die Varianten, ohne unbeabsichtigt die Lösung zu verraten.
 
 `layout="image"` rückt Antworten nach unten. Das Fragebild muss selbst
 eingebunden und passend platziert werden; die Option erzeugt kein Bild.
-Zusätzlicher Aufgabentext erscheint zuerst, danach das Fragebild und anschließend
-die Antworten. Ohne zusätzlichen Text wird zuerst das Bild eingeblendet.
-Das gilt auch für frei platzierte `.image`-Blöcke; zusätzliche `.fragment`-Klassen
-sind nicht nötig. Folgezeilen einer Textantwort beginnen unter dem Antworttext.
+Die Einblendungen folgen der Reihenfolge der Blöcke in der QMD: Steht Text vor
+dem Bild, erscheint er zuerst; steht das Bild zuerst, wird es zuerst eingeblendet.
+Weitere Absätze, Bilder und Antworten folgen an ihrer jeweiligen Quellposition.
+Das gilt für Auswahlfragen mit und ohne Bildlayout, auch für frei platzierte
+`.image`-Blöcke. Zusätzliche `.fragment`-Klassen sind nicht nötig. Zusammengehörige
+Inhalte in einem gemeinsamen Container werden als Block eingeblendet.
+Folgezeilen einer Textantwort beginnen unter dem Antworttext.
 
 ### Lückentext / Begriffe zuordnen
 

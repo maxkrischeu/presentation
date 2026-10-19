@@ -369,11 +369,12 @@ Punkte; `subtitle="false"` blendet den Untertitel aus. Ergebnisse unterstützen
 Die bisherigen Zusatzklassen und `data-quiz-*`-Attribute bleiben kompatibel;
 explizite neue Optionen haben Vorrang. `.correct` und `.answer` bleiben unverändert.
 
-Bei `layout="image"` erscheinen zusätzlicher Fragetext, Fragebild und Antworten
-nacheinander. Frei platzierte Bilder folgen derselben Reihenfolge. Ohne
-zusätzlichen Fragetext beginnt die Einblendung mit dem Bild. Nummer und Text
-einer Antwort stehen in getrennten Spalten, damit Folgezeilen bündig unter
-dem Antworttext beginnen.
+Bei Auswahlfragen folgen die Einblendungen der Reihenfolge der Inhaltsblöcke
+in der QMD – auch bei `layout="image"` und frei platzierten Bildern. Ein Bild
+vor einem Absatz erscheint vor dem Absatz; nachfolgender Text und Antworten
+folgen an ihrer Quellposition. Gemeinsame Container bilden einen Schritt;
+Antwortlisten werden weiterhin Antwort für Antwort eingeblendet. Nummer und
+Antworttext stehen in getrennten Spalten für bündige Folgezeilen.
 
 ### Antwortkarten im Quiz
 
