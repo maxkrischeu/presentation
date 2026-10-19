@@ -3,6 +3,10 @@
 Interaktive Quarto-Präsentationen mit Quiz, Aufgabenboxen, Tafel und Medienbibliothek.
 Benötigt **Quarto ab 1.10**.
 
+Für die Unterrichtserstellung mit KI-Agents oder von Hand:
+[Leitfaden mit QMD-Bausteinen](_extensions/presentation/UNTERRICHT.md).
+`AGENTS.md` verweist Agents automatisch auf diesen Einstieg.
+
 ## Neues Projekt
 
 ```sh

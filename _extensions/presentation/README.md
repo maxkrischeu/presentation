@@ -1,5 +1,9 @@
 # Presentation – V2
 
+**Unterricht erstellen:** [Leitfaden für Menschen und KI-Agents](UNTERRICHT.md)
+mit kopierbaren Beispielen für Folien, Quiz, Aufgabenboxen und Medien.
+Die installierte Extension muss dafür nicht verändert werden.
+
 **PowerPoint:** `quarto render praesentation.qmd --to presentation-pptx`
 erzeugt im Presentation-Projekt eine zusätzliche bearbeitbare PPTX.
 [Umfang, Gestaltung und Grenzen](modules/powerpoint/README.md).
