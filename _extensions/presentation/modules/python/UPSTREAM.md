@@ -11,6 +11,12 @@ Presentation output adapter initializes /output and refreshes file previews afte
 
 Editor and terminal default to an equal 50/50 split.
 
+The adapter exposes idempotent open and delayed editor focus, cancelling pending
+focus on close. Sections marked `.python` automatically activate the workspace
+through Presentation's mode controller and close it on departure; one editor
+and kernel persist between slides. Marked slides get navigation controls. The
+bundled upstream runtime remains unchanged by this slide integration.
+
 - Terminal startup clears and homes the cursor to row 1 (`ESC[H`), rather than
   row 2; removes the temporary `q`. Editor/terminal first-line spacing is aligned
   by the integration stylesheet.

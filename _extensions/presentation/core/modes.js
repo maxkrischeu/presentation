@@ -59,10 +59,25 @@ Presentation.mountModes = function (context) {
     }
     changed();
   }
+  // Explicit activation is idempotent and exits another mode through its public
+  // contract. Automatic slide behaviours must not toggle an open mode closed.
+  function activate(id) {
+    const mode = definitions.get(id);
+    if (!mode) throw new Error(`Unknown presentation mode: ${id}`);
+    closePanels();
+    if (current() !== id) {
+      definitions.get(current())?.exit();
+      if (current() !== "standard") return false;
+      mode.enter();
+    }
+    changed();
+    return current() === id;
+  }
   Presentation.modes = {
     current,
     exit,
     invoke,
+    activate,
     closePanel,
     closePanels,
     panelOpen,

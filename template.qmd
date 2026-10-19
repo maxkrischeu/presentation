@@ -279,9 +279,10 @@ Hier steht eine Notiz nur für die Referentenansicht. Sie erscheint nicht auf de
 Die Verblassdauer des Laserpointers wird im Projekt-YAML in Sekunden eingestellt.
 :::
 
-## Python direkt ausprobieren {fragments="off"}
+## Python direkt ausprobieren {.python}
 
-Öffne mit **T** die Python-Konsole und führe diesen Code dort aus:
+Die Python-Umgebung öffnet sich auf dieser Folie automatisch. Probiere diesen
+Code im Editor aus; dieser Folientext ist bei geschlossener Umgebung sichtbar:
 
 ```python
 zahlen = [1, 2, 3, 4]
@@ -292,6 +293,8 @@ Ergebnis: **10**. Mit **Enter** verlässt du den Modus, wenn kein Eingabefeld ak
 
 ::: {.notes}
 Die Python-Laufzeit lädt beim ersten Öffnen im Browser und benötigt dafür Internet.
+Auf .python-Folien wird der Editor automatisch fokussiert. Die Pfeile der Python-
+Werkzeugleiste wechseln die Folie; Code und Variablen bleiben dabei erhalten.
 Grafiken und Dateien erscheinen über die Ausgabeansicht. Der Kernelzustand wird
 nicht in einen Sitzungsexport übernommen. Der Codeblock auf der Folie wird nicht
 beim Rendern ausgeführt.

@@ -81,6 +81,19 @@ quarto render meine-praesentation.qmd
 
 `quarto preview` stellt auch „In Quelle speichern“ und PDF-/ZIP-Sitzungsexporte bereit. Eine statisch gehostete HTML-Präsentation funktioniert ebenfalls; Schreiben in lokale QMD-Dateien und serverseitige Sitzungsexporte brauchen die lokale Vorschau. Python-Pakete werden bei Bedarf aus dem Internet geladen.
 
+## Python als Folientyp
+
+```markdown
+## Python ausprobieren {.python}
+```
+
+Die Arbeitsumgebung öffnet sich beim Betreten automatisch und fokussiert den
+Code-Editor. Beim Verlassen schließt sie sich wieder. Code und Python-Zustand
+bleiben zwischen diesen Folien erhalten. Vor-/Zurück-Pfeile in der Werkzeugleiste
+wechseln die Folie; „Beenden“ schließt die Umgebung. `T` bleibt manuell verfügbar.
+Nur der erste Start lädt die Laufzeit und Pakete aus dem Internet.
+[Details und Verhalten beim Export](modules/python/README.md).
+
 ## Platz in der Kopfzeile
 
 Die Kopfzeilenmitte nutzt freien Platz zwischen den Seitenfeldern und bleibt

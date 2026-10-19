@@ -78,7 +78,7 @@ function Pandoc(doc)
     if block.t=='Header' and block.level<=2 then
       flush()
       slideMode=setting(block) or mode
-      skip=block.level==1 or has(block,'quiz-question') or has(block,'quiz-intro') or has(block,'quiz-results')
+      skip=block.level==1 or has(block,'quiz-question') or has(block,'quiz-intro') or has(block,'quiz-results') or has(block,'python')
       output:insert(block)
     elseif block.t=='HorizontalRule' then
       flush();skip=false;slideMode=mode;output:insert(block)

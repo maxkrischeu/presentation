@@ -392,6 +392,27 @@ ist `fragments="off"` häufig sinnvoll.
 
 ## 6. Weitere vorhandene Möglichkeiten
 
+### Eine Folie direkt als Python-Arbeitsumgebung
+
+```markdown
+## Python ausprobieren {.python}
+```
+
+Die vorhandene Python-Umgebung öffnet sich automatisch beim Betreten; der
+Code-Editor erhält den Eingabefokus. Beim Verlassen schließt sie sich wieder.
+Vor-/Zurück-Pfeile in ihrer Werkzeugleiste wechseln die Folie. Mit „Beenden“
+kann man sie schließen, ohne die Folie zu verlassen; `T` funktioniert weiterhin.
+
+Code und Python-Variablen bleiben zwischen den Python-Folien erhalten. Es handelt
+sich um eine gemeinsame Umgebung, nicht um einen neuen Kernel je Folie. Beim
+ersten Öffnen werden Laufzeit und Pakete aus dem Internet geladen. Zusätzlicher
+Folientext ist bei geschlossener Umgebung und im statischen Export sichtbar;
+die Arbeitsumgebung selbst wird nicht als interaktive Oberfläche exportiert.
+Codeblöcke auf der Folie werden weder automatisch ausgeführt noch als Startcode
+in den Editor übernommen. Automatische Einblendungen sind hier ausgeschaltet.
+
+### Werkzeuge ohne eigenen Folientyp
+
 - **Zeichnen/Canvas und Tafel:** Freihand, Formenerkennung, Lasso, Radierer,
   Rückgängig und Wiederholen. Freiraum auf normalen Folien oder in Aufgabenboxen
   einplanen; keine zusätzliche Canvas-Implementierung nötig.

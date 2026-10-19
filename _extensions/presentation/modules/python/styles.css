@@ -230,6 +230,9 @@ html .reveal .drop.active {
 .presentation-python-controls[hidden] {
   display: none !important;
 }
+.presentation-python-controls button[hidden] {
+  display: none !important;
+}
 
 .presentation-dock.presentation-python {
   z-index: 160;

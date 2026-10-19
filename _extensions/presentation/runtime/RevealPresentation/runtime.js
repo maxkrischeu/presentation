@@ -243,10 +243,25 @@ Presentation.mountModes = function (context) {
     }
     changed();
   }
+  // Explicit activation is idempotent and exits another mode through its public
+  // contract. Automatic slide behaviours must not toggle an open mode closed.
+  function activate(id) {
+    const mode = definitions.get(id);
+    if (!mode) throw new Error(`Unknown presentation mode: ${id}`);
+    closePanels();
+    if (current() !== id) {
+      definitions.get(current())?.exit();
+      if (current() !== "standard") return false;
+      mode.enter();
+    }
+    changed();
+    return current() === id;
+  }
   Presentation.modes = {
     current,
     exit,
     invoke,
+    activate,
     closePanel,
     closePanels,
     panelOpen,
@@ -8161,17 +8176,23 @@ react-dom/cjs/react-dom.production.min.js:
   let deck,
     started = false,
     previousKeyboard,
+    slideMode = false,
+    focusObserver,
     rich = false,
     unread = false;
   const controls = document.createElement("div");
   controls.className = "presentation-python-controls";
   controls.hidden = true;
   const icons = {
+    prev: '<path d="m14 5-7 7 7 7"/>',
+    next: '<path d="m10 5 7 7-7 7"/>',
     run: '<path d="m7 4 13 8-13 8Z"/>',
     rich: '<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M12 4v16 M3 12h9"/>',
     done: '<path d="m4 12 5 5L20 6"/>',
   };
   for (const [action, label] of [
+    ["prev", "Previous Slide"],
+    ["next", "Next Slide"],
     ["run", "Run"],
     ["rich", "Rich Output"],
     ["done", "Done Python Console"],
@@ -8187,6 +8208,11 @@ react-dom/cjs/react-dom.production.min.js:
   plugin.controls = controls;
   function sync() {
     controls.hidden = !plugin.isActive();
+    for (const action of ["prev", "next"]) {
+      const button = controls.querySelector(`[data-python=${action}]`);
+      button.hidden = !slideMode;
+      button.disabled = !deck || (action === "prev" ? deck.isFirstSlide() : deck.isLastSlide());
+    }
     controls
       .querySelector("[data-python=rich]")
       .setAttribute("aria-pressed", String(rich));
@@ -8201,6 +8227,8 @@ react-dom/cjs/react-dom.production.min.js:
   controls.addEventListener("click", (event) => {
     const action = event.target.closest("[data-python]")?.dataset.python;
     if (action === "done") plugin.close();
+    if (action === "prev") deck.prev();
+    if (action === "next") deck.next();
     if (action === "run")
       document.querySelector(".drop .editor-actions button")?.click();
     if (action === "rich") {
@@ -8236,6 +8264,8 @@ react-dom/cjs/react-dom.production.min.js:
     Presentation.localize(controls);
   };
   plugin.close = () => {
+    focusObserver?.disconnect();
+    focusObserver = null;
     if (!plugin.isActive()) return;
     plugin.dropElement.classList.remove("active");
     document
@@ -8246,10 +8276,10 @@ react-dom/cjs/react-dom.production.min.js:
     deck.configure({ keyboard: previousKeyboard });
     sync();
   };
-  plugin.toggleDrop = () => {
+  plugin.open = () => {
     if (!deck || document.documentElement.classList.contains("print-pdf"))
       return;
-    if (plugin.isActive()) return plugin.close();
+    if (plugin.isActive()) return;
     if (!started) {
       // Upstream's global shortcut listener uses a sentinel; Presentation owns input handling.
       const proxy = Object.create(deck);
@@ -8287,6 +8317,28 @@ react-dom/cjs/react-dom.production.min.js:
     sync();
     window.dispatchEvent(new Event("resize"));
   };
+  plugin.toggleDrop = () => plugin.isActive() ? plugin.close() : plugin.open();
+  plugin.setSlideMode = (value) => {
+    slideMode = value;
+    sync();
+  };
+  plugin.focusEditor = () => {
+    focusObserver?.disconnect();
+    const focus = () => {
+      if (!plugin.isActive()) return false;
+      const editor = document.querySelector('.drop .cm-content[contenteditable="true"]');
+      if (!editor) return false;
+      editor.focus({preventScroll: true});
+      focusObserver?.disconnect();
+      focusObserver = null;
+      return true;
+    };
+    if (focus() || !plugin.isActive()) return;
+    focusObserver = new MutationObserver(focus);
+    focusObserver.observe(document.querySelector(".drop-clip"), {
+      childList: true, subtree: true, attributes: true, attributeFilter: ["contenteditable"],
+    });
+  };
 })();
 
 ;
@@ -8298,6 +8350,23 @@ Presentation.register({
   interactiveOnly: true,
   setup(context) {
     const api = window.RevealDrop;
+    let slideOwned = false;
+    const followSlide = () => {
+      const automatic = !context.deck.isOverview() &&
+        context.deck.getCurrentSlide()?.classList.contains("python");
+      api.setSlideMode(!!automatic);
+      if (automatic) {
+        slideOwned = Presentation.modes.activate("python");
+        if (slideOwned) api.focusEditor();
+      } else if (slideOwned) {
+        slideOwned = false;
+        api.close();
+      }
+    };
+    for (const event of ["slidechanged", "overviewshown", "overviewhidden"])
+      context.deck.on(event, followSlide);
+    // Also handle a direct URL to a Python slide, after commands and modes mount.
+    Promise.resolve().then(() => Presentation.ready).then(followSlide, () => {});
     return {
       modes: [
         {
@@ -8306,7 +8375,7 @@ Presentation.register({
           label: "Python Console",
           menuOrder: 90,
           key: "T",
-          enter: api.toggleDrop,
+          enter: api.open,
           exit: api.close,
           isActive: () => api.isActive(),
           dockClass: "presentation-python",
