@@ -12,3 +12,8 @@ Multiple-choice overall feedback requires the exact correct set for green Correc
 
 
 Results use one bounded scrollable list, with a vertically centered total card. Live-only result sections are removed during quiz initialization in print-pdf mode, before framing and PDF pagination.
+
+Optional `quiz.cards` adds green/yellow/red/blue card markers to up to four
+choice answers in their final display order, including shuffled and image
+answers. Markers reserve their own space inside the answer and do not depend
+on selection, correctness, retry or score. Cloze and larger answer sets omit them.

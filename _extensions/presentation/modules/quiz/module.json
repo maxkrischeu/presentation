@@ -11,7 +11,8 @@
     "intro.css",
     "results.css",
     "cloze.css",
-    "image-answers.css"
+    "image-answers.css",
+    "cards.css"
   ],
   "plugins": [
     {
@@ -22,6 +23,7 @@
           "allowNumberKeys": false,
           "shuffleOptions": false,
           "includeScore": true,
+          "cards": false,
           "disableOnCheck": false,
           "defaultCorrect": "",
           "defaultIncorrect": "",

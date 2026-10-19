@@ -209,6 +209,7 @@ window.RevealQuiz = function () {
       settings.disableReset = options.disableReset || false;
 
       settings.shuffleOptions = options.shuffleOptions || false;
+      settings.cards = options.cards === true;
 
       settings.defaultCorrect =
         options.defaultCorrect || Presentation.t("Correct!");
@@ -424,6 +425,22 @@ window.RevealQuiz = function () {
             number.textContent = `${index + 1}. `;
             (option.querySelector(":scope > p") || option).prepend(number);
           });
+
+          // Cards identify the final displayed answer positions, never correctness.
+          // Do not repeat colors on questions that exceed the four physical cards.
+          if (settings.cards && options.length > 0 && options.length <= 4) {
+            const colors = ["green", "yellow", "red", "blue"];
+            const labels = ["Green answer card", "Yellow answer card", "Red answer card", "Blue answer card"];
+            options.forEach((option, index) => {
+              const card = document.createElement("span");
+              card.className = "quiz-answer-card";
+              card.dataset.cardColor = colors[index];
+              card.setAttribute("role", "img");
+              card.setAttribute("aria-label", Presentation.t(labels[index]));
+              option.classList.add("quiz-option-has-card");
+              option.append(card);
+            });
+          }
 
           // Native Reveal fragments: question first, then answers in display order.
           // Controls and feedback share the final answer's step (also on rewind).

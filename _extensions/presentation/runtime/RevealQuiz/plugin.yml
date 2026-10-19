@@ -5,6 +5,7 @@ config:
     allowNumberKeys: false
     shuffleOptions: false
     includeScore: true
+    cards: false
     disableOnCheck: false
     defaultCorrect: ""
     defaultIncorrect: ""

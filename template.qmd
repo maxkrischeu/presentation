@@ -246,6 +246,9 @@ Nur die vollständig richtige Zuordnung erhält die volle Punktzahl.
 ::: {.notes}
 show="both" zeigt Gesamtpunktzahl und einzelne Fragen. show="total" zeigt nur
 die Gesamtpunktzahl; show="questions" nur die Fragenübersicht.
+Mit quiz.cards: true im Projekt- oder Dokument-YAML erscheinen bei Auswahlfragen
+bis vier Antworten rechts farbige Karten: Grün, Gelb, Rot und Blau. Die Symbole
+stehen für die Antwortposition, unabhängig von der richtigen Lösung.
 :::
 
 ## Zeichnen und Tafel {fragments="off"}

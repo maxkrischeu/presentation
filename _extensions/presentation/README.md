@@ -369,6 +369,21 @@ Punkte; `subtitle="false"` blendet den Untertitel aus. Ergebnisse unterstützen
 Die bisherigen Zusatzklassen und `data-quiz-*`-Attribute bleiben kompatibel;
 explizite neue Optionen haben Vorrang. `.correct` und `.answer` bleiben unverändert.
 
+### Antwortkarten im Quiz
+
+```yaml
+quiz:
+  cards: true
+```
+
+Im Projekt oder einzelnen Dokument aktivierbar; Standard ist `false`.
+Auswahlfragen mit höchstens vier Antworten zeigen rechts innerhalb jedes
+Antwortfelds eine mittig ausgerichtete Karte: **Grün, Gelb, Rot, Blau** in
+sichtbarer Antwortreihenfolge. Die Farbe kennzeichnet die Antwortposition,
+nicht deren Richtigkeit. Text-, Bildantworten und Mehrfachauswahl werden
+unterstützt. Lückentexte und Fragen mit mehr als vier Antworten bleiben ohne
+Symbole. Beim Prüfen und Wiederholen bleibt die Zuordnung bestehen.
+
 ### Einheitliche Medienblöcke
 
 ```markdown

@@ -278,6 +278,27 @@ Word-Eingabefeld.
 Neue Inhalte verwenden diese öffentliche Schreibweise, keine internen
 `data-quiz-*`-Attribute oder älteren Zusatzklassen.
 
+### Farbkarten zum Hochhalten
+
+Für vorbereitete grüne, gelbe, rote und blaue Antwortkarten im Projekt-YAML
+oder im YAML-Kopf einer einzelnen Präsentation aktivieren:
+
+```yaml
+quiz:
+  cards: true
+```
+
+Bei Auswahlfragen mit bis zu vier Antworten steht dann eine kleine Karte ganz
+rechts innerhalb jedes Antwortfelds, vertikal mittig. Die Zuordnung folgt der
+sichtbaren Reihenfolge: **1 Grün, 2 Gelb, 3 Rot, 4 Blau**. Sie ist unabhängig
+von der richtigen Antwort und bleibt beim Prüfen oder Wiederholen erhalten.
+Das gilt auch für Bildantworten und Mehrfachauswahl. Lückentexte und Fragen
+mit mehr als vier Antwortmöglichkeiten zeigen keine Kartensymbole.
+
+Ohne Angabe oder mit `cards: false` sind die Symbole aus. Eine einzelne QMD
+kann damit eine Projektvorgabe überschreiben. An den Fragen selbst ist nichts
+zu ändern; es werden keine zusätzlichen Antwortklicks oder Einblendungen erzeugt.
+
 ## 5. Bilder, Videos, Dokumente und interaktive Inhalte
 
 Medienpfade in der QMD sind relativ zur QMD, z. B. `assets/bild.svg` oder
