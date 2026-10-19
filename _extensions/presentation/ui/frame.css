@@ -25,6 +25,8 @@
 .presentation-header {
   top: 0;
   height: var(--presentation-header);
+  grid-template-columns: minmax(0, var(--presentation-header-side, 1fr))
+    minmax(0, 1fr) minmax(0, var(--presentation-header-side, 1fr));
 }
 .presentation-footer {
   bottom: 0;
@@ -51,7 +53,19 @@
   min-width: 0;
 }
 .presentation-header-center {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+}
+.presentation-header-text {
+  flex: 0 1 auto;
+}
+.presentation-header-number {
+  flex: 0 0 auto;
+  white-space: pre;
+  font-variant-numeric: tabular-nums;
 }
 .reveal .presentation-footer a {
   color: inherit;

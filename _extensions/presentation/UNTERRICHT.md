@@ -71,6 +71,8 @@ Schule und Einblendungsvorgaben erbt die QMD aus `_quarto.yml`. Kein Datum
 hinzufügen, wenn keines gewünscht ist; `date: today` setzt das aktuelle Datum.
 Ohne ausdrücklich gesetztes `presentation.header-text` wird `subtitle` für
 die Mitte der Kopfzeile verwendet.
+Die Mitte nutzt freien Platz zwischen den Seitenfeldern. Bei Platzmangel wird
+nur der Thementext gekürzt; eine aktivierte Foliennummer bleibt vollständig sichtbar.
 
 ## 2. Folien und Lehrkraftnotizen
 

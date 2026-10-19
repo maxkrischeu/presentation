@@ -102,7 +102,7 @@ function Meta(meta)
   local html = string.format([[<template id="presentation-frame-template" data-dock="%s" data-dock-items="%s" data-slide-number="%s" data-date-in-header="%s">
 <header class="presentation-header" aria-label="Kopfzeile">
   <div class="presentation-header-left">%s<span class="presentation-label">%s</span></div>
-  <div class="presentation-header-center presentation-label">%s</div>
+  <div class="presentation-header-center"><span class="presentation-header-text presentation-label">%s</span></div>
   <div class="presentation-header-right presentation-label">%s</div>
   <div class="presentation-progress" aria-hidden="true"><div class="presentation-progress-fill"></div></div>
 </header>

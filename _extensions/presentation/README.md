@@ -81,6 +81,13 @@ quarto render meine-praesentation.qmd
 
 `quarto preview` stellt auch „In Quelle speichern“ und PDF-/ZIP-Sitzungsexporte bereit. Eine statisch gehostete HTML-Präsentation funktioniert ebenfalls; Schreiben in lokale QMD-Dateien und serverseitige Sitzungsexporte brauchen die lokale Vorschau. Python-Pakete werden bei Bedarf aus dem Internet geladen.
 
+## Platz in der Kopfzeile
+
+Die Kopfzeilenmitte nutzt freien Platz zwischen den Seitenfeldern und bleibt
+geometrisch zentriert. Wenn der Platz trotzdem nicht reicht, wird nur der
+Thementext gekürzt; die aktivierte Foliennummer bleibt vollständig sichtbar.
+Der vollständige Kopfzeilentext bleibt als Tooltip erhalten.
+
 ## Institution und Website
 
 Ohne `institution` bleibt die Fußzeile rechts leer. Der Name ist frei wählbar.
