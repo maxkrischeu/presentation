@@ -144,6 +144,33 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Hanging answer text: continuation lines align with the text, not its number. */
+.reveal .quiz-question .quiz-options .quiz-text-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--quiz-option-number-width, 2ch) minmax(0, 1fr);
+  column-gap: 0.22em;
+  align-items: start;
+}
+.reveal .quiz-text-option > .quiz-option-number {
+  white-space: nowrap;
+}
+.reveal .quiz-option-text {
+  min-width: 0;
+}
+.reveal .quiz-option-text > :first-child { margin-top: 0; }
+.reveal .quiz-option-text > :last-child { margin-bottom: 0; }
+.reveal .quiz-multiple .quiz-options .quiz-text-option {
+  padding-inline-end: 2em;
+}
+.reveal .quiz-multiple .quiz-text-option.selected::after {
+  position: absolute;
+  right: 0.6em;
+  top: 50%;
+  transform: translateY(-50%);
+  float: none;
+}
+
 /* Answer surfaces own their text colors, including selection and assessment.
    Keep semantic emphasis without inheriting the slide's dark accent colors. */
 .reveal .quiz-question .option-button :is(strong, b, em, i, code, a),

@@ -369,6 +369,12 @@ Punkte; `subtitle="false"` blendet den Untertitel aus. Ergebnisse unterstützen
 Die bisherigen Zusatzklassen und `data-quiz-*`-Attribute bleiben kompatibel;
 explizite neue Optionen haben Vorrang. `.correct` und `.answer` bleiben unverändert.
 
+Bei `layout="image"` erscheinen zusätzlicher Fragetext, Fragebild und Antworten
+nacheinander. Frei platzierte Bilder folgen derselben Reihenfolge. Ohne
+zusätzlichen Fragetext beginnt die Einblendung mit dem Bild. Nummer und Text
+einer Antwort stehen in getrennten Spalten, damit Folgezeilen bündig unter
+dem Antworttext beginnen.
+
 ### Antwortkarten im Quiz
 
 ```yaml

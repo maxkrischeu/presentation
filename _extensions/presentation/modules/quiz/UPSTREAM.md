@@ -17,3 +17,8 @@ Optional `quiz.cards` adds green/yellow/red/blue card markers to up to four
 choice answers in their final display order, including shuffled and image
 answers. Markers reserve their own space inside the answer and do not depend
 on selection, correctness, retry or score. Cloze and larger answer sets omit them.
+
+Text answers use separate number and text columns for hanging indentation,
+including multi-paragraph answers. Question-image layouts reveal prompt text,
+then question images (including free-image source anchors), then answer rows.
+Controls still share the final answer's step. Inert resource entries remain excluded.

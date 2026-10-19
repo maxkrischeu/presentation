@@ -420,10 +420,21 @@ window.RevealQuiz = function () {
           // Number in final display order, including shuffled questions.
           options.forEach((option, index) => {
             option.parentElement.classList.add("quiz-options");
+            option.parentElement.style.setProperty("--quiz-option-number-width", `${String(options.length).length + 1}ch`);
             const number = document.createElement("span");
             number.className = "quiz-option-number";
             number.textContent = `${index + 1}. `;
-            (option.querySelector(":scope > p") || option).prepend(number);
+            if (slide.classList.contains("quiz-images")) {
+              (option.querySelector(":scope > p") || option).prepend(number);
+            } else {
+              // Separate the number from the answer so every wrapped line starts
+              // at the same text edge, preserving inline emphasis and paragraphs.
+              const text = document.createElement("div");
+              text.className = "quiz-option-text";
+              text.append(...option.childNodes);
+              option.classList.add("quiz-text-option");
+              option.append(number, text);
+            }
           });
 
           // Cards identify the final displayed answer positions, never correctness.
@@ -442,22 +453,35 @@ window.RevealQuiz = function () {
             });
           }
 
-          // Native Reveal fragments: question first, then answers in display order.
+          // Native Reveal fragments: prompt, question image, then answer order.
           // Controls and feedback share the final answer's step (also on rewind).
           const revealAt = (element, index) => {
             element.classList.add("fragment");
             element.dataset.fragmentIndex = String(index);
           };
-          Array.from(slide.children)
+          const prompt = Array.from(slide.children)
             .filter(
               (element) =>
-                !element.matches(
+                (element.matches("[data-presentation-image-step]") || !element.matches(
                   "h1,h2,h3,h4,h5,h6,ul,ol,aside,template,script,style,[hidden]",
-                ) && !element.querySelector(".option-button"),
-            )
-            .forEach((element) => revealAt(element, 0));
-          options.forEach((option, index) => revealAt(option, index + 1));
-          revealAt(cloneButtonContainer, options.length);
+                )) && !element.querySelector(".option-button"),
+            );
+          const questionImages = prompt.filter(element =>
+            element.matches("[data-presentation-image-step], .presentation-media-box") ||
+            element.querySelector("img, video, iframe, [data-presentation-image-step]"),
+          );
+          let answerStart = 1;
+          if (slide.classList.contains("quiz-image") && questionImages.length) {
+            const text = prompt.filter(element => !questionImages.includes(element));
+            text.forEach(element => revealAt(element, 0));
+            const imageStep = text.length ? 1 : 0;
+            questionImages.forEach(element => revealAt(element, imageStep));
+            answerStart = imageStep + 1;
+          } else {
+            prompt.forEach(element => revealAt(element, 0));
+          }
+          options.forEach((option, index) => revealAt(option, index + answerStart));
+          revealAt(cloneButtonContainer, options.length + answerStart - 1);
           // Feedback inherits the controls' fragment instead of adding a step.
           cloneFeedbackElement.setAttribute("role", "status");
 

@@ -250,6 +250,10 @@ benennen die Varianten, ohne unbeabsichtigt die Lösung zu verraten.
 
 `layout="image"` rückt Antworten nach unten. Das Fragebild muss selbst
 eingebunden und passend platziert werden; die Option erzeugt kein Bild.
+Zusätzlicher Aufgabentext erscheint zuerst, danach das Fragebild und anschließend
+die Antworten. Ohne zusätzlichen Text wird zuerst das Bild eingeblendet.
+Das gilt auch für frei platzierte `.image`-Blöcke; zusätzliche `.fragment`-Klassen
+sind nicht nötig. Folgezeilen einer Textantwort beginnen unter dem Antworttext.
 
 ### Lückentext / Begriffe zuordnen
 
