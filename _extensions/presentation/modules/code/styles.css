@@ -1,0 +1,32 @@
+.reveal pre > code.presentation-code-window {
+  max-height: var(--presentation-code-available) !important;
+}
+
+/* Print the viewport, never expand or shrink its full source text. The same
+   rule serves the live browser's print command and Reveal's PDF view. */
+@media print {
+  .reveal pre > code.presentation-code-window {
+    box-sizing: border-box !important;
+    width: var(--presentation-code-width, 100%) !important;
+    height: var(--presentation-code-height, auto) !important;
+    max-height: var(--presentation-code-height, var(--presentation-code-available, var(--presentation-code-max-height, 500px))) !important;
+    font-size: var(--presentation-code-font-size) !important;
+    line-height: var(--presentation-code-line-height) !important;
+    padding: var(--presentation-code-padding-top) var(--presentation-code-padding-right)
+      var(--presentation-code-padding-bottom) var(--presentation-code-padding-left) !important;
+    overflow: hidden !important;
+    break-inside: avoid;
+  }
+}
+html.print-pdf .reveal pre > code.presentation-code-window {
+  box-sizing: border-box !important;
+  width: var(--presentation-code-width, 100%) !important;
+  height: var(--presentation-code-height, auto) !important;
+  max-height: var(--presentation-code-height, var(--presentation-code-available, var(--presentation-code-max-height, 500px))) !important;
+  font-size: var(--presentation-code-font-size) !important;
+  line-height: var(--presentation-code-line-height) !important;
+  padding: var(--presentation-code-padding-top) var(--presentation-code-padding-right)
+    var(--presentation-code-padding-bottom) var(--presentation-code-padding-left) !important;
+  overflow: hidden !important;
+  break-inside: avoid;
+}

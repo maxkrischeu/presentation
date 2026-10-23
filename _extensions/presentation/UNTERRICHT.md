@@ -392,6 +392,23 @@ ist `fragments="off"` häufig sinnvoll.
 
 ## 6. Weitere vorhandene Möglichkeiten
 
+### Langen Quellcode zeigen
+
+````markdown
+## Ein Programm besprechen {fragments="off"}
+
+```{.python code-overflow="scroll" filename="beispiel.py"}
+print("Hallo Welt")
+```
+````
+
+Normale Quarto-Codeblöcke bleiben scrollbar und werden auf den verfügbaren
+Folienbereich oberhalb der Fußzeile begrenzt. Überschrift, Dateiname und
+nachfolgender Inhalt werden dabei berücksichtigt. Im PDF-Export mit aktuellem
+Stand bleibt der sichtbare Ausschnitt einschließlich vertikaler und horizontaler
+Scrollposition erhalten; der Code wird nicht vollständig ausgeklappt. Beim
+Export des vorbereiteten Stands beginnt der Ausschnitt oben links.
+
 ### Eine Folie direkt als Python-Arbeitsumgebung
 
 ```markdown

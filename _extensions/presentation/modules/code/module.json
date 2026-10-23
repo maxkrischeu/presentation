@@ -1,0 +1,6 @@
+{
+  "id": "code",
+  "requires": ["frame"],
+  "scripts": ["module.js"],
+  "styles": ["styles.css"]
+}
