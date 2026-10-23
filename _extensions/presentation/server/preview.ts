@@ -2,6 +2,7 @@
 import { dirname, extname, fromFileUrl, join, toFileUrl } from "stdlib/path";
 import { contentType } from "stdlib/mediaTypes";
 import { digest, exists, inside, relative, resolve } from "./paths.ts";
+import { liveReload as liveReloadClient } from "./live-reload.js";
 const root = await Deno.realPath(
   Deno.env.get("QUARTO_PROJECT_DIR") || Deno.cwd(),
 );
@@ -205,11 +206,12 @@ async function handle(request: Request): Promise<Response> {
       const document = await Deno.readTextFile(page),
         revision = await pageRevision(page);
       const script =
-        `<script>(()=>{if(new URLSearchParams(location.search).has('print-pdf'))return;const revision=${
+        `<script>(${liveReloadClient.toString()})(${
           JSON.stringify(revision)
-        };async function check(){try{const r=await fetch('/__presentation/revision?page='+encodeURIComponent(location.pathname),{cache:'no-store'});if(r.ok&&(await r.json()).revision!==revision){location.reload();return;}}catch{}setTimeout(check,1000);}setTimeout(check,1000);})();</script>`;
+        });</script>`;
       const body = new TextEncoder().encode(
-        document.replace("</body>", script + "</body>"),
+        // Read the pending position before Reveal can normalize a missing hash.
+        document.replace("</head>", script + "</head>"),
       );
       headers.set("Content-Length", String(body.length));
       return new Response(request.method === "HEAD" ? null : body, { headers });

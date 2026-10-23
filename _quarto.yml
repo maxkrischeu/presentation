@@ -9,6 +9,7 @@ date-format: "D. MMMM YYYY"
 
 quiz:
   cards: false # true: grüne, gelbe, rote und blaue Antwortkarten anzeigen
+  timer: false # alternativ ganze Sekunden, z. B. 30; pro Frage timer="15" oder timer="off"
 
 presentation:
   lang: de

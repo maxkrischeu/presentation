@@ -220,6 +220,46 @@ Die Frage kann auch als Absatz unter einer kürzeren Folienüberschrift stehen.
 `columns="1"` bleibt einspaltig. Sinnvolle, eindeutig falsche Distraktoren
 verwenden. Bei Mehrfachauswahl alle richtigen Antworten markieren.
 
+### Optionaler Countdown
+
+```yaml
+quiz:
+  timer: 30
+```
+
+`timer` gibt die Zeit in ganzen Sekunden an (1 bis 3600). Standard ist
+`false`: Fragen haben keinen Timer. Einzelne Fragen können die Vorgabe
+überschreiben oder ausschalten:
+
+```markdown
+## Wie viele Bits sind ein Byte? {.quiz-question timer="15"}
+
+- 4 Bit
+- [8 Bit]{.correct}
+- 16 Bit
+
+## In Ruhe überlegen {.quiz-question timer="off"}
+
+- [Richtige Antwort]{.correct}
+- Falsche Antwort
+```
+
+Der Timer steht rechts neben der Überschrift; dafür wird Platz reserviert.
+Er startet, sobald alle Antworten sichtbar sind. Ein Klick auf die Zeitanzeige
+pausiert bzw. setzt fort. Folienwechsel, Zurückblenden, Übersicht, Schwarzbild
+und ein ausgeblendeter Browser-Reiter halten die Zeit an.
+
+Nach Ablauf wird die aktuelle Auswahl automatisch geprüft und gesperrt;
+die richtigen Antworten werden angezeigt. Ohne Auswahl gibt es null Punkte.
+Bei Mehrfachauswahl und Lückentext bleibt die vorhandene Teilpunktewertung
+erhalten. **Prüfen** loggt eine Auswahl vorzeitig ein und hält den Timer an.
+**Noch einmal** beginnt mit voller Zeit neu; der erste Versuch zählt weiterhin.
+**Zurücksetzen** löscht alle Quizwertungen und setzt die Zeiten zurück.
+
+Sitzungsexporte behalten Restzeit, Pause und abgeschlossene Wertung.
+Im PDF erscheinen keine laufenden Timer. Die vorhandene Auswahl und Wertung
+bleiben beim Export des aktuellen Stands erhalten.
+
 ### Bilder als Antworten
 
 ```markdown
@@ -512,6 +552,12 @@ Die laufende Quarto-Vorschau unterstützt Quellspeicherung und PDF-/ZIP-Exporte
 bereitstellen. Zum Weitergeben als Webpräsentation den ZIP-Export verwenden.
 Nach einem Extension-Update betroffene Präsentationen neu rendern und die
 Browserseite neu laden, damit auch erzeugte Ressourcen aktualisiert werden.
+
+Beim automatischen Neuladen nach einer QMD-Änderung bleiben die aktuelle Folie
+und ihre Einblendung erhalten. Ändert sich ihre automatisch erzeugte ID, wird
+die vorige Folienposition verwendet; entfernte Folien/Einblendungen erhalten
+die nächstmögliche verbleibende Position. Jeder Vorschau-Tab behält seine
+eigene Position. Bewusst geöffnete andere Folienlinks haben weiterhin Vorrang.
 
 Vor der Übergabe einer Stunde:
 

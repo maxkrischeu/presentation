@@ -1,4 +1,16 @@
 -- Public authoring attributes; runtime classes/data stay private to the quiz.
+local function timer(value)
+  local text = pandoc.utils.stringify(value)
+  if value == false or text == 'false' or text == 'off' then return 'off' end
+  if not text:match('^%d+$') or tonumber(text) < 1 or tonumber(text) > 3600 then
+    error('quiz.timer / timer muss false bzw. off oder eine ganze Sekundenzahl von 1 bis 3600 sein.')
+  end
+  return text
+end
+function Meta(meta)
+  if meta.quiz and meta.quiz.timer ~= nil then timer(meta.quiz.timer) end
+  return meta
+end
 local function option(el, name, allowed)
   local value = el.attributes[name]
   if value == nil then return nil end
@@ -15,6 +27,10 @@ local function remove(el, names)
 end
 function Header(el)
   if el.classes:includes('quiz-question') then
+    if el.attributes.timer ~= nil then
+      el.attributes['data-quiz-timer'] = timer(el.attributes.timer)
+      el.attributes.timer = nil
+    end
     local kind = option(el, 'type', {single=true, multiple=true, cloze=true})
     if kind then
       remove(el, {['quiz-multiple']=true, ['quiz-cloze']=true})

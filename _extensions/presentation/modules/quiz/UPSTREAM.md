@@ -23,3 +23,13 @@ including multi-paragraph answers. Choice questions reveal blocks in authored
 QMD order, including free-image source anchors, interleaved prose and answer
 lists. Containers without answer lists stay atomic; lists reveal answer by answer.
 Controls still share the final answer's step. Inert resource entries remain excluded.
+
+An optional countdown uses a monotonic deadline, starts after the final answer
+fragment and pauses outside the visible question, on rewind, overview, blackout,
+printing or explicit pause. Timeout submits the current choice/partial cloze,
+records a zero for no response, reveals solutions and locks the attempt. Manual
+submission also finishes a timed attempt. Again and Reset retain their existing
+first-attempt scoring semantics. Timer state and timeout feedback are included
+in question snapshots. Live timers are omitted from print output. Removing a
+last results section for print retains inert document resources placed there
+by Pandoc, including templates and hidden resource links.

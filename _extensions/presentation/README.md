@@ -155,8 +155,10 @@ Grundstands im Terminal:
 quarto run _extensions/presentation/modules/exports/render.ts meine-praesentation.html
 ```
 
-Die Vorschau lädt erst nach erfolgreichem Renderabschluss neu. Erfolgreiche
-HTTP-Abrufe werden nicht protokolliert; `PRESENTATION_DEBUG=1` aktiviert sie bei
+Die Vorschau lädt erst nach erfolgreichem Renderabschluss neu.
+Beim Neuladen bleiben Folie und Einblendung erhalten, auch bei geänderter
+automatischer Folien-ID. Mehrere Tabs behalten ihre jeweilige Position.
+Erfolgreiche HTTP-Abrufe werden nicht protokolliert; `PRESENTATION_DEBUG=1` aktiviert sie bei
 Bedarf. `quarto preview meine-praesentation.qmd --quiet` blendet außerdem Quartos
 ausführliche Render-Metadaten aus. Fehlermeldungen bleiben relevant.
 
@@ -410,6 +412,24 @@ sichtbarer Antwortreihenfolge. Die Farbe kennzeichnet die Antwortposition,
 nicht deren Richtigkeit. Text-, Bildantworten und Mehrfachauswahl werden
 unterstützt. Lückentexte und Fragen mit mehr als vier Antworten bleiben ohne
 Symbole. Beim Prüfen und Wiederholen bleibt die Zuordnung bestehen.
+
+### Quiz mit Countdown
+
+```yaml
+quiz:
+  timer: 30
+```
+
+Standard ist `false`. Eine ganze Sekundenzahl von 1 bis 3600 aktiviert den
+Timer rechts neben der Überschrift. Einzelne Fragen überschreiben sie mit
+`timer="15"` oder schalten ihn mit `timer="off"` aus.
+Die Zeit startet nach der letzten Antwort-Einblendung. Anklicken pausiert
+bzw. setzt fort; Folienwechsel und Übersicht halten die Zeit ebenfalls an.
+Nach Ablauf wird die aktuelle Auswahl geprüft und die Lösung angezeigt.
+Ohne Auswahl gibt es null Punkte; Mehrfachauswahl und Lückentext behalten
+ihre Teilpunktewertung. „Prüfen“ loggt vorher ein, „Noch einmal“ startet mit
+voller Zeit neu. Der erste Versuch zählt weiterhin. Im PDF ist kein Timer
+sichtbar. Details und Beispiele stehen im [Unterrichtsleitfaden](UNTERRICHT.md).
 
 ### Einheitliche Medienblöcke
 

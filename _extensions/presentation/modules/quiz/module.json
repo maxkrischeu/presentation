@@ -1,6 +1,7 @@
 {
   "id": "quiz",
   "scripts": [
+    "timer.js",
     "cloze.js",
     "quiz.js",
     "module.js"
@@ -12,7 +13,8 @@
     "results.css",
     "cloze.css",
     "image-answers.css",
-    "cards.css"
+    "cards.css",
+    "timer.css"
   ],
   "plugins": [
     {
@@ -24,6 +26,7 @@
           "shuffleOptions": false,
           "includeScore": true,
           "cards": false,
+          "timer": false,
           "disableOnCheck": false,
           "defaultCorrect": "",
           "defaultIncorrect": "",

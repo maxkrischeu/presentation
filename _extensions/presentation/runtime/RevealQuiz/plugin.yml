@@ -6,6 +6,7 @@ config:
     shuffleOptions: false
     includeScore: true
     cards: false
+    timer: false
     disableOnCheck: false
     defaultCorrect: ""
     defaultIncorrect: ""

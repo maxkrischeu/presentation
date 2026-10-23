@@ -120,7 +120,13 @@ window.RevealQuiz = function () {
         deck
           .getSlidesElement()
           .querySelectorAll("section.quiz-results")
-          .forEach((slide) => slide.remove());
+          .forEach((slide) => {
+            // Pandoc may put document resources inside the final section.
+            // Retain inert resources when excluding a live-only results page.
+            slide.querySelectorAll(":scope > template, :scope > script, :scope > style, :scope > [hidden]")
+              .forEach(resource => slide.before(resource));
+            slide.remove();
+          });
       }
       const config = deck.getConfig();
       const options = config.quiz || {};
@@ -210,6 +216,14 @@ window.RevealQuiz = function () {
 
       settings.shuffleOptions = options.shuffleOptions || false;
       settings.cards = options.cards === true;
+      const timerDuration = slide => {
+        const value = slide.dataset.quizTimer ?? options.timer;
+        if (value === undefined || value === false || value === "off" || value === "false") return 0;
+        const seconds = Number(value);
+        if (value === true || !Number.isInteger(seconds) || seconds < 1 || seconds > 3600)
+          throw Error("quiz.timer must be false or an integer from 1 to 3600 seconds.");
+        return seconds;
+      };
 
       settings.defaultCorrect =
         options.defaultCorrect || Presentation.t("Correct!");
@@ -378,7 +392,7 @@ window.RevealQuiz = function () {
           if (slide.classList.contains("quiz-cloze")) {
             const reset = resetButton.cloneNode(true);
             const api = Presentation.factories.quizCloze({
-              slide, settings,
+              slide, settings, deck, timerSeconds: timerDuration(slide),
               controls: [checkButton.cloneNode(true), againButton.cloneNode(true), reset, feedbackElement.cloneNode(true)],
               record(points) { if (!scores.has(slide)) scores.set(slide, points); updateScores(); },
               score: () => scores.has(slide) ? scores.get(slide) : null,
@@ -401,6 +415,7 @@ window.RevealQuiz = function () {
 
           let selectedOptions = [];
           let isAnswered = false;
+          let timer = null, timedOut = false;
           let isMultipleChoice = slide.classList.contains("quiz-multiple");
 
           // ensure each list element has a class of 'option-button'
@@ -481,14 +496,17 @@ window.RevealQuiz = function () {
           cloneFeedbackElement.setAttribute("role", "status");
 
           function resetQuiz() {
-            cloneCheckBtn.disabled = false;
+            cloneCheckBtn.disabled = !!timer;
             options.forEach((opt) => {
               opt.classList.remove("selected", "correct", "incorrect");
               opt.disabled = false;
             });
             selectedOptions = [];
             isAnswered = false;
+            timedOut = false;
             cloneFeedbackElement.textContent = "";
+            cloneFeedbackElement.classList.remove("quiz-timeout-feedback");
+            timer?.reset();
           }
 
           resetQuestions.push(resetQuiz);
@@ -585,10 +603,11 @@ window.RevealQuiz = function () {
             slide.append(layout);
           }
 
-          cloneCheckBtn.addEventListener("click", function () {
-            console.log("clicked check");
-            if (selectedOptions.length > 0 && !isAnswered) {
+          function assess(expired = false) {
+            if ((selectedOptions.length > 0 || expired) && !isAnswered) {
               isAnswered = true;
+              timedOut = expired;
+              timer?.finish();
 
               if (isMultipleChoice) {
                 // Only evaluate the chosen answers; do not reveal the others.
@@ -625,9 +644,9 @@ window.RevealQuiz = function () {
                 // Single choice logic (original)
                 let selectedOption = selectedOptions[0];
                 let isCorrect =
-                  !!selectedOption.querySelector("span.correct");
+                  !!selectedOption?.querySelector("span.correct");
                 let hasExplanation =
-                  selectedOption.querySelector("span") &&
+                  selectedOption?.querySelector("span") &&
                   selectedOption
                     .querySelector("span")
                     .hasAttribute("data-explanation");
@@ -643,11 +662,20 @@ window.RevealQuiz = function () {
                     explanation || settings.defaultCorrect;
                   cloneFeedbackElement.style.color = "#27ae60";
                 } else {
-                  selectedOption.classList.add("incorrect");
+                  selectedOption?.classList.add("incorrect");
                   cloneFeedbackElement.textContent =
                     explanation || settings.defaultIncorrect;
                   cloneFeedbackElement.style.color = "#c0392b";
                 }
+              }
+
+              if (expired) {
+                cloneFeedbackElement.classList.add("quiz-timeout-feedback");
+                options.forEach(option => {
+                  if (option.querySelector("span.correct")) option.classList.add("correct");
+                });
+                cloneFeedbackElement.textContent = Presentation.t("Time is up") + ". " +
+                  cloneFeedbackElement.textContent + (selectedOptions.length ? "" : " " + Presentation.t("No answer selected."));
               }
 
               // Only the first checked attempt counts, including a zero-point attempt.
@@ -661,7 +689,7 @@ window.RevealQuiz = function () {
               }
               updateScores();
 
-              if (settings.disableOnCheck) {
+              if (settings.disableOnCheck || timer || expired) {
                 cloneCheckBtn.disabled = true;
                 cloneResetBtn.disabled = false;
                 cloneNextBtn.disabled = false;
@@ -676,7 +704,15 @@ window.RevealQuiz = function () {
                 cloneResetBtn.disabled = true;
               }
             }
+          }
+          cloneCheckBtn.addEventListener("click", () => assess());
+          timer = Presentation.factories.quizTimer({
+            deck, slide, seconds: timerDuration(slide),
+            ready: () => !cloneButtonContainer.classList.contains("fragment") || cloneButtonContainer.classList.contains("visible"),
+            answered: () => isAnswered,
+            onExpire: () => assess(true),
           });
+          if (timer) cloneCheckBtn.disabled = true;
 
           sessionQuestions.push({
             slide,
@@ -686,12 +722,15 @@ window.RevealQuiz = function () {
                 .map((opt, i) => (selectedOptions.includes(opt) ? i : null))
                 .filter((i) => i !== null),
               checked: isAnswered,
+              timedOut,
+              timer: timer?.snapshot(),
               score: scores.has(slide) ? scores.get(slide) : null,
             }),
             restore: (entry) => {
-              entry.selected.forEach((i) => options[i]?.click());
-              if (entry.checked) cloneCheckBtn.click();
+              (entry.selected || []).forEach((i) => options[i]?.click());
+              if (entry.checked) assess(entry.timedOut === true);
               if (entry.score !== null) scores.set(slide, entry.score);
+              timer?.restore(entry.timer);
             },
           });
 

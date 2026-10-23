@@ -18,3 +18,20 @@ freier Bildanker und Inline-Bilder. Das gilt mit und ohne `layout="image"`.
 Antwortlisten erhalten einen Schritt pro Antwort; Container ohne Antwortlisten
 bleiben gemeinsame Schritte. Die Bedienelemente erscheinen mit der letzten Antwort.
 Textantworten erhalten getrennte Nummern- und Textspalten für bündige Folgezeilen.
+
+`quiz.timer: false|Sekunden` aktiviert optional einen Countdown (1–3600 ganze
+Sekunden). Das Frageattribut `timer="15"` überschreibt die Vorgabe,
+`timer="off"` schaltet sie aus. `timer.js` besitzt Deadline, Pause und Anzeige;
+die bestehenden Fragecontroller übernehmen die eigentliche Bewertung.
+Der Countdown startet erst mit sichtbaren Bedienelementen nach der letzten
+Antwort. Folienwechsel, Zurückblenden, Übersicht, Schwarzbild, Druck und
+ausgeblendeter Browser-Reiter pausieren ihn; ein eigener Klick pausiert manuell.
+Bei Ablauf werden auch unvollständige/fehlende Antworten geprüft, Lösungen
+angezeigt und die Auswahl bis Again gesperrt. Frühes Check stoppt ebenfalls.
+Again setzt nur den Versuch und Timer zurück, Reset zusätzlich die Erstwertung.
+Restzeit, Pause, Abschluss und Timeout-Lösungen gehören zum Frage-Snapshot.
+Print erzeugt keine laufende Anzeige. Inerte Dokumentressourcen bleiben beim
+Entfernen einer letzten Live-Ergebnisfolie für den PDF-Export erhalten.
+
+Prüfung: `tests/quiz-timer-check.cjs`; interaktiver Rundgang:
+`tests/quiz-timer.qmd`. Reine Uhrlogik: `modules/quiz/tests/timer-check.cjs`.

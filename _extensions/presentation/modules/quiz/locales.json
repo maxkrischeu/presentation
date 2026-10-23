@@ -1,5 +1,12 @@
 {
   "de": {
+    "Time is up": "Zeit abgelaufen",
+    "Answer submitted": "Antwort eingeloggt",
+    "No answer selected.": "Keine Antwort ausgewählt.",
+    "Correct answer": "Richtige Antwort",
+    "Pause quiz timer": "Quiz-Timer pausieren",
+    "Resume quiz timer": "Quiz-Timer fortsetzen",
+    "Timer starts when all answers are visible": "Timer startet, sobald alle Antworten sichtbar sind",
     "Green answer card": "Grüne Antwortkarte",
     "Yellow answer card": "Gelbe Antwortkarte",
     "Red answer card": "Rote Antwortkarte",

@@ -1,9 +1,9 @@
 /* Cloze interaction owns placements; the quiz engine owns scoring and sessions. */
-Presentation.factories.quizCloze = function ({slide, settings, controls, record, score}) {
+Presentation.factories.quizCloze = function ({slide, settings, deck, timerSeconds, controls, record, score}) {
   const t = Presentation.t;
   const answers = [...slide.querySelectorAll('.answer')].map(el => el.textContent.trim());
   const slots = [], tokens = [];
-  let selected = null, checked = false;
+  let selected = null, checked = false, timedOut = false, timer = null;
   const bank = document.createElement('div');bank.className='quiz-cloze-bank';
   bank.dataset.presentationKeyboard='local';
   bank.setAttribute('aria-label',t('Available terms'));
@@ -45,24 +45,34 @@ Presentation.factories.quizCloze = function ({slide, settings, controls, record,
   // The text and term bank appear together, without revealing individual solutions.
   [...slide.children].filter(el=>!el.matches('h1,h2,h3,aside,script,style,template,[hidden]')).forEach(el=>{el.classList.add('fragment');el.dataset.fragmentIndex='0';});
   function resetAttempt(){
-    checked=false;selected=null;feedback.textContent='';
+    checked=false;selected=null;timedOut=false;feedback.textContent='';
+    feedback.classList.remove('quiz-timeout-feedback');
+    slide.querySelectorAll('.quiz-cloze-solution').forEach(el=>el.remove());
     slots.forEach(slot=>slot.classList.remove('correct','incorrect'));
     const shuffled=[...tokens];for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
-    bank.append(...shuffled);choose(null);update();
+    bank.append(...shuffled);choose(null);update();timer?.reset();
   }
-  function assess(){
-    if(check.disabled)return;
-    checked=true;let points=0;
-    slots.forEach((slot,i)=>{const correct=slot.textContent.trim()===answers[i];slot.classList.add(correct?'correct':'incorrect');if(correct)points++;});
+  function assess(expired=false){
+    if(checked || (!expired && check.disabled))return;
+    checked=true;timedOut=expired;timer?.finish();let points=0;
+    slots.forEach((slot,i)=>{
+      const correct=slot.textContent.trim()===answers[i];slot.classList.add(correct?'correct':'incorrect');if(correct)points++;
+      if(expired&&!correct){const solution=document.createElement('span');solution.className='quiz-cloze-solution';solution.textContent=answers[i];solution.setAttribute('aria-label',t('Correct answer')+': '+answers[i]);slot.after(solution);}
+    });
     const full=points===slots.length;
     feedback.textContent=full?settings.defaultCorrect:points?t('Partly correct!'):settings.defaultIncorrect;
     feedback.style.color=full?'#27ae60':points?'#a87600':'#c0392b';
+    if(expired){feedback.classList.add('quiz-timeout-feedback');feedback.textContent=t('Time is up')+'. '+feedback.textContent;}
     record(points);update();
   }
-  check.addEventListener('click',assess);again.addEventListener('click',resetAttempt);reset.disabled=settings.disableReset;
+  check.addEventListener('click',()=>assess());again.addEventListener('click',resetAttempt);reset.disabled=settings.disableReset;
   resetAttempt();
-  return {reset:resetAttempt,capture:()=>({slide:slide.id,placements:slots.map(slot=>tokens.indexOf(slot.querySelector('button'))),checked,score:score()}),restore(entry){
+  timer=Presentation.factories.quizTimer({deck,slide,seconds:timerSeconds,
+    ready:()=>!row.classList.contains('fragment')||row.classList.contains('visible'),
+    answered:()=>checked,onExpire:()=>assess(true)});
+  return {reset:resetAttempt,capture:()=>({slide:slide.id,placements:slots.map(slot=>tokens.indexOf(slot.querySelector('button'))),checked,timedOut,timer:timer?.snapshot(),score:score()}),restore(entry){
     resetAttempt();const used=new Set();(entry.placements||[]).forEach((index,i)=>{if(slots[i]&&Number.isInteger(index)&&tokens[index]&&!used.has(index)){place(index,slots[i]);used.add(index);}});
-    if(entry.checked)assess();
+    if(entry.checked)assess(entry.timedOut===true);
+    timer?.restore(entry.timer);
   }};
 };

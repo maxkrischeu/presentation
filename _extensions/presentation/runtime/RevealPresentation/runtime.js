@@ -113,7 +113,7 @@ window.Presentation = window.Presentation || {};
 ;
 
 /* core/i18n.js */
-Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Cancel": "Abbrechen", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Lasso Selection": "Lasso-Auswahl", "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen", "Undo / redo drawing": "Zeichenaktion rückgängig / wiederholen", "Undo Drawing": "Zeichenaktion rückgängig", "Redo Drawing": "Zeichenaktion wiederholen", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Export requires quarto preview. Start the preview and open its localhost address instead of opening the HTML file directly.": "Der Export benötigt quarto preview. Starte die Vorschau und öffne die angezeigte localhost-Adresse, statt die HTML-Datei direkt zu öffnen.", "Save to Source": "Im Quarto-Dokument speichern", "Shared": "Gemeinsam", "Undo": "Rückgängig", "Redo": "Wiederholen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Invalid placement file.": "Ungültige Medienlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "Placements saved.": "Medienpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Medienlayout-Datei ist zu groß.", "Placements loaded.": "Medienpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Medienpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "This Lesson": "Diese Stunde", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Media Library": "Medienbibliothek", "Close Media Library": "Medienbibliothek schließen", "Edit Media": "Medien bearbeiten", "Media source": "Medienquelle", "Media editing": "Medienbearbeitung", "Delete Media": "Medium löschen", "Resize media": "Mediengröße ändern", "Rotate media": "Medium drehen", "Rotate media · Snap: 45° · Shift: 15°": "Medium drehen · Einrasten: 45° · Umschalt: 15°", "This media item could not be loaded.": "Dieses Medium konnte nicht geladen werden.", "Media selected. Close the library to move or resize it.": "Medium ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Loaded; unavailable media or slides were skipped.": "Geladen; nicht verfügbare Medien oder Folien wurden übersprungen.", "I (media editing)": "I (Medienbearbeitung)", "Open / close media library": "Medienbibliothek öffnen / schließen", "Delete selected media": "Ausgewähltes Medium löschen", "Undo / redo (media editing)": "Rückgängig / Wiederholen (Medienbearbeitung)", "Use quarto preview to import media.": "Zum Einfügen von Medien bitte quarto preview verwenden.", "Media saved in assets.": "Medium im assets-Ordner gespeichert.", "Media saved in assets. Save to Source keeps its placement in the document.": "Medium in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "No shared media available.": "Keine gemeinsamen Medien vorhanden.", "No media available for this lesson.": "Keine Medien für diese Stunde vorhanden.", "No media available for this slide.": "Keine Medien für diese Folie vorhanden.", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Green answer card": "Grüne Antwortkarte", "Yellow answer card": "Gelbe Antwortkarte", "Red answer card": "Rote Antwortkarte", "Blue answer card": "Blaue Antwortkarte", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz", "Available terms": "Verfügbare Begriffe", "Gap {number}": "Lücke {number}", "Previous search result": "Vorheriger Treffer", "Next search result": "Nächster Treffer", "No search results": "Keine Treffer", "Enlarge spreadsheet": "Tabelle vergrößern", "Spreadsheet": "Tabelle", "Close spreadsheet": "Tabelle schließen", "Select Text": "Text auswählen", "Finish Text Selection": "Textauswahl beenden"}};
+Presentation.messages={"de": {"Modes": "Modi", "Utilities": "Extras", "Close": "Schließen", "Fullscreen": "Vollbild", "Speaker View": "Referentenansicht", "Chalkboard": "Tafel", "Clear Drawings": "Zeichnungen löschen", "Download Drawings": "Zeichnungen herunterladen", "Download PDF": "PDF herunterladen", "Previous Slide": "Vorherige Folie", "Next Slide": "Nächste Folie", "Slide Overview (O)": "Folienübersicht (O)", "Toggle Notes Canvas (C)": "Zeichenmodus (C)", "Modes Menu": "Modimenü", "Presentation Tools": "Präsentationswerkzeuge", "Export Chalkboard PDF": "Tafel als PDF exportieren", "Black": "Schwarz", "Blue": "Blau", "Red": "Rot", "Green": "Grün", "Image positioning": "Bildbearbeitung", "Chalkboard Tools": "Tafelwerkzeuge", "Notes Canvas Tools": "Zeichenwerkzeuge", "Keyboard Help": "Tastaturhilfe", "Keyboard Shortcuts": "Tastenkürzel", "Reset Session": "Sitzung zurücksetzen", "Reset this session? Quiz answers and scores, slide drawings and chalkboards will be cleared. Images will return to the prepared layout. This cannot be undone.": "Sitzung zurücksetzen? Quizantworten und Punkte, Folienzeichnungen und Tafeln werden gelöscht. Bilder werden auf das vorbereitete Layout zurückgesetzt. Dies kann nicht rückgängig gemacht werden.", "Content": "Inhalt", "Download": "Herunterladen", "This Slide": "Diese Folie", "Done": "Fertig", "Image layer": "Bildebene", "Image rotation": "Bilddrehung", "Image transparency": "Bildtransparenz", "Reset": "Zurücksetzen", "Prev": "Zurück", "Next": "Weiter", "Point": "Punkt", "Header": "Kopfzeile", "Footer": "Fußzeile", "Navigate slides (standard / overview / laser / magnifier)": "Folien wechseln (Standard / Übersicht / Laser / Lupe)", "Fullscreen / Speaker View (standard mode)": "Vollbild / Referentenansicht (Standardmodus)", "Black screen (standard mode)": "Schwarzbild (Standardmodus)", "Search": "Suchen", "Search...": "Suchen …", "Modes menu": "Modimenü", "Slide overview": "Folienübersicht", "Keyboard help": "Tastaturhilfe", "standard mode": "Standardmodus", "Delete / Backspace (image editing)": "Entf / Rücktaste (Bildbearbeitung)", "Mode key again": "Modustaste erneut", "Exit the current mode (outside text fields)": "Aktuellen Modus beenden (außerhalb von Textfeldern)", "Close panel, then exit working mode; fullscreen last": "Zuerst Bedienfläche schließen, dann Arbeitsmodus beenden; zuletzt Vollbild", "Browser fullscreen exit": "Browser-Vollbild beenden", "In text fields, Enter and letters remain text input. Use Close to leave the Python editor.": "In Textfeldern bleiben Enter und Buchstaben Texteingaben. Den Python-Editor über den Haken verlassen.", "Source changed since rendering. Render and reload before saving.": "Das Quelldokument wurde geändert. Vor dem Speichern neu rendern und laden.", "The presentation was rendered again. Reload it before exporting.": "Die Präsentation wurde neu gerendert. Vor dem Export neu laden.", "Another export is running. Please try again shortly.": "Ein anderer Export läuft bereits. Bitte gleich erneut versuchen.", "No non-empty chalkboards to export.": "Es gibt keine beschriebenen Tafeln zum Exportieren.", "Another operation is running. Please try again shortly.": "Ein anderer Vorgang läuft bereits. Bitte gleich erneut versuchen.", "Cancel": "Abbrechen", "Open separately": "Separat öffnen", "Loading PDF …": "PDF wird geladen …", "Page": "Seite", "Could not load PDF. Please use “Open separately”.": "PDF konnte nicht geladen werden. Bitte „Separat öffnen“ verwenden.", "Notes Canvas": "Zeichenmodus", "Show / Hide Drawings": "Zeichnungen ein-/ausblenden", "Pen / Colors": "Stift / Farben", "Eraser": "Radierer", "Clear All Drawings on This Slide / Board": "Alle Zeichnungen auf dieser Folie / Tafel löschen", "Previous Board": "Vorherige Tafel", "Next Board": "Nächste Tafel", "Back to Presentation": "Zurück zur Präsentation", "Done Drawing": "Zeichenmodus beenden", "Pen Color": "Stiftfarbe", "Eraser Type": "Radierertyp", "Pixel Eraser": "Normaler Radierer", "Stroke Eraser": "Objektradierer", "White": "Weiß", "Orange": "Orange", "Purple": "Violett", "Yellow": "Gelb", "Hide Drawings": "Zeichnungen ausblenden", "Show Drawings": "Zeichnungen einblenden", "Color {number}": "Farbe {number}", "Please confirm to delete chalkboard drawings on this slide!": "Zeichnungen auf dieser Folie wirklich löschen?", "Please confirm to delete all chalkboard drawings!": "Alle Tafelzeichnungen wirklich löschen?", "Pen / Eraser (drawing mode)": "Stift / Radierer (Zeichenmodus)", "← / → (chalkboard)": "← / → (Tafel)", "Previous / next board": "Vorherige / nächste Tafel", "Lasso Selection": "Lasso-Auswahl", "Undo / redo lasso move": "Lasso-Verschiebung rückgängig / wiederholen", "Undo / redo drawing": "Zeichenaktion rückgängig / wiederholen", "Undo Drawing": "Zeichenaktion rückgängig", "Redo Drawing": "Zeichenaktion wiederholen", "Export Slides PDF": "Folien als PDF exportieren", "Export Presentation": "Präsentation exportieren", "Current session": "Aktuelle Sitzung", "Prepared presentation": "Vorbereitete Präsentation", "Include placed images": "Platzierte Bilder einschließen", "Include slide drawings": "Folienzeichnungen einschließen", "Include hidden drawings": "Ausgeblendete Zeichnungen einschließen", "All non-empty boards, including hidden drawings · A4 landscape": "Alle nicht leeren Tafeln, einschließlich ausgeblendeter Zeichnungen · A4 quer", "ZIP with the current images, drawings and quiz state, plus local presentation resources.": "ZIP mit den aktuellen Bildern, Zeichnungen und dem Quizstand sowie den lokalen Präsentationsdateien.", "Preparing export…": "Export wird vorbereitet …", "Export ready.": "Export ist fertig.", "Export failed.": "Export fehlgeschlagen.", "Open this project with quarto preview to export the current session.": "Öffne dieses Projekt mit quarto preview, um die aktuelle Sitzung zu exportieren.", "Scope": "Umfang", "Current state": "Aktueller Stand", "Custom": "Benutzerdefiniert", "Slide state": "Folienstand", "Current": "Aktuell", "Prepared": "Vorbereitet", "Also include hidden drawings": "Auch ausgeblendete Zeichnungen", "Include chalkboard pages": "Tafelseiten einschließen", "Preparing export… On first use, export components are downloaded.": "Export wird vorbereitet … Bei der ersten Nutzung werden die Exportkomponenten heruntergeladen.", "Export requires quarto preview. Start the preview and open its localhost address instead of opening the HTML file directly.": "Der Export benötigt quarto preview. Starte die Vorschau und öffne die angezeigte localhost-Adresse, statt die HTML-Datei direkt zu öffnen.", "Save to Source": "Im Quarto-Dokument speichern", "Shared": "Gemeinsam", "Undo": "Rückgängig", "Redo": "Wiederholen", "Restore Prepared Layout": "Vorbereitetes Layout wiederherstellen", "Layer": "Ebene", "Rotation": "Drehung", "Transparency": "Transparenz", "0: behind text": "0: hinter dem Text", "0%: opaque · 100%: transparent": "0 %: deckend · 100 %: transparent", "Rotation in degrees": "Drehung in Grad", "Invalid placement file.": "Ungültige Medienlayout-Datei.", "Browser storage unavailable. Use Save to keep your work.": "Browserspeicher nicht verfügbar. Speichere deine Änderungen im Quarto-Dokument.", "Placements saved.": "Medienpositionen gespeichert.", "Open this project with quarto preview to save to its Quarto source.": "Öffne dieses Projekt mit quarto preview, um im Quarto-Dokument zu speichern.", "This generated slide has no editable source heading.": "Diese automatisch erzeugte Folie hat keine bearbeitbare Überschrift im Quarto-Dokument.", "Saved to Quarto source. Preview is updating…": "Im Quarto-Dokument gespeichert. Vorschau wird aktualisiert …", "Saved to Quarto source. Render again to update the presentation and PDF.": "Im Quarto-Dokument gespeichert. Erneut rendern, um Präsentation und PDF zu aktualisieren.", "Source could not be saved.": "Das Quarto-Dokument konnte nicht gespeichert werden.", "Prepared layout restored.": "Vorbereitetes Layout wiederhergestellt.", "Placement file is too large.": "Die Medienlayout-Datei ist zu groß.", "Placements loaded.": "Medienpositionen geladen.", "Saved placements could not be restored; the prepared layout is shown.": "Gespeicherte Medienpositionen konnten nicht wiederhergestellt werden; das vorbereitete Layout wird angezeigt.", "This Lesson": "Diese Stunde", "Image is too large (maximum 12 MB).": "Das Bild ist zu groß (maximal 12 MB).", "Image dimensions are too large.": "Die Bildabmessungen sind zu groß.", "Media Library": "Medienbibliothek", "Close Media Library": "Medienbibliothek schließen", "Edit Media": "Medien bearbeiten", "Media source": "Medienquelle", "Media editing": "Medienbearbeitung", "Delete Media": "Medium löschen", "Resize media": "Mediengröße ändern", "Rotate media": "Medium drehen", "Rotate media · Snap: 45° · Shift: 15°": "Medium drehen · Einrasten: 45° · Umschalt: 15°", "This media item could not be loaded.": "Dieses Medium konnte nicht geladen werden.", "Media selected. Close the library to move or resize it.": "Medium ausgewählt. Schließe die Bibliothek, um es zu verschieben oder seine Größe zu ändern.", "Loaded; unavailable media or slides were skipped.": "Geladen; nicht verfügbare Medien oder Folien wurden übersprungen.", "I (media editing)": "I (Medienbearbeitung)", "Open / close media library": "Medienbibliothek öffnen / schließen", "Delete selected media": "Ausgewähltes Medium löschen", "Undo / redo (media editing)": "Rückgängig / Wiederholen (Medienbearbeitung)", "Use quarto preview to import media.": "Zum Einfügen von Medien bitte quarto preview verwenden.", "Media saved in assets.": "Medium im assets-Ordner gespeichert.", "Media saved in assets. Save to Source keeps its placement in the document.": "Medium in assets gespeichert. „Im Quarto-Dokument speichern“ sichert seine Position.", "No shared media available.": "Keine gemeinsamen Medien vorhanden.", "No media available for this lesson.": "Keine Medien für diese Stunde vorhanden.", "No media available for this slide.": "Keine Medien für diese Folie vorhanden.", "Laser Pointer": "Laserpointer", "Laser Color": "Laserfarbe", "Clear Laser Trails": "Laserspuren löschen", "Done Laser Pointer": "Laserpointer beenden", "Magnifier": "Lupe", "Zoom Out": "Verkleinern", "Zoom In": "Vergrößern", "Smaller Lens": "Kleinere Lupe", "Larger Lens": "Größere Lupe", "Done Magnifier": "Lupe beenden", "Magnification {zoom} times": "{zoom}-fache Vergrößerung", "Slide Overview": "Folienübersicht", "Preview: up to 100 rows / 20 columns. Download contains the full file.": "Vorschau: bis zu 100 Zeilen / 20 Spalten. Der Download enthält die vollständige Datei.", "Python Console": "Python-Konsole", "Run": "Ausführen", "Rich Output": "Erweiterte Ausgabe", "Done Python Console": "Python-Konsole beenden", "Output": "Ausgabe", "Plots appear here. Save files in /output to preview or download them.": "Diagramme erscheinen hier. Speichere Dateien in /output, um sie anzusehen oder herunterzuladen.", "Preview truncated. Download contains the full file.": "Vorschau gekürzt. Der Download enthält die vollständige Datei.", "Time is up": "Zeit abgelaufen", "Answer submitted": "Antwort eingeloggt", "No answer selected.": "Keine Antwort ausgewählt.", "Correct answer": "Richtige Antwort", "Pause quiz timer": "Quiz-Timer pausieren", "Resume quiz timer": "Quiz-Timer fortsetzen", "Timer starts when all answers are visible": "Timer startet, sobald alle Antworten sichtbar sind", "Green answer card": "Grüne Antwortkarte", "Yellow answer card": "Gelbe Antwortkarte", "Red answer card": "Rote Antwortkarte", "Blue answer card": "Blaue Antwortkarte", "Again": "Noch einmal", "Try this question again without changing your score": "Diese Frage erneut versuchen, ohne den Punktestand zu ändern", "Reset all questions and scores for a new class": "Alle Fragen und Punkte für eine neue Klasse zurücksetzen", "Check": "Prüfen", "Correct!": "Richtig!", "Incorrect!": "Falsch!", "Partly correct!": "Teilweise richtig!", "Total score": "Gesamtpunktzahl", "Quiz results by question": "Quizergebnisse nach Frage", "Question": "Frage", "Questions": "Fragen", "Points": "Punkte", "{number}. Question:": "{number}. Frage:", "{checked} of {total} questions checked": "{checked} von {total} Fragen geprüft", "Points earned": "Erreichte Punkte", "Not checked yet": "Noch nicht geprüft", "Score: {score}": "Punktestand: {score}", "Total quiz score": "Gesamtpunktzahl im Quiz", "Available terms": "Verfügbare Begriffe", "Gap {number}": "Lücke {number}", "Previous search result": "Vorheriger Treffer", "Next search result": "Nächster Treffer", "No search results": "Keine Treffer", "Enlarge spreadsheet": "Tabelle vergrößern", "Spreadsheet": "Tabelle", "Close spreadsheet": "Tabelle schließen", "Select Text": "Text auswählen", "Finish Text Selection": "Textauswahl beenden"}};
 // Presentation UI only; authored slide content and asset labels are never translated.
 window.Presentation = window.Presentation || {};
 (() => {
@@ -8552,13 +8552,107 @@ Presentation.register({
 
 ;
 
+/* modules/quiz/timer.js */
+/* A monotonic deadline avoids drift when the browser delays a tick. */
+Presentation.factories.quizClock = function (seconds, now = () => performance.now()) {
+  const duration = seconds * 1000;
+  let remaining = duration, deadline = null;
+  const read = () => deadline === null ? remaining : Math.max(0, deadline - now());
+  return {
+    read,
+    running: () => deadline !== null,
+    start() { if (deadline === null && remaining > 0) deadline = now() + remaining; },
+    pause() { remaining = read(); deadline = null; },
+    reset() { remaining = duration; deadline = null; },
+    restore(value) {
+      deadline = null;
+      remaining = Number.isFinite(value) ? Math.max(0, Math.min(duration, value)) : duration;
+    },
+  };
+};
+
+/* One timer belongs to one question; question controllers own assessment. */
+Presentation.factories.quizTimer = function ({ deck, slide, seconds, ready, answered, onExpire }) {
+  if (!seconds || new URLSearchParams(location.search).has("print-pdf") ||
+      document.documentElement.classList.contains("print-pdf")) return null;
+  const heading = slide.querySelector("h1,h2,h3");
+  if (!heading) return null;
+  const clock = Presentation.factories.quizClock(seconds);
+  const print = window.matchMedia("print");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "quiz-timer";
+  button.dataset.presentationNavigation = "local";
+  button.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6m-3 0v3"/></svg><span class="quiz-timer-value" aria-hidden="true"></span><span class="quiz-timer-action" aria-hidden="true"></span>';
+  heading.classList.add("quiz-heading-timed");
+  heading.append(button);
+  const label = button.querySelector(".quiz-timer-value");
+  const action = button.querySelector(".quiz-timer-action");
+  let paused = false, finished = false, timeout;
+  const eligible = () => deck.getCurrentSlide() === slide && ready() &&
+    !deck.isOverview() && !deck.isPaused() && !document.hidden && !print.matches;
+  function render() {
+    const left = Math.ceil(clock.read() / 1000);
+    const text = Math.floor(left / 60) + ":" + String(left % 60).padStart(2, "0");
+    label.textContent = text;
+    button.dataset.state = finished ? "finished" : paused ? "paused" : clock.running() ? "running" : "waiting";
+    button.classList.toggle("quiz-timer-urgent", left <= 10 && clock.running() && !finished);
+    button.disabled = finished;
+    action.textContent = finished ? (left === 0 ? "■" : "✓") : paused ? "▶" : "Ⅱ";
+    const description = Presentation.t(finished ? (left === 0 ? "Time is up" : "Answer submitted") :
+      paused ? "Resume quiz timer" : clock.running() ? "Pause quiz timer" : "Timer starts when all answers are visible");
+    button.title = description;
+    button.setAttribute("aria-label", description + ": " + text);
+    button.setAttribute("aria-pressed", String(paused));
+  }
+  function sync() {
+    clearTimeout(timeout);
+    if (finished || answered() || paused || !eligible()) clock.pause();
+    else clock.start();
+    if (!finished && !answered() && eligible() && !paused && clock.read() <= 0) {
+      finished = true;
+      clock.pause();
+      render();
+      onExpire();
+      return;
+    }
+    render();
+    if (clock.running()) timeout = setTimeout(sync, Math.min(200, clock.read()));
+  }
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+    if (finished) return;
+    paused = !paused;
+    sync();
+  });
+  for (const event of ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "overviewshown", "overviewhidden", "paused", "resumed"])
+    deck.on(event, sync);
+  document.addEventListener("visibilitychange", sync);
+  print.addEventListener("change", sync);
+  sync();
+  return {
+    finish() { finished = true; clock.pause(); clearTimeout(timeout); render(); },
+    reset() { finished = false; paused = false; clock.reset(); sync(); },
+    snapshot: () => ({ remaining: clock.read(), paused, finished }),
+    restore(saved) {
+      if (!saved) return;
+      clock.restore(saved.remaining);
+      paused = saved.paused === true;
+      finished = saved.finished === true || answered();
+      sync();
+    },
+  };
+};
+
+;
+
 /* modules/quiz/cloze.js */
 /* Cloze interaction owns placements; the quiz engine owns scoring and sessions. */
-Presentation.factories.quizCloze = function ({slide, settings, controls, record, score}) {
+Presentation.factories.quizCloze = function ({slide, settings, deck, timerSeconds, controls, record, score}) {
   const t = Presentation.t;
   const answers = [...slide.querySelectorAll('.answer')].map(el => el.textContent.trim());
   const slots = [], tokens = [];
-  let selected = null, checked = false;
+  let selected = null, checked = false, timedOut = false, timer = null;
   const bank = document.createElement('div');bank.className='quiz-cloze-bank';
   bank.dataset.presentationKeyboard='local';
   bank.setAttribute('aria-label',t('Available terms'));
@@ -8600,25 +8694,35 @@ Presentation.factories.quizCloze = function ({slide, settings, controls, record,
   // The text and term bank appear together, without revealing individual solutions.
   [...slide.children].filter(el=>!el.matches('h1,h2,h3,aside,script,style,template,[hidden]')).forEach(el=>{el.classList.add('fragment');el.dataset.fragmentIndex='0';});
   function resetAttempt(){
-    checked=false;selected=null;feedback.textContent='';
+    checked=false;selected=null;timedOut=false;feedback.textContent='';
+    feedback.classList.remove('quiz-timeout-feedback');
+    slide.querySelectorAll('.quiz-cloze-solution').forEach(el=>el.remove());
     slots.forEach(slot=>slot.classList.remove('correct','incorrect'));
     const shuffled=[...tokens];for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
-    bank.append(...shuffled);choose(null);update();
+    bank.append(...shuffled);choose(null);update();timer?.reset();
   }
-  function assess(){
-    if(check.disabled)return;
-    checked=true;let points=0;
-    slots.forEach((slot,i)=>{const correct=slot.textContent.trim()===answers[i];slot.classList.add(correct?'correct':'incorrect');if(correct)points++;});
+  function assess(expired=false){
+    if(checked || (!expired && check.disabled))return;
+    checked=true;timedOut=expired;timer?.finish();let points=0;
+    slots.forEach((slot,i)=>{
+      const correct=slot.textContent.trim()===answers[i];slot.classList.add(correct?'correct':'incorrect');if(correct)points++;
+      if(expired&&!correct){const solution=document.createElement('span');solution.className='quiz-cloze-solution';solution.textContent=answers[i];solution.setAttribute('aria-label',t('Correct answer')+': '+answers[i]);slot.after(solution);}
+    });
     const full=points===slots.length;
     feedback.textContent=full?settings.defaultCorrect:points?t('Partly correct!'):settings.defaultIncorrect;
     feedback.style.color=full?'#27ae60':points?'#a87600':'#c0392b';
+    if(expired){feedback.classList.add('quiz-timeout-feedback');feedback.textContent=t('Time is up')+'. '+feedback.textContent;}
     record(points);update();
   }
-  check.addEventListener('click',assess);again.addEventListener('click',resetAttempt);reset.disabled=settings.disableReset;
+  check.addEventListener('click',()=>assess());again.addEventListener('click',resetAttempt);reset.disabled=settings.disableReset;
   resetAttempt();
-  return {reset:resetAttempt,capture:()=>({slide:slide.id,placements:slots.map(slot=>tokens.indexOf(slot.querySelector('button'))),checked,score:score()}),restore(entry){
+  timer=Presentation.factories.quizTimer({deck,slide,seconds:timerSeconds,
+    ready:()=>!row.classList.contains('fragment')||row.classList.contains('visible'),
+    answered:()=>checked,onExpire:()=>assess(true)});
+  return {reset:resetAttempt,capture:()=>({slide:slide.id,placements:slots.map(slot=>tokens.indexOf(slot.querySelector('button'))),checked,timedOut,timer:timer?.snapshot(),score:score()}),restore(entry){
     resetAttempt();const used=new Set();(entry.placements||[]).forEach((index,i)=>{if(slots[i]&&Number.isInteger(index)&&tokens[index]&&!used.has(index)){place(index,slots[i]);used.add(index);}});
-    if(entry.checked)assess();
+    if(entry.checked)assess(entry.timedOut===true);
+    timer?.restore(entry.timer);
   }};
 };
 
@@ -8747,7 +8851,13 @@ window.RevealQuiz = function () {
         deck
           .getSlidesElement()
           .querySelectorAll("section.quiz-results")
-          .forEach((slide) => slide.remove());
+          .forEach((slide) => {
+            // Pandoc may put document resources inside the final section.
+            // Retain inert resources when excluding a live-only results page.
+            slide.querySelectorAll(":scope > template, :scope > script, :scope > style, :scope > [hidden]")
+              .forEach(resource => slide.before(resource));
+            slide.remove();
+          });
       }
       const config = deck.getConfig();
       const options = config.quiz || {};
@@ -8837,6 +8947,14 @@ window.RevealQuiz = function () {
 
       settings.shuffleOptions = options.shuffleOptions || false;
       settings.cards = options.cards === true;
+      const timerDuration = slide => {
+        const value = slide.dataset.quizTimer ?? options.timer;
+        if (value === undefined || value === false || value === "off" || value === "false") return 0;
+        const seconds = Number(value);
+        if (value === true || !Number.isInteger(seconds) || seconds < 1 || seconds > 3600)
+          throw Error("quiz.timer must be false or an integer from 1 to 3600 seconds.");
+        return seconds;
+      };
 
       settings.defaultCorrect =
         options.defaultCorrect || Presentation.t("Correct!");
@@ -9005,7 +9123,7 @@ window.RevealQuiz = function () {
           if (slide.classList.contains("quiz-cloze")) {
             const reset = resetButton.cloneNode(true);
             const api = Presentation.factories.quizCloze({
-              slide, settings,
+              slide, settings, deck, timerSeconds: timerDuration(slide),
               controls: [checkButton.cloneNode(true), againButton.cloneNode(true), reset, feedbackElement.cloneNode(true)],
               record(points) { if (!scores.has(slide)) scores.set(slide, points); updateScores(); },
               score: () => scores.has(slide) ? scores.get(slide) : null,
@@ -9028,6 +9146,7 @@ window.RevealQuiz = function () {
 
           let selectedOptions = [];
           let isAnswered = false;
+          let timer = null, timedOut = false;
           let isMultipleChoice = slide.classList.contains("quiz-multiple");
 
           // ensure each list element has a class of 'option-button'
@@ -9108,14 +9227,17 @@ window.RevealQuiz = function () {
           cloneFeedbackElement.setAttribute("role", "status");
 
           function resetQuiz() {
-            cloneCheckBtn.disabled = false;
+            cloneCheckBtn.disabled = !!timer;
             options.forEach((opt) => {
               opt.classList.remove("selected", "correct", "incorrect");
               opt.disabled = false;
             });
             selectedOptions = [];
             isAnswered = false;
+            timedOut = false;
             cloneFeedbackElement.textContent = "";
+            cloneFeedbackElement.classList.remove("quiz-timeout-feedback");
+            timer?.reset();
           }
 
           resetQuestions.push(resetQuiz);
@@ -9212,10 +9334,11 @@ window.RevealQuiz = function () {
             slide.append(layout);
           }
 
-          cloneCheckBtn.addEventListener("click", function () {
-            console.log("clicked check");
-            if (selectedOptions.length > 0 && !isAnswered) {
+          function assess(expired = false) {
+            if ((selectedOptions.length > 0 || expired) && !isAnswered) {
               isAnswered = true;
+              timedOut = expired;
+              timer?.finish();
 
               if (isMultipleChoice) {
                 // Only evaluate the chosen answers; do not reveal the others.
@@ -9252,9 +9375,9 @@ window.RevealQuiz = function () {
                 // Single choice logic (original)
                 let selectedOption = selectedOptions[0];
                 let isCorrect =
-                  !!selectedOption.querySelector("span.correct");
+                  !!selectedOption?.querySelector("span.correct");
                 let hasExplanation =
-                  selectedOption.querySelector("span") &&
+                  selectedOption?.querySelector("span") &&
                   selectedOption
                     .querySelector("span")
                     .hasAttribute("data-explanation");
@@ -9270,11 +9393,20 @@ window.RevealQuiz = function () {
                     explanation || settings.defaultCorrect;
                   cloneFeedbackElement.style.color = "#27ae60";
                 } else {
-                  selectedOption.classList.add("incorrect");
+                  selectedOption?.classList.add("incorrect");
                   cloneFeedbackElement.textContent =
                     explanation || settings.defaultIncorrect;
                   cloneFeedbackElement.style.color = "#c0392b";
                 }
+              }
+
+              if (expired) {
+                cloneFeedbackElement.classList.add("quiz-timeout-feedback");
+                options.forEach(option => {
+                  if (option.querySelector("span.correct")) option.classList.add("correct");
+                });
+                cloneFeedbackElement.textContent = Presentation.t("Time is up") + ". " +
+                  cloneFeedbackElement.textContent + (selectedOptions.length ? "" : " " + Presentation.t("No answer selected."));
               }
 
               // Only the first checked attempt counts, including a zero-point attempt.
@@ -9288,7 +9420,7 @@ window.RevealQuiz = function () {
               }
               updateScores();
 
-              if (settings.disableOnCheck) {
+              if (settings.disableOnCheck || timer || expired) {
                 cloneCheckBtn.disabled = true;
                 cloneResetBtn.disabled = false;
                 cloneNextBtn.disabled = false;
@@ -9303,7 +9435,15 @@ window.RevealQuiz = function () {
                 cloneResetBtn.disabled = true;
               }
             }
+          }
+          cloneCheckBtn.addEventListener("click", () => assess());
+          timer = Presentation.factories.quizTimer({
+            deck, slide, seconds: timerDuration(slide),
+            ready: () => !cloneButtonContainer.classList.contains("fragment") || cloneButtonContainer.classList.contains("visible"),
+            answered: () => isAnswered,
+            onExpire: () => assess(true),
           });
+          if (timer) cloneCheckBtn.disabled = true;
 
           sessionQuestions.push({
             slide,
@@ -9313,12 +9453,15 @@ window.RevealQuiz = function () {
                 .map((opt, i) => (selectedOptions.includes(opt) ? i : null))
                 .filter((i) => i !== null),
               checked: isAnswered,
+              timedOut,
+              timer: timer?.snapshot(),
               score: scores.has(slide) ? scores.get(slide) : null,
             }),
             restore: (entry) => {
-              entry.selected.forEach((i) => options[i]?.click());
-              if (entry.checked) cloneCheckBtn.click();
+              (entry.selected || []).forEach((i) => options[i]?.click());
+              if (entry.checked) assess(entry.timedOut === true);
               if (entry.score !== null) scores.set(slide, entry.score);
+              timer?.restore(entry.timer);
             },
           });
 
