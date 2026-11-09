@@ -30,8 +30,12 @@ Sitzungsstand von vorn. Die Druckansicht läuft nicht und blendet die Knöpfe au
 ein exportierter Sitzungsstand behält die erreichte Zeit. Kein zusätzlicher
 Server oder externer Timerdienst erforderlich.
 
+Die Knöpfe behalten während des Laufens ihre Textknoten und ihre Breite.
+Pause ändert den gewünschten Laufzustand, damit spätere Folienereignisse eine
+manuell gesetzte Pause nicht versehentlich aufheben.
+
 Für einen dauerhaft benannten Sitzungsstand kann der Div eine eigene ID bekommen,
 zum Beispiel `.timer #tippuhr`. Das erhält seine Zuordnung auch beim Einfügen
 weiterer Timer in die Präsentation.
 
-Logikprüfung im Quellprojekt: `node --test _extensions/presentation/modules/timer/tests/clock.test.cjs`.
+Logikprüfung im Quellprojekt: `node --test _extensions/presentation/modules/timer/tests/*.test.cjs`.

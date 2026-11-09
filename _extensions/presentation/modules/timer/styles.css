@@ -37,8 +37,10 @@
 .reveal .presentation-timer-progress::-webkit-progress-bar { background: #e5edf6; }
 .reveal .presentation-timer-progress::-webkit-progress-value { background: var(--presentation-blue); }
 .reveal .presentation-timer-progress::-moz-progress-bar { background: var(--presentation-blue); }
-.reveal .presentation-timer-controls { display: flex; justify-content: center; gap: 12px; margin-top: 26px; }
+.reveal .presentation-timer-controls { display: flex; justify-content: center; gap: 12px; width: min(100%, 440px); margin: 26px auto 0; }
 .reveal .presentation-timer-controls button {
+  flex: 1;
+  min-width: 0;
   font: inherit;
   font-size: .6em;
   padding: 10px 22px;
