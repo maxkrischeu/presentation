@@ -162,6 +162,29 @@ Die Anzahl der Bildpunkte ist Breite × Höhe.
 :::
 ```
 
+### Inhalt im verbleibenden Platz vertikal zentrieren
+
+`.vcenter` nutzt den noch freien Platz im Inhaltsbereich und zentriert seinen
+Inhalt darin vertikal. Die Überschrift sowie Text vor oder nach dem Block
+behalten ihren Platz. Textausrichtung und Schriftgröße bleiben unverändert.
+
+```markdown
+## Ein wichtiger Gedanke
+
+:::: {.vcenter}
+::: {.statement}
+Ein Algorithmus beschreibt einen Lösungsweg Schritt für Schritt.
+:::
+::::
+```
+
+Für einen einfachen Satz reicht `::: {.vcenter}` ohne innere Statementbox.
+Der Block eignet sich auch für mehrere Absätze oder andere Inhalte im normalen
+Textfluss. Die Zentrierung passt sich an die Höhe der Überschrift und der
+übrigen Inhalte an und bleibt in der Druck-/PDF-Ansicht erhalten. Bei mehreren
+`.vcenter`-Blöcken teilen diese sich den freien Platz. Frei platzierte Medien
+werden weiterhin durch ihre eigenen Koordinaten positioniert.
+
 ### Zitat
 
 ```markdown

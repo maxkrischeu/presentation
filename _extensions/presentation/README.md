@@ -132,6 +132,26 @@ normaler Text; ohne Namen bleibt das Feld leer. Die URL unterstützt HTTP/HTTPS
 und öffnet in einem neuen Tab. Auch `teacher-url` kann als Projektvorgabe gesetzt
 und im Dokument mit `false` oder `""` entfernt werden.
 
+## Inhalte vertikal zentrieren
+
+Der Div-Block `.vcenter` füllt den verbleibenden Platz unter der Überschrift
+und zwischen anderen Inhalten. Er zentriert seinen Inhalt vertikal, ohne dessen
+Textausrichtung zu ändern. Beispiel mit einer Statementbox:
+
+```markdown
+## Merksatz
+
+:::: {.vcenter}
+::: {.statement}
+Dein Merksatz steht hier.
+:::
+::::
+```
+
+Die vorhandenen Abstände und der Kopf-/Fußbereich bleiben berücksichtigt.
+Mehrere `.vcenter`-Blöcke teilen sich den freien Platz. Die Funktion verwendet
+den normalen Textfluss und gilt auch für die Druck-/PDF-Ansicht.
+
 ## Entwicklung
 
 Die lesbaren Quelldateien liegen in `core/`, `ui/`, `modules/` und `server/`. `runtime/`, `presentation.css` und `_extension.yml` werden deterministisch erzeugt; dort nicht direkt ändern.

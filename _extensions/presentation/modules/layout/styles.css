@@ -1,0 +1,27 @@
+/* Only opt-in slides change layout. The existing frame remains absolute. */
+.reveal .slides section.presentation-slide.presentation-vcenter-slide.present,
+.reveal.overview .slides section.presentation-slide.presentation-vcenter-slide,
+html.print-pdf .reveal .slides section.presentation-slide.presentation-vcenter-slide {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.reveal .presentation-vcenter-slide > * {
+  flex-shrink: 0;
+}
+
+.reveal .vcenter,
+.reveal .presentation-vcenter-parent {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+.reveal .vcenter {
+  justify-content: center;
+}
+
+.reveal .vcenter > * {
+  flex-shrink: 0;
+}
