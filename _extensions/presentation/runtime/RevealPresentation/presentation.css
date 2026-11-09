@@ -2729,3 +2729,62 @@ html .reveal .drop.active {
 }
 .presentation-selection-controls[hidden] { display: none; }
 .presentation-selection-controls > span { font-size: 16px; white-space: nowrap; }
+
+/* modules/timer/styles.css */
+.reveal .presentation-timer {
+  width: min(100%, 760px);
+  align-self: center;
+  margin: 12px auto;
+  text-align: center;
+}
+.reveal .presentation-timer-status {
+  min-height: 1.4em;
+  font-size: .7em;
+  font-weight: 600;
+  color: var(--presentation-muted);
+}
+.reveal .presentation-timer-display {
+  font-size: 4.4em;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--presentation-navy);
+}
+.reveal .presentation-timer-target {
+  margin: 0 0 24px;
+  font-size: .8em;
+  color: var(--presentation-muted);
+}
+.reveal .presentation-timer-progress {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin: 0;
+  border: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e5edf6;
+  accent-color: var(--presentation-blue);
+}
+.reveal .presentation-timer-progress::-webkit-progress-bar { background: #e5edf6; }
+.reveal .presentation-timer-progress::-webkit-progress-value { background: var(--presentation-blue); }
+.reveal .presentation-timer-progress::-moz-progress-bar { background: var(--presentation-blue); }
+.reveal .presentation-timer-controls { display: flex; justify-content: center; gap: 12px; margin-top: 26px; }
+.reveal .presentation-timer-controls button {
+  font: inherit;
+  font-size: .6em;
+  padding: 10px 22px;
+  border: 1px solid #c4cde1;
+  border-radius: 6px;
+  color: var(--presentation-navy);
+  background: white;
+  cursor: pointer;
+}
+.reveal .presentation-timer-controls .presentation-timer-toggle { color: white; background: var(--presentation-navy); border-color: var(--presentation-navy); }
+.reveal .presentation-timer-controls button:focus-visible { outline: 3px solid var(--presentation-blue); outline-offset: 3px; }
+.reveal .presentation-timer[data-state="finished"] .presentation-timer-display { color: #407621; }
+.reveal .presentation-timer[data-state="finished"] .presentation-timer-progress::-webkit-progress-value { background: #7cb142; }
+.reveal .presentation-timer[data-state="finished"] .presentation-timer-progress::-moz-progress-bar { background: #7cb142; }
+html.print-pdf .presentation-timer-controls { display: none; }
+@media print { .reveal .presentation-timer-controls { display: none; } }

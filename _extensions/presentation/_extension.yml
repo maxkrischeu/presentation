@@ -49,6 +49,7 @@ contributes:
         - "modules/quotes/filter.lua"
         - "modules/spreadsheets/filter.lua"
         - "modules/tasks/filter.lua"
+        - "modules/timer/filter.lua"
       revealjs-plugins:
         - "runtime/RevealDrop"
         - "runtime/RevealQuiz"

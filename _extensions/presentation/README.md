@@ -152,6 +152,23 @@ Die vorhandenen Abstände und der Kopf-/Fußbereich bleiben berücksichtigt.
 Mehrere `.vcenter`-Blöcke teilen sich den freien Platz. Die Funktion verwendet
 den normalen Textfluss und gilt auch für die Druck-/PDF-Ansicht.
 
+## Uhr für Arbeitsphasen
+
+Ein leerer `.timer`-Div zeigt eine digitale Uhr mit Start/Pause, Zurücksetzen
+und Fortschrittsanzeige. Standardmäßig zählt sie von 0:00 bis zur Zielzeit hoch:
+
+```markdown
+:::: {.vcenter}
+::: {.timer minutes="10" direction="up" autostart="true"}
+:::
+::::
+```
+
+`direction="down"` zeigt stattdessen die Restzeit. Ohne `autostart="true"`
+startet die Uhr erst per Knopfdruck. Folienwechsel, Übersicht und Schwarzbild
+pausieren die Uhr; ein Browser-Tabwechsel lässt sie weiterlaufen. Einzelheiten:
+[Arbeitsphasen-Uhr](modules/timer/README.md).
+
 ## Entwicklung
 
 Die lesbaren Quelldateien liegen in `core/`, `ui/`, `modules/` und `server/`. `runtime/`, `presentation.css` und `_extension.yml` werden deterministisch erzeugt; dort nicht direkt ändern.

@@ -185,6 +185,29 @@ Textfluss. Die Zentrierung passt sich an die Höhe der Überschrift und der
 `.vcenter`-Blöcken teilen diese sich den freien Platz. Frei platzierte Medien
 werden weiterhin durch ihre eigenen Koordinaten positioniert.
 
+### Uhr für Tippübungen und andere Arbeitsphasen
+
+```markdown
+## Tippübungen {fragments="off"}
+
+:::: {.vcenter}
+::: {.timer minutes="10" direction="up" autostart="true"}
+:::
+::::
+```
+
+Den `.timer`-Block innen leer lassen. Die Uhr zeigt die bereits geleistete Zeit
+von 0:00 bis 10:00 und stoppt dann ohne Ton. Pause, Weiter und Zurücksetzen sind
+direkt auf der Folie möglich. `direction="down"` zählt stattdessen herunter.
+Ohne `autostart="true"` startet die Uhr erst über den Startknopf. `minutes`
+erlaubt positive Zahlen bis 180; Standard sind 10 Minuten.
+
+Beim Verlassen der Folie, in der Übersicht und im Schwarzbild pausiert die Uhr.
+Beim Wechsel des Browser-Tabs läuft sie weiter, damit die Klasse während der
+Arbeitsphase andere Webseiten nutzen kann. Nach Zurücksetzen wartet sie auf
+einen manuellen Start. Die Druckansicht zeigt eine stehende Uhr ohne Knöpfe.
+Weitere Hinweise: [Arbeitsphasen-Uhr](modules/timer/README.md).
+
 ### Zitat
 
 ```markdown
