@@ -25,3 +25,11 @@ html.print-pdf .reveal .slides section.presentation-slide.presentation-vcenter-s
 .reveal .vcenter > * {
   flex-shrink: 0;
 }
+
+/* An authored subtitle inside a heading; the line break remains explicit. */
+.reveal :is(h1, h2, h3) .untertitel {
+  color: var(--presentation-ink);
+  font-weight: 400;
+  font-size: 0.75em;
+  letter-spacing: normal;
+}

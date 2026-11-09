@@ -1421,6 +1421,14 @@ html.print-pdf .reveal .slides section.presentation-slide.presentation-vcenter-s
   flex-shrink: 0;
 }
 
+/* An authored subtitle inside a heading; the line break remains explicit. */
+.reveal :is(h1, h2, h3) .untertitel {
+  color: var(--presentation-ink);
+  font-weight: 400;
+  font-size: 0.75em;
+  letter-spacing: normal;
+}
+
 /* modules/magnifier/styles.css */
 /* Magnifier is clipped to the content area; its mirror never receives input. */
 .presentation-magnifier-controls {

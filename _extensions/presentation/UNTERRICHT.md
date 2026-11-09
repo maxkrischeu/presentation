@@ -96,6 +96,18 @@ Für handschriftliche Lösungen eine normale Folie mit der Frage und ausreichend
 freiem Platz anlegen. `.quiz-question` erzeugt dagegen ein interaktives Quiz
 mit vorbereiteten Antworten.
 
+### Unterzeile innerhalb einer Überschrift
+
+Mit `.untertitel` erscheint ein Teil der Überschrift dunkel, normal gewichtet
+und mit 75 % der Überschriftengröße. `<br>` legt den Zeilenumbruch fest:
+
+```markdown
+# Letzte Woche:<br>[Einführung in den Algorithmusbegriff]{.untertitel}
+```
+
+Das funktioniert auch innerhalb von `##`- und `###`-Überschriften. Die Klasse
+formatiert nur den markierten Text und erzeugt keine zusätzliche Folie.
+
 ### Einblendungen
 
 Bei `presentation.fragments: auto` erscheinen Inhalte schrittweise. Für Medien,

@@ -132,6 +132,17 @@ normaler Text; ohne Namen bleibt das Feld leer. Die URL unterstützt HTTP/HTTPS
 und öffnet in einem neuen Tab. Auch `teacher-url` kann als Projektvorgabe gesetzt
 und im Dokument mit `false` oder `""` entfernt werden.
 
+## Unterzeilen in Überschriften
+
+```markdown
+# Letzte Woche:<br>[Einführung in den Algorithmusbegriff]{.untertitel}
+```
+
+`.untertitel` formatiert den markierten Teil einer Überschrift in der normalen
+dunklen Textfarbe, mit Schriftgewicht 400 und 75 % der Überschriftengröße.
+Der Zeilenumbruch bleibt mit `<br>` ausdrücklich gesetzt. Unterstützt werden
+Überschriften der Ebenen 1 bis 3.
+
 ## Inhalte vertikal zentrieren
 
 Der Div-Block `.vcenter` füllt den verbleibenden Platz unter der Überschrift
